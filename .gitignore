@@ -1,0 +1,117 @@
+# .gitignore for Medical RAG System
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# API Keys (important!)
+*api_key*
+*API_KEY*
+*.key
+
+# Data directories
+data/agents/*/raw_papers/*.pdf
+data/agents/*/raw_papers/*.json
+data/agents/*/processed/*
+data/*.json
+!data/evaluation/*.json  # Keep evaluation datasets
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker
+docker-compose.override.yml
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Model files (large)
+models/*.bin
+models/*.pt
+models/*.pth
+models/*.h5
+*.safetensors
+
+# Vector DB data (if running locally)
+qdrant_data/
+.qdrant/
+
+# Redis dumps
+dump.rdb
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+
+# Backup files
+*.bak
+*.backup
+
+# Configuration (keep templates)
+config/agents.yaml
+!config/agents.yaml.template
+!config/system.yaml
+
+# Monitoring
+grafana/data/
+prometheus/data/
