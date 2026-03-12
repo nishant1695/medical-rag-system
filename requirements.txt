@@ -1,0 +1,32 @@
+# Medical RAG System - Requirements
+# Data Pipeline Dependencies
+
+# Core dependencies
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# PubMed & Bio
+biopython>=1.81
+requests>=2.31.0
+
+# PDF Processing
+pymupdf>=1.23.0
+pypdf>=3.17.0
+
+# NLP & Medical
+spacy>=3.7.0
+scispacy>=0.5.3
+
+# Embeddings & Vector Store
+sentence-transformers>=2.2.2
+torch>=2.1.0
+qdrant-client>=1.7.0
+
+# LLM
+anthropic>=0.18.0
+
+# Utilities
+tqdm>=4.66.0
+pandas>=2.1.0
+numpy>=1.24.0

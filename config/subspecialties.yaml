@@ -1,0 +1,103 @@
+# Configuration for Subspecialty Agents
+# User defines PubMed keywords for each subspecialty
+
+subspecialties:
+  breast:
+    name: "Breast Surgery Specialist"
+    description: "Expert in breast reconstruction and aesthetic breast surgery"
+    pubmed_keywords:
+      - "breast reconstruction"
+      - "DIEP flap"
+      - "TRAM flap"
+      - "breast implants"
+      - "autologous breast reconstruction"
+      - "mastectomy reconstruction"
+      - "nipple reconstruction"
+    mesh_terms:
+      - "Mammaplasty[MeSH]"
+      - "Mastectomy[MeSH]"
+      - "Breast Neoplasms/surgery[MeSH]"
+    max_papers: 150
+
+  reconstructive:
+    name: "Reconstructive Surgery Specialist"
+    description: "Expert in complex reconstruction and free tissue transfer"
+    pubmed_keywords:
+      - "reconstructive surgery"
+      - "free flap"
+      - "microsurgery"
+      - "perforator flap"
+      - "tissue transfer"
+      - "defect reconstruction"
+    mesh_terms:
+      - "Reconstructive Surgical Procedures[MeSH]"
+      - "Surgical Flaps[MeSH]"
+      - "Microsurgery[MeSH]"
+    max_papers: 150
+
+  burn:
+    name: "Burn Surgery Specialist"
+    description: "Expert in acute burn care and burn reconstruction"
+    pubmed_keywords:
+      - "burn surgery"
+      - "burn reconstruction"
+      - "skin grafting"
+      - "burn scar management"
+      - "burn contracture"
+      - "thermal injury"
+    mesh_terms:
+      - "Burns[MeSH]"
+      - "Cicatrix[MeSH]"
+      - "Skin Transplantation[MeSH]"
+    max_papers: 100
+
+  hand:
+    name: "Hand Surgery Specialist"
+    description: "Expert in hand and upper extremity reconstruction"
+    pubmed_keywords:
+      - "hand surgery"
+      - "hand reconstruction"
+      - "tendon repair"
+      - "nerve repair hand"
+      - "finger replantation"
+      - "hand trauma"
+    mesh_terms:
+      - "Hand Injuries[MeSH]"
+      - "Hand Surgery[MeSH]"
+    max_papers: 50
+
+  craniofacial:
+    name: "Craniofacial Surgery Specialist"
+    description: "Expert in craniofacial surgery and cleft repair"
+    pubmed_keywords:
+      - "craniofacial surgery"
+      - "cleft lip"
+      - "cleft palate"
+      - "craniosynostosis"
+      - "orthognathic surgery"
+    mesh_terms:
+      - "Cleft Lip[MeSH]"
+      - "Cleft Palate[MeSH]"
+      - "Craniosynostoses[MeSH]"
+    max_papers: 50
+
+# Publication filters
+publication_filters:
+  publication_types:
+    - "Journal Article"
+    - "Review"
+    - "Clinical Trial"
+    - "Randomized Controlled Trial"
+    - "Meta-Analysis"
+  languages:
+    - "eng"
+  date_range:
+    start: "2000/01/01"
+    end: "2026/12/31"
+
+# Deduplication settings
+deduplication:
+  use_pmid: true
+  use_doi: true
+  fuzzy_title_match: true
+  fuzzy_threshold: 0.9
