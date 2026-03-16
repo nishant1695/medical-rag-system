@@ -51,7 +51,7 @@ export interface SpecialistContext {
   evidence_summary: Record<string, number>
 }
 
-export type SafetyClass = 'literature' | 'patient_specific' | 'emergency'
+export type SafetyClass = 'literature' | 'clinical_query' | 'emergency'
 
 export interface ChatResponse {
   answer: string

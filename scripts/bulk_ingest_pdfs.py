@@ -133,7 +133,16 @@ if __name__ == "__main__":
     parser.add_argument("--limit", type=int, default=1000, help="Max number of files to ingest")
     parser.add_argument(
         "--subspecialty",
-        choices=["breast", "hand", "craniofacial", "microsurgery", "burns", "aesthetic", "lower_extremity"],
+        choices=[
+            "aesthetic",
+            "pediatric_plastic",
+            "microsurgery",
+            "craniofacial",
+            "supermicrosurgery",
+            "burn_surgery",
+            "wound_care",
+            "hand",
+        ],
         default=None,
         help="Tag all ingested PDFs with this subspecialty (used for filtered retrieval)",
     )
