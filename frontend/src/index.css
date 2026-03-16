@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --scrollbar-width: 6px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.slate.300') transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: theme('colors.slate.300');
+    border-radius: 3px;
+  }
+}
+
+/* Typing cursor for streaming */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.typing-cursor::after {
+  content: '▋';
+  animation: blink 1s step-end infinite;
+  color: theme('colors.medical.500');
+}
+
+/* Citation badge pulse on hover */
+.citation-badge {
+  @apply inline-flex items-center justify-center px-1.5 py-0.5 rounded text-xs font-mono
+         bg-medical-100 text-medical-700 border border-medical-200 cursor-pointer
+         hover:bg-medical-200 transition-colors;
+}
+
+/* Evidence level colours */
+.ev-I   { @apply bg-emerald-100 text-emerald-800 border-emerald-300; }
+.ev-II  { @apply bg-teal-100 text-teal-800 border-teal-300; }
+.ev-III { @apply bg-sky-100 text-sky-800 border-sky-300; }
+.ev-IV  { @apply bg-amber-100 text-amber-800 border-amber-300; }
+.ev-V   { @apply bg-slate-100 text-slate-600 border-slate-300; }
+
+/* Safety warning variants */
+.safety-literature      { @apply bg-emerald-50 border-emerald-200 text-emerald-700; }
+.safety-patient_specific { @apply bg-amber-50 border-amber-300 text-amber-800; }
+.safety-emergency       { @apply bg-red-50 border-red-300 text-red-800; }
+
+/* Markdown content inside chat bubbles */
+.prose-chat p { @apply mb-2 last:mb-0; }
+.prose-chat ul { @apply list-disc pl-5 mb-2; }
+.prose-chat ol { @apply list-decimal pl-5 mb-2; }
+.prose-chat li { @apply mb-0.5; }
+.prose-chat h1, .prose-chat h2, .prose-chat h3 { @apply font-semibold mb-1 mt-3 first:mt-0; }
+.prose-chat code { @apply bg-slate-100 text-slate-700 px-1 py-0.5 rounded text-xs font-mono; }
+.prose-chat pre  { @apply bg-slate-100 p-3 rounded text-xs overflow-x-auto mb-2; }
+.prose-chat blockquote { @apply border-l-4 border-medical-300 pl-3 italic text-slate-600; }

@@ -1,97 +1,55 @@
 #!/bin/bash
-# Setup script for Medical RAG Data Pipeline
+# Medical RAG System Setup Script
 
-set -e  # Exit on error
-
-echo "🏥 Medical RAG System - Data Pipeline Setup"
-echo "==========================================="
+set -e
+echo "🏥 Medical RAG System Setup"
 echo ""
 
-# Check Python version
-echo "Checking Python version..."
-python_version=$(python3 --version 2>&1 | awk '{print $2}')
-echo "✓ Python $python_version detected"
+# Check Python
+echo "1️⃣  Checking Python..."
+python3 --version
 echo ""
 
-# Create virtual environment
-echo "Creating virtual environment..."
-if [ ! -d "venv" ]; then
-    python3 -m venv venv
-    echo "✓ Virtual environment created"
-else
-    echo "✓ Virtual environment already exists"
-fi
-echo ""
-
-# Activate virtual environment
-echo "Activating virtual environment..."
+# Create venv
+echo "2️⃣  Creating virtual environment..."
+python3 -m venv venv
 source venv/bin/activate
-echo "✓ Virtual environment activated"
-echo ""
-
-# Upgrade pip
-echo "Upgrading pip..."
-pip install --upgrade pip --quiet
-echo "✓ pip upgraded"
 echo ""
 
 # Install dependencies
-echo "Installing dependencies..."
-echo "This may take 5-10 minutes..."
-pip install -r requirements.txt --quiet
-echo "✓ Dependencies installed"
+echo "3️⃣  Installing dependencies..."
+cd backend
+pip install --upgrade pip
+pip install -r requirements.txt
+cd ..
 echo ""
 
-# Install spaCy model
-echo "Installing spaCy English model..."
-python -m spacy download en_core_web_sm --quiet
-echo "✓ spaCy model installed"
+# Download models
+echo "4️⃣  Downloading models..."
+python -m spacy download en_core_sci_md
 echo ""
 
-# Install scispaCy model
-echo "Installing scispaCy medical model..."
-pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.3/en_core_sci_sm-0.5.3.tar.gz --quiet
-echo "✓ scispaCy model installed"
-echo ""
-
-# Create .env file
-echo "Setting up environment configuration..."
+# Setup .env
+echo "5️⃣  Setting up .env..."
 if [ ! -f ".env" ]; then
     cp .env.example .env
-    echo "✓ .env file created from template"
-    echo "⚠️  IMPORTANT: Edit .env and add your PubMed email and API key!"
-else
-    echo "✓ .env file already exists"
+    echo "✅ Created .env - EDIT WITH YOUR API KEYS!"
 fi
 echo ""
 
 # Create directories
-echo "Creating data directories..."
-mkdir -p data/{raw_papers,processed,chunks}
-mkdir -p data/raw_papers/{breast,reconstructive,burn,hand,craniofacial}
-echo "✓ Data directories created"
+mkdir -p data/papers data/processed data/docling
+
+# Start Docker
+echo "6️⃣  Starting Docker services..."
+docker-compose up -d
+sleep 10
 echo ""
 
-# Test imports
-echo "Testing imports..."
-python -c "
-import Bio
-from Bio import Entrez
-import pymupdf
-import spacy
-import sentence_transformers
-from qdrant_client import QdrantClient
-print('✓ All imports successful')
-"
+# Init database
+echo "7️⃣  Initializing database..."
+python scripts/init_db.py
 echo ""
 
-echo "==========================================="
-echo "✅ Setup complete!"
-echo ""
-echo "Next steps:"
-echo "1. Edit .env file and add your PubMed credentials"
-echo "2. Start Qdrant: docker run -p 6333:6333 qdrant/qdrant"
-echo "3. Run: python scripts/01_fetch_papers.py --subspecialty breast --max-papers 50"
-echo ""
-echo "To activate environment later: source venv/bin/activate"
-echo "==========================================="
+echo "🎉 Setup Complete!"
+echo "Run: cd backend && uvicorn app.main:app --reload"

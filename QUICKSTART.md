@@ -1,139 +1,194 @@
-# Quick Start Guide - Data Pipeline
+# Quick Start Guide - Medical RAG System
 
-## Get Started in 5 Minutes
+## 🚀 Get Started in 5 Minutes
 
-### Step 1: Initial Setup
+### Step 1: Setup
 
 ```bash
-# Clone/navigate to repository
-cd /Users/nishantsingh/GitHub/medical-rag-system
-
-# Run setup script
-chmod +x setup.sh
+cd ~/GitHub/medical-rag-system
 ./setup.sh
-
-# Activate virtual environment
-source venv/bin/activate
 ```
 
-### Step 2: Configure Environment
+This will:
+- Create Python virtual environment
+- Install all dependencies
+- Download medical NLP models
+- Start Docker services (PostgreSQL, ChromaDB, Redis)
+- Initialize database
+
+### Step 2: Configure API Keys
+
+Edit `.env` file:
 
 ```bash
-# Copy environment template
-cp .env.example .env
-
-# Edit .env and add your credentials
 nano .env
-
-# Required:
-PUBMED_EMAIL=your_email@example.com
-PUBMED_API_KEY=your_api_key_here  # Optional but recommended
 ```
 
-**Get PubMed API Key (Free):**
-1. Go to: https://www.ncbi.nlm.nih.gov/account/
-2. Sign in or create account
-3. Go to Settings → API Key Management
-4. Create new API key
-5. Copy to .env file
+**Required:**
+- `ANTHROPIC_API_KEY=sk-...` (or OpenAI/Gemini)
+- `PUBMED_EMAIL=your@email.com`
 
-### Step 3: Validate Setup
+**Optional:**
+- `PUBMED_API_KEY=...` (free from NCBI)
+
+### Step 3: Start Backend
 
 ```bash
-# Test everything is working
-python tests/test_data_pipeline.py
+cd backend
+source ../venv/bin/activate
+uvicorn app.main:app --reload
 ```
 
-**Expected output:**
-```
-✅ ALL TESTS PASSED!
-You're ready to fetch papers!
-```
+**API will be available at:**
+- 📚 API Docs: http://localhost:8000/docs
+- 💚 Health: http://localhost:8000/health
 
-### Step 4: Fetch Your First Papers
+### Step 4: Test the API
+
+**Create a workspace:**
 
 ```bash
-# Fetch 50 papers for breast surgery
-python scripts/01_fetch_papers.py --subspecialty breast --max-papers 50
+curl -X POST http://localhost:8000/api/v1/workspaces \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Breast Surgery",
+    "subspecialty": "breast",
+    "description": "Breast reconstruction research"
+  }'
 ```
 
-**Expected output:**
-```
-🔍 Searching PubMed...
-✓ Found 100 papers
-📥 Fetching paper details...
-[Progress bar]
-✓ Retrieved 50 papers
-💾 Saving papers...
-✓ Saved 50 new papers
-Skipped 0 duplicates
-
-✅ Fetch complete!
-Papers saved to: data/raw_papers/breast/
-```
-
-### Step 5: Verify Data
+**Upload a paper:**
 
 ```bash
-# Check what was downloaded
-ls data/raw_papers/breast/
-
-# View a sample paper
-cat data/raw_papers/breast/pmid-12345678.json | head -20
+curl -X POST http://localhost:8000/api/v1/workspaces/1/documents \
+  -F "file=@paper.pdf" \
+  -F "pmid=12345678"
 ```
+
+**Search:**
+
+```bash
+curl -X POST http://localhost:8000/api/v1/workspaces/1/search \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What are the outcomes of DIEP flap surgery?",
+    "top_k": 5
+  }'
+```
+
+## 🎯 Features Available
+
+✅ **Core Features (Implemented):**
+- Workspace management (subspecialties)
+- Document upload with PMID
+- Medical document parsing (Docling + PubMed)
+- Evidence grading (Level I-V)
+- Study design classification
+- Medical entity extraction (scispaCy)
+- Safety classification (patient-specific detection)
+- Hybrid retrieval (vector + reranking)
+- PubMedBERT embeddings
+- Search API with citations
+
+🚧 **Coming Soon:**
+- SSE streaming chat
+- Frontend UI
+- Multi-specialist consultation
+- Knowledge graph integration
+
+## 📊 Architecture
+
+```
+User Query
+    ↓
+Safety Classifier (block patient-specific/emergency)
+    ↓
+Medical Retriever
+  ├─ PubMedBERT Embeddings
+  ├─ ChromaDB Vector Search
+  └─ Cross-Encoder Reranking
+    ↓
+Response with:
+  ├─ Relevant chunks
+  ├─ PMID citations
+  ├─ Evidence levels
+  └─ Safety warnings
+```
+
+## 🔍 Example Queries
+
+**Good (Literature) ✅**
+- "What are the complications of DIEP flap surgery?"
+- "Outcomes of breast reconstruction in obese patients"
+- "Evidence for TRAM flap vs DIEP flap"
+
+**Blocked (Patient-Specific) ⚠️**
+- "Should I perform DIEP flap on my 45-year-old patient?"
+- "What dose should I give this patient?"
+
+**Blocked (Emergency) 🚫**
+- "Patient with severe bleeding, what to do?"
+- "Emergency treatment for..."
+
+## 📁 Directory Structure
+
+```
+medical-rag-system/
+├── backend/
+│   ├── app/
+│   │   ├── api/          # ✅ Workspaces, documents, chat
+│   │   ├── core/         # ✅ Config, database
+│   │   ├── models/       # ✅ Database models
+│   │   ├── schemas/      # ✅ Pydantic schemas
+│   │   └── services/     # ✅ RAG pipeline
+│   └── requirements.txt
+├── scripts/
+│   └── init_db.py        # ✅ Database setup
+├── docker-compose.yml    # ✅ Services
+├── setup.sh              # ✅ One-command setup
+└── README.md
+```
+
+## 🐛 Troubleshooting
+
+**Database connection failed:**
+```bash
+docker-compose up -d postgres
+docker-compose ps  # Check status
+```
+
+**ChromaDB connection failed:**
+```bash
+docker-compose up -d chromadb
+curl http://localhost:8000/api/v1/heartbeat
+```
+
+**Model download failed:**
+```bash
+python -m spacy download en_core_sci_md
+```
+
+**Import errors:**
+```bash
+source venv/bin/activate
+cd backend
+pip install -r requirements.txt
+```
+
+## 📝 Next Steps
+
+1. **Add more papers:** Upload PDFs with PMIDs
+2. **Test queries:** Use the search endpoint
+3. **Check evidence:** Review evidence levels in responses
+4. **Monitor safety:** Test with patient-specific queries
+
+## 🔗 Resources
+
+- **Full Docs:** README.md
+- **Implementation:** IMPLEMENTATION_STATUS.md
+- **Design:** POC_COMPREHENSIVE_SOLUTION.md
+- **API Docs:** http://localhost:8000/docs
 
 ---
 
-## Troubleshooting
-
-### Error: "PUBMED_EMAIL not set"
-**Fix:** Edit `.env` and set `PUBMED_EMAIL=your_email@example.com`
-
-### Error: "No papers found"
-**Possible causes:**
-1. Network connection issues
-2. PubMed API temporarily down
-3. Query too specific (no results)
-
-**Fix:** Check your internet connection, try again in a few minutes
-
-### Error: "Rate limit exceeded"
-**Fix:** Add PUBMED_API_KEY to .env for higher rate limits (10 req/s vs 3 req/s)
-
-### Error: "Import error"
-**Fix:** Make sure you activated virtual environment: `source venv/bin/activate`
-
----
-
-## What's Next?
-
-After fetching papers:
-
-1. **Process papers** (extract text, metadata)
-   ```bash
-   python scripts/02_process_papers.py --subspecialty breast
-   ```
-
-2. **Chunk papers** (structure-aware chunking)
-   ```bash
-   python scripts/03_chunk_papers.py --subspecialty breast
-   ```
-
-3. **Create vector store** (embed and index)
-   ```bash
-   python scripts/04_create_vectorstore.py --subspecialty breast
-   ```
-
----
-
-## Data Pipeline Status
-
-After Step 4, you'll have:
-- ✅ 50 papers downloaded with metadata
-- ✅ Deduplication index created
-- ✅ Papers organized by subspecialty
-- ✅ Ready for processing stage
-
-**Location:** `data/raw_papers/breast/`
-
-**Next:** Process and chunk these papers
+**Status:** ✅ Core features ready for testing!
