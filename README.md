@@ -1,476 +1,398 @@
 # Medical RAG System
-## AI-Powered Medical Research Assistant with Evidence-Based Citations
+## Clinical Decision Support for Healthcare Professionals
 
-A production-ready RAG (Retrieval-Augmented Generation) system specifically designed for medical research, combining NexusRAG's hybrid retrieval architecture with medical domain enhancements.
+A production-ready RAG (Retrieval-Augmented Generation) system designed for healthcare professionals. Ask complex clinical questions and receive structured, evidence-graded answers with inline citations sourced directly from peer-reviewed literature.
 
-[![Status](https://img.shields.io/badge/status-in--development-yellow)]()
+[![Status](https://img.shields.io/badge/status-active-brightgreen)]()
 [![Python](https://img.shields.io/badge/python-3.10+-blue)]()
 [![License](https://img.shields.io/badge/license-MIT-green)]()
 
 ---
 
-## 🌟 Key Features
+## Overview
 
-### Medical Domain Specialization
-- **PubMed Integration** - Automatic fetching of research papers with metadata (PMID, authors, journal)
-- **Evidence Grading** - Oxford CEBM Level I-V classification for all papers
-- **Study Design Detection** - Automatic classification (RCT, meta-analysis, cohort, case series)
-- **Medical Entity Extraction** - scispaCy-based extraction of conditions, procedures, treatments
-- **Safety Classification** - Detects and blocks patient-specific or emergency queries
+This system ingests research papers (PDF), indexes them by subspecialty, and answers clinical questions using a multi-specialist agentic pipeline. It is intended for **qualified healthcare professionals** seeking rapid evidence synthesis — not a replacement for clinical judgment.
 
-### Advanced Retrieval
-- **Hybrid Search** - Combines Knowledge Graph + Vector Search + Cross-Encoder Reranking
-- **Medical Embeddings** - PubMedBERT for domain-specific semantic search
-- **Structure-Aware Chunking** - Preserves document hierarchy and medical context
-- **Image & Table Extraction** - Surgical diagrams and outcome tables become searchable
-
-### Citation & Verification
-- **PMID-Based Citations** - Every claim links to PubMed source
-- **Evidence Transparency** - Level I-V displayed for all citations
-- **Inline References** - 4-character citation IDs in answers
-- **Verifiable Sources** - Direct links to original papers
-
-### Medical Safety
-- **Patient-Specific Detection** - Warns when queries appear to be about specific patients
-- **Emergency Blocking** - Refuses to answer emergency medical questions
-- **Conservative Language** - "Studies suggest" rather than "You should"
-- **Educational Disclaimers** - Clear messaging about system limitations
+**Typical use cases:**
+- "What is the evidence for immediate vs. delayed breast reconstruction after mastectomy?"
+- "A 55-year-old with cutaneous melanoma presents with a new thigh lesion. What staging workup and treatment options does the literature support?"
+- "Compare DIEP flap vs. TRAM flap outcomes in obese patients."
 
 ---
 
-## 🏗️ Architecture
+## Key Features
+
+### Multi-Specialist Architecture
+- **8 subspecialties** in a single vector store, tagged with metadata: Aesthetic Surgery, Pediatric Plastic Surgery, Microsurgery, Craniofacial Surgery, Supermicrosurgery, Burn Surgery, Wound Care, Hand Surgery
+- **Keyword-based classifier** routes queries to the relevant specialty pool(s) — no extra LLM call
+- **Parallel retrieval** across matched specialties via `asyncio.gather`
+- **Multi-specialist synthesis** when a query spans multiple domains — the answer is structured with per-specialty findings, areas of agreement/disagreement, and a final verdict
+
+### Query Decomposition + HyDE
+- **Complexity detection** identifies clinical vignettes, comparative queries, multi-aspect questions, and long queries (>60 words)
+- **Query decomposition** breaks complex queries into 2–4 focused sub-questions (one cheap LLM call, JSON output)
+- **HyDE (Hypothetical Document Embeddings)** generates a 2–3 sentence hypothetical abstract per sub-question; embedding this paragraph instead of the raw query improves recall for complex clinical questions
+- **Chunk deduplication** across all parallel retrievals — chunks are deduplicated by `chunk_id` before cid assignment, keeping the highest-scoring copy
+
+### Clinical Decision Support Mode
+- **Safety classifier** routes queries to one of three classes:
+  - `literature` — general research questions, evidence summaries
+  - `clinical_query` — clinical vignettes, treatment planning, diagnosis assistance (the primary use-case)
+  - `emergency` — life-threatening situations (hard-blocked, directs to emergency services)
+- **Structured clinical output** for `clinical_query`: Clinical Summary → Evidence-Based Options → Key Considerations → Evidence Quality
+- No intrusive warnings for clinical queries — the system is designed for qualified clinicians
+
+### Hybrid Retrieval Pipeline
+- **PubMedBERT embeddings** (`microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext`, 768-dim) for medical domain semantic search
+- **Cross-encoder reranking** (`cross-encoder/ms-marco-MiniLM-L-6-v2`) to score candidates against the query
+- **Over-fetch + rerank**: prefetches 3× candidates, reranks, returns top-K
+- **Subspecialty filtering** via ChromaDB metadata `where` filters
+
+### Evidence Grading
+- Oxford CEBM **Level I–V** classification for all papers and individual claims
+- Evidence level displayed alongside every citation
+- Evidence quality summary in every response (count by level)
+
+### Conversation Memory
+- **Rolling history**: last 8 turns sent verbatim to the LLM
+- **Condensed summary** of older turns (up to 40 messages) appended to the system prompt — no extra LLM call, zero extra latency
+- **Context-aware query rewriting** for follow-up questions ("what about complications?" → "what about complications of DIEP flap breast reconstruction?")
+- **Persistent history** stored in the database, restored on page load
+
+### PDF Parsing & Metadata Extraction
+- **Docling** with `HybridChunker` for structure-aware chunking (preserves headings, tables, sections)
+- Automatic extraction of DOI, authors, publication year, journal from PDF text
+- **CrossRef API** lookup to resolve paper URLs when no DOI/PMID is present
+- All metadata stored per-chunk in ChromaDB for retrieval-time access
+
+### Streaming Chat Interface
+- **SSE (Server-Sent Events)** streaming — tokens appear as they are generated
+- Step-by-step status events: classifying → decomposing → HyDE → retrieving → synthesizing
+- Extended thinking support (when enabled in config)
+- Abort mid-stream
+
+### Frontend
+- React 19 + TypeScript + Vite + TailwindCSS
+- Per-message citation panel with evidence badges and paper links
+- Specialist context panel for multi-specialty answers
+- Workspace management, document upload, semantic search tab
+- Persistent conversation with clear-history support
+
+---
+
+## Architecture
 
 ```
-┌────────────────────────────────────────────────────────────┐
-│                    Frontend (React)                        │
-│  Chat Interface • Citation Display • Evidence Badges        │
-└────────────────────────────────────────────────────────────┘
-                           │
-                           ▼
-┌────────────────────────────────────────────────────────────┐
-│              Medical Safety Classifier                     │
-│  Emergency Detection • Patient-Specific Filtering          │
-└────────────────────────────────────────────────────────────┘
-                           │
-                           ▼
-┌────────────────────────────────────────────────────────────┐
-│              Hybrid Retrieval Pipeline                     │
-│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐      │
-│  │ Knowledge    │ │ Vector       │ │ Cross-Encoder│      │
-│  │ Graph        │ │ Search       │ │ Reranking    │      │
-│  │ (LightRAG)   │ │ (ChromaDB)   │ │ (BGE-v2-m3)  │      │
-│  └──────────────┘ └──────────────┘ └──────────────┘      │
-└────────────────────────────────────────────────────────────┘
-                           │
-                           ▼
-┌────────────────────────────────────────────────────────────┐
-│            Medical Document Parser                         │
-│  Docling • PubMed API • scispaCy • Evidence Grading        │
-└────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────┐
+│                        React Frontend                               │
+│   Chat • Citation Panel • Specialist Context • Document Management  │
+└──────────────────────────────┬──────────────────────────────────────┘
+                               │  SSE streaming (POST /chat)
+                               ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                    FastAPI Backend                                   │
+│                                                                     │
+│  ┌─────────────────────────────────────────────────────────────┐   │
+│  │                  Medical Safety Classifier                   │   │
+│  │   literature  │  clinical_query  │  emergency (blocked)      │   │
+│  └───────────────────────────┬─────────────────────────────────┘   │
+│                              │                                      │
+│  ┌───────────────────────────▼─────────────────────────────────┐   │
+│  │                    Agentic Chat Pipeline                     │   │
+│  │                                                              │   │
+│  │  1. Follow-up query rewriting (context-aware)               │   │
+│  │  2. Subspecialty classification (keyword, no LLM)           │   │
+│  │  3. Complexity detection                                     │   │
+│  │     └─ [complex] Decompose → HyDE per sub-question          │   │
+│  │  4. Parallel retrieval (sub-queries × subspecialties)       │   │
+│  │  5. Deduplicate chunks by chunk_id                          │   │
+│  │  6. Synthesizer LLM (structured clinical or literature fmt) │   │
+│  └───────────────────────────┬─────────────────────────────────┘   │
+│                              │                                      │
+│  ┌───────────────────────────▼─────────────────────────────────┐   │
+│  │                  Hybrid Retrieval                            │   │
+│  │   PubMedBERT Embeddings → ChromaDB → Cross-Encoder Rerank   │   │
+│  └─────────────────────────────────────────────────────────────┘   │
+│                                                                     │
+│  ┌────────────────────────────────────────────────────────────┐    │
+│  │               Medical Document Parser                       │    │
+│  │   Docling HybridChunker • DOI/CrossRef • Evidence Grading   │    │
+│  └────────────────────────────────────────────────────────────┘    │
+│                                                                     │
+│  SQLite (aiosqlite)          ChromaDB (embedded PersistentClient)  │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🚀 Quick Start
+## Subspecialties
+
+| Key | Display Name | Example Keywords |
+|---|---|---|
+| `aesthetic` | Aesthetic Surgery | rhinoplasty, facelift, liposuction, abdominoplasty |
+| `pediatric_plastic` | Pediatric Plastic Surgery | cleft lip/palate, hemangioma, syndactyly, microtia |
+| `microsurgery` | Microsurgery | free flap, DIEP, anastomosis, replantation, ALT flap |
+| `craniofacial` | Craniofacial Surgery | mandible, orthognathic, Le Fort, distraction osteogenesis |
+| `supermicrosurgery` | Supermicrosurgery | lymphedema, LVA, VLNT, ICG lymphography |
+| `burn_surgery` | Burn Surgery | TBSA, escharotomy, inhalation injury, Parkland formula |
+| `wound_care` | Wound Care | NPWT/VAC, pressure ulcer, diabetic foot, wound bed preparation |
+| `hand` | Hand Surgery | Dupuytren, carpal tunnel, flexor/extensor tendon, nerve graft |
+
+Queries that span multiple subspecialties trigger parallel retrieval from each matched pool and a multi-specialist synthesis response.
+
+---
+
+## Quick Start
 
 ### Prerequisites
 
-- **Python 3.10+**
-- **Docker & Docker Compose**
-- **Node.js 18+** (for frontend)
-- **PubMed API Key** (free from NCBI)
-- **Anthropic API Key** (for Claude) OR local Ollama
+- Python 3.10+
+- Node.js 18+
+- Anthropic API key (or OpenAI / local Ollama)
 
-### Installation
+### Backend
 
 ```bash
-# 1. Clone repository
-cd ~/GitHub
-git clone <repository-url> medical-rag-system
-cd medical-rag-system
+cd medical-rag-system/backend
 
-# 2. Set up environment
-cp .env.example .env
-# Edit .env with your API keys
+# Create and activate virtualenv
+python -m venv ../venv
+source ../venv/bin/activate
 
-# 3. Install backend dependencies
-cd backend
-python -m venv venv
-source venv/bin/activate
+# Install dependencies
 pip install -r requirements.txt
 
-# 4. Download medical NLP models
-python -m spacy download en_core_sci_md
+# Configure environment
+cp ../.env.example ../.env
+# Edit .env — set LLM_PROVIDER, ANTHROPIC_API_KEY, DATABASE_URL, etc.
 
-# 5. Start infrastructure (PostgreSQL, ChromaDB, Redis)
-cd ..
-docker-compose up -d
+# Initialise database (SQLite by default)
+DATABASE_URL="sqlite+aiosqlite:///./data/medrag.db" PYTHONPATH=. python ../scripts/init_db.py
 
-# 6. Initialize database
-python scripts/init_db.py
-
-# 7. Start backend
-cd backend
+# Start API server
 uvicorn app.main:app --reload --port 8000
+```
 
-# 8. Start frontend (separate terminal)
-cd frontend
+### Frontend
+
+```bash
+cd medical-rag-system/frontend
 npm install
 npm run dev
+# Open http://localhost:5173
 ```
 
 ### Access
 
-- **Frontend:** http://localhost:3000
-- **API Docs:** http://localhost:8000/docs
-- **Health Check:** http://localhost:8000/health
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:5173 |
+| API | http://localhost:8000 |
+| Interactive API docs | http://localhost:8000/docs |
 
 ---
 
-## 📚 Usage
+## Ingesting Papers
 
-### Basic Query
+### Single paper via the UI
 
-```python
-# Via Python client
-from medical_rag_client import MedicalRAG
+1. Create a workspace (name it anything — it's your knowledge base)
+2. Go to the **Documents** tab
+3. Upload a PDF, optionally provide a PMID for automatic metadata enrichment
 
-rag = MedicalRAG(api_url="http://localhost:8000")
-
-# Create a workspace (subspecialty)
-workspace = rag.create_workspace(
-    name="Breast Surgery",
-    subspecialty="breast"
-)
-
-# Upload a paper
-rag.upload_paper(
-    workspace_id=workspace.id,
-    file_path="paper.pdf",
-    pmid="12345678"  # Optional
-)
-
-# Ask a question
-response = rag.query(
-    workspace_id=workspace.id,
-    question="What are the outcomes of DIEP flap breast reconstruction?"
-)
-
-# Response includes:
-# - answer: Full answer with inline citations
-# - sources: List of sources with PMID, evidence level
-# - evidence_quality: Distribution of evidence levels
-# - safety_classification: "literature" | "patient_specific" | "emergency"
-```
-
-### Via Web Interface
-
-1. Create a workspace (e.g., "Breast Surgery")
-2. Upload research papers (PDF with optional PMID)
-3. Wait for processing (parsing + indexing)
-4. Start chatting with citations and evidence levels
-
-### Safety Features
-
-```python
-# Literature query (safe) ✅
-"What are the complications of DIEP flap surgery?"
-→ Returns evidence-based answer with citations
-
-# Patient-specific query (warned) ⚠️
-"Should I perform DIEP flap on my 45-year-old patient with BMI 32?"
-→ Warns user, provides only general evidence, no recommendations
-
-# Emergency query (blocked) 🚫
-"Patient with severe bleeding after surgery, what should I do?"
-→ Blocks query, advises calling emergency services
-```
-
----
-
-## 🔧 Configuration
-
-### Environment Variables
+### Bulk ingest from a directory
 
 ```bash
-# LLM Provider
-LLM_PROVIDER=anthropic  # or openai, gemini, ollama
-ANTHROPIC_API_KEY=sk-...
+# Ingest all PDFs in a folder, tagged with a subspecialty
+python scripts/bulk_ingest_pdfs.py \
+    --workspace 1 \
+    --dir /path/to/pdfs \
+    --subspecialty microsurgery
 
-# Database
-DATABASE_URL=postgresql+asyncpg://medrag:medrag@localhost:5432/medrag
+# Options
+#   --workspace   Workspace (knowledge base) ID (required)
+#   --dir         Directory containing PDF files (required)
+#   --subspecialty  One of: aesthetic, pediatric_plastic, microsurgery,
+#                           craniofacial, supermicrosurgery, burn_surgery,
+#                           wound_care, hand
+#   --pattern     Glob pattern, default *.pdf
+#   --limit       Max files to ingest, default 1000
+```
 
-# PubMed
-PUBMED_EMAIL=your-email@example.com
-PUBMED_API_KEY=your-pubmed-api-key
+The script:
+- Skips files already indexed (by filename + workspace)
+- Runs the full Docling parse pipeline
+- Extracts DOI, authors, year, journal from PDF text
+- Looks up paper URL via CrossRef API if no DOI/PMID found
+- Embeds and indexes all chunks in ChromaDB with subspecialty metadata
 
-# Vector Store
-VECTOR_STORE_TYPE=chromadb  # or qdrant
-CHROMADB_HOST=localhost
-CHROMADB_PORT=8000
+---
+
+## Configuration
+
+### Key environment variables (`.env`)
+
+```bash
+# LLM
+LLM_PROVIDER=anthropic          # anthropic | openai | ollama
+ANTHROPIC_API_KEY=sk-ant-...
+LLM_MODEL=claude-opus-4-6       # override model
+LLM_MAX_OUTPUT_TOKENS=8000
+
+# Database (SQLite for local, PostgreSQL for production)
+DATABASE_URL=sqlite+aiosqlite:///./data/medrag.db
+
+# Vector store (embedded ChromaDB, no server needed)
+CHROMADB_LOCAL_PATH=./data/chromadb
 
 # Embeddings
 EMBEDDING_MODEL=microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext
-EMBEDDING_DEVICE=cpu  # or cuda, mps
+EMBEDDING_DEVICE=cpu             # cpu | cuda | mps
 
-# Retrieval
-NEXUSRAG_VECTOR_PREFETCH=20
-NEXUSRAG_RERANKER_TOP_K=8
-NEXUSRAG_MIN_RELEVANCE_SCORE=0.3
-```
-
-See `.env.example` for full configuration options.
-
----
-
-## 📊 Database Schema
-
-### Core Tables
-
-- **knowledge_bases** - Workspaces (subspecialties)
-- **documents** - Research papers with medical metadata
-- **document_images** - Extracted images with captions
-- **document_tables** - Extracted tables with structure
-- **chat_messages** - Conversation history with citations
-- **medical_entities** - Cached medical entities
-
-### Medical Enhancements
-
-Each document includes:
-- PMID, DOI, authors, journal
-- Study design (RCT, cohort, meta-analysis, etc.)
-- Evidence level (I-V)
-- Sample size, study population
-- Limitations
-- MeSH terms
-
----
-
-## 🧪 Testing
-
-```bash
-# Run all tests
-pytest tests/
-
-# Test specific component
-pytest tests/test_medical_parser.py
-pytest tests/test_safety_classifier.py
-
-# Test with medical queries
-python scripts/test_queries.py --workspace breast_surgery
+# Retrieval tuning
+NEXUSRAG_VECTOR_PREFETCH=20      # candidates fetched before reranking
+NEXUSRAG_RERANKER_TOP_K=8        # results after reranking
+NEXUSRAG_MIN_RELEVANCE_SCORE=0.3 # minimum reranker score
 ```
 
 ---
 
-## 📈 Evaluation
+## API Reference
 
-### Test Queries
+### Workspaces
 
-```python
-# Run evaluation on test set
-python scripts/evaluate.py \
-    --test-set data/evaluation/breast_surgery_queries.json \
-    --workspace breast_surgery \
-    --output results.json
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/workspaces` | List all workspaces |
+| `POST` | `/api/v1/workspaces` | Create workspace |
+| `DELETE` | `/api/v1/workspaces/{id}` | Delete workspace |
+
+### Documents
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/workspaces/{id}/documents` | List documents |
+| `POST` | `/api/v1/workspaces/{id}/documents/upload` | Upload PDF |
+| `DELETE` | `/api/v1/workspaces/{id}/documents/{doc_id}` | Delete document |
+
+### Chat
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/v1/workspaces/{id}/chat` | SSE streaming chat |
+| `POST` | `/api/v1/workspaces/{id}/search` | Semantic search |
+| `GET` | `/api/v1/workspaces/{id}/history` | Conversation history |
+| `DELETE` | `/api/v1/workspaces/{id}/history` | Clear history |
+| `GET` | `/api/v1/workspaces/{id}/stats` | Workspace stats |
+
+### Chat request body
+
+```json
+{
+  "message": "What is the evidence for DIEP flap in obese patients?",
+  "history": [
+    { "role": "user", "content": "..." },
+    { "role": "assistant", "content": "..." }
+  ],
+  "enable_thinking": false,
+  "force_search": true
+}
 ```
 
-### Metrics
+### SSE event stream
 
-- **Citation Accuracy**: % of claims with correct PMID
-- **Evidence Level Accuracy**: Correct Level I-V classification
-- **Safety Recall**: % of patient-specific queries detected
-- **Retrieval Quality**: Precision@5, Recall@5
+The chat endpoint streams the following events:
 
----
-
-## 🔒 Medical Safety & Legal
-
-### Important Disclaimers
-
-⚠️ **FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY**
-
-This system is designed to help medical professionals explore research literature. It is NOT:
-- A substitute for clinical judgment
-- Approved for patient care decisions
-- A medical device
-- Intended for emergency use
-
-**All clinical decisions must be made by qualified healthcare professionals.**
-
-### Safety Features
-
-1. **Patient-Specific Detection** - Blocks queries about specific patients
-2. **Emergency Blocking** - Refuses emergency medical questions
-3. **Evidence Grading** - Transparent Level I-V classification
-4. **PMID Verification** - All claims linked to verifiable sources
-5. **Conservative Language** - "Studies suggest" vs. "You should"
-
-### Limitations
-
-- Information may be incomplete or outdated
-- RAG systems can occasionally make errors
-- Citations should always be verified
-- Not a substitute for systematic reviews
-- May miss relevant papers not in corpus
+| Event | Payload | Description |
+|---|---|---|
+| `status` | `{ step, detail, subspecialties? }` | Pipeline progress |
+| `thinking` | `{ text }` | Extended thinking tokens (if enabled) |
+| `token` | `{ text }` | Answer tokens |
+| `sources` | `{ sources[] }` | Retrieved sources (sent before answer) |
+| `complete` | `{ answer, sources, safety_classification, evidence_summary, specialist_contexts }` | Final event |
+| `error` | `{ message }` | Error |
 
 ---
 
-## 🛠️ Development
-
-### Project Structure
+## Project Structure
 
 ```
 medical-rag-system/
 ├── backend/
 │   ├── app/
-│   │   ├── api/           # FastAPI endpoints
-│   │   ├── core/          # Config, database, exceptions
-│   │   ├── models/        # SQLAlchemy models
-│   │   ├── schemas/       # Pydantic schemas
-│   │   └── services/      # Business logic
-│   │       ├── medical_document_parser.py
-│   │       ├── medical_safety_classifier.py
-│   │       ├── embeddings.py
-│   │       ├── vector_store.py
-│   │       └── ...
+│   │   ├── api/
+│   │   │   ├── chat.py          # Chat, search, history endpoints
+│   │   │   ├── workspaces.py    # Workspace CRUD
+│   │   │   └── documents.py     # Document upload / management
+│   │   ├── core/
+│   │   │   ├── config.py        # Settings (pydantic-settings)
+│   │   │   └── database.py      # Async SQLAlchemy setup
+│   │   ├── models/              # SQLAlchemy ORM models
+│   │   ├── schemas/             # Pydantic request/response schemas
+│   │   └── services/
+│   │       ├── chat_agent.py        # Agentic pipeline (decomp, HyDE, retrieval, synthesis)
+│   │       ├── medical_safety_classifier.py  # literature / clinical_query / emergency
+│   │       ├── medical_document_parser.py    # Docling parser + metadata extraction
+│   │       ├── rag_service.py       # Document processing orchestration
+│   │       ├── retrieval.py         # Hybrid retrieval (vector + reranker)
+│   │       ├── embeddings.py        # PubMedBERT embedding service
+│   │       ├── vector_store.py      # ChromaDB wrapper
+│   │       ├── reranker.py          # Cross-encoder reranker
+│   │       └── llm/
+│   │           ├── base.py          # LLM provider abstraction
+│   │           ├── anthropic_provider.py
+│   │           ├── openai_provider.py
+│   │           └── ollama_provider.py
 │   └── requirements.txt
 ├── frontend/
-│   ├── src/
-│   │   ├── components/    # React components
-│   │   ├── pages/         # Page components
-│   │   ├── hooks/         # Custom hooks
-│   │   └── utils/         # Utilities
-│   └── package.json
-├── scripts/               # Utility scripts
-├── tests/                 # Test suite
-├── docker-compose.yml
-├── .env.example
-└── README.md
-```
-
-### Adding a New Subspecialty
-
-```python
-# 1. Create workspace
-rag.create_workspace(
-    name="Hand Surgery",
-    subspecialty="hand",
-    system_prompt="You are a hand surgery research assistant..."
-)
-
-# 2. Define PubMed query
-query = """
-    (hand surgery OR hand reconstruction)
-    AND (outcomes OR complications)
-    AND ("2015"[Date - Publication] : "2026"[Date - Publication])
-"""
-
-# 3. Fetch papers
-python scripts/fetch_pubmed.py \
-    --workspace hand_surgery \
-    --query "$query" \
-    --max-papers 200
-
-# 4. Process papers
-python scripts/process_papers.py --workspace hand_surgery
+│   └── src/
+│       ├── pages/
+│       │   ├── ChatPage.tsx     # Chat interface with streaming
+│       │   └── WorkspacePage.tsx
+│       ├── components/
+│       │   ├── ChatMessage.tsx  # Message bubble + citation + specialist panels
+│       │   ├── ChatInput.tsx
+│       │   ├── CitationPanel.tsx
+│       │   └── DocumentsTab.tsx
+│       ├── api.ts               # API client + SSE stream handler
+│       └── types.ts             # TypeScript interfaces
+├── scripts/
+│   ├── bulk_ingest_pdfs.py      # Batch PDF ingestion with subspecialty tagging
+│   └── init_db.py               # Database initialisation
+└── data/
+    ├── medrag.db                # SQLite database
+    └── chromadb/                # Embedded ChromaDB vector store
 ```
 
 ---
 
-## 📝 API Documentation
+## Safety & Disclaimer
 
-### Endpoints
+**This system is a clinical decision support tool for qualified healthcare professionals.**
 
-#### Workspaces
-- `POST /api/v1/workspaces` - Create workspace
-- `GET /api/v1/workspaces` - List workspaces
-- `GET /api/v1/workspaces/{id}` - Get workspace
+It is NOT:
+- A substitute for clinical judgment
+- Approved for direct patient care decisions without professional oversight
+- A medical device
+- Appropriate for emergency use
 
-#### Documents
-- `POST /api/v1/workspaces/{id}/documents` - Upload document
-- `GET /api/v1/workspaces/{id}/documents` - List documents
-- `DELETE /api/v1/documents/{id}` - Delete document
+The safety classifier routes queries to three classes:
 
-#### Chat
-- `POST /api/v1/workspaces/{id}/chat` - SSE streaming chat
-- `POST /api/v1/workspaces/{id}/search` - Search documents
-- `GET /api/v1/workspaces/{id}/chat/history` - Get chat history
+| Class | Behaviour |
+|---|---|
+| `literature` | General evidence summary — standard response |
+| `clinical_query` | Clinical vignette / treatment planning — structured Clinical Decision Support response with disclaimer footer |
+| `emergency` | Hard-blocked — directs to emergency services (911) immediately |
 
-See http://localhost:8000/docs for interactive API documentation.
-
----
-
-## 🤝 Contributing
-
-Contributions welcome! Please read CONTRIBUTING.md for guidelines.
-
-### Development Workflow
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Add tests
-5. Run tests (`pytest`)
-6. Commit (`git commit -m 'Add amazing feature'`)
-7. Push (`git push origin feature/amazing-feature`)
-8. Open a Pull Request
+All responses include inline citations with evidence levels so every claim is traceable to a source.
 
 ---
 
-## 📜 License
+## Acknowledgements
 
-MIT License - see LICENSE file for details
-
----
-
-## 🙏 Acknowledgments
-
-- **NexusRAG** - Base architecture and hybrid retrieval
-- **Docling** - Document parsing and structure preservation
-- **PubMedBERT** - Medical domain embeddings
-- **scispaCy** - Medical named entity recognition
-- **LightRAG** - Knowledge graph implementation
-- **NCBI** - PubMed API access
-
----
-
-## 📞 Support
-
-- **Documentation**: See IMPLEMENTATION_STATUS.md and POC_COMPREHENSIVE_SOLUTION.md
-- **Issues**: GitHub Issues
-- **Email**: support@medical-rag.example.com
-
----
-
-## 🔄 Roadmap
-
-### ✅ Phase 1: Foundation (Current)
-- [x] Project structure
-- [x] Database models
-- [x] Medical document parser
-- [x] Safety classifier
-- [ ] Hybrid retrieval pipeline
-
-### 🚧 Phase 2: Core Features
-- [ ] Agentic chat with streaming
-- [ ] Frontend UI
-- [ ] PubMed integration
-- [ ] Docker deployment
-
-### 📋 Phase 3: Advanced Features
-- [ ] Multi-specialist consultation
-- [ ] Conversation memory
-- [ ] Image/table understanding
-- [ ] Evidence synthesis
-
-### 🎯 Phase 4: Production
-- [ ] Performance optimization
-- [ ] Comprehensive testing
-- [ ] Security hardening
-- [ ] Deployment documentation
-
----
-
-**Status**: 🟡 Phase 1 (Foundation) - 60% Complete
-
-**Built with ❤️ for advancing medical research accessibility**
+- **Docling** — Document parsing and structure-aware chunking
+- **PubMedBERT** — Medical domain embeddings (Microsoft Research)
+- **ChromaDB** — Embedded vector store
+- **cross-encoder/ms-marco-MiniLM** — Cross-encoder reranking
+- **Oxford CEBM** — Evidence level classification framework
+- **CrossRef** — DOI and paper URL resolution API
