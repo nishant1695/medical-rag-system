@@ -32,6 +32,7 @@ This system ingests research papers (PDF), indexes them by subspecialty, and ans
 - **Complexity detection** identifies clinical vignettes, comparative queries, multi-aspect questions, and long queries (>60 words)
 - **Query decomposition** breaks complex queries into 2–4 focused sub-questions (one cheap LLM call, JSON output)
 - **HyDE (Hypothetical Document Embeddings)** generates a 2–3 sentence hypothetical abstract per sub-question; embedding this paragraph instead of the raw query improves recall for complex clinical questions
+- **Knowledge graph expansion** enriches each retrieval query with related concepts found by BFS traversal of the medical knowledge graph (see below)
 - **Chunk deduplication** across all parallel retrievals — chunks are deduplicated by `chunk_id` before cid assignment, keeping the highest-scoring copy
 
 ### Clinical Decision Support Mode
@@ -41,6 +42,16 @@ This system ingests research papers (PDF), indexes them by subspecialty, and ans
   - `emergency` — life-threatening situations (hard-blocked, directs to emergency services)
 - **Structured clinical output** for `clinical_query`: Clinical Summary → Evidence-Based Options → Key Considerations → Evidence Quality
 - No intrusive warnings for clinical queries — the system is designed for qualified clinicians
+
+### Medical Knowledge Graph
+- **Automatic extraction** — after each document is indexed, an LLM extracts medical entities and typed relationships from the chunks (batched, 4 chunks per call)
+- **Entity types**: procedure, condition, outcome, anatomy, technique, population, drug
+- **Relation types**: treats, complicates, compared_to, requires, associated_with, contraindicates, part_of, predicts
+- **Persistent storage** in SQLite (`graph_nodes` + `graph_edges` tables); entities accumulate `mention_count` and edges accumulate `weight` as more papers are ingested — frequently co-occurring concepts become more strongly connected
+- **BFS query expansion** — at retrieval time, the query is matched against graph nodes; a breadth-first search up to 2 hops expands it with related concepts scored by `edge_weight × 0.6^(hop−1)` (directly connected, strongly evidenced concepts rank highest)
+- **Example**: query "DIEP flap complications" → hop-1: Flap Failure, Fat Necrosis, Donor Site Morbidity → hop-2: Venous Congestion, Re-exploration, Seroma — all appended to the embedding query
+- **REST endpoint** `GET /workspaces/{id}/graph` returns `{nodes, edges}` for visualisation (D3, Cytoscape, etc.)
+- No external graph database required — SQLite is sufficient at current scale; the `MedicalKnowledgeGraph` interface can be swapped for Neo4j if multi-hop reasoning or graph algorithms are needed later
 
 ### Hybrid Retrieval Pipeline
 - **PubMedBERT embeddings** (`microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext`, 768-dim) for medical domain semantic search
@@ -90,7 +101,7 @@ This system ingests research papers (PDF), indexes them by subspecialty, and ans
                                │  SSE streaming (POST /chat)
                                ▼
 ┌─────────────────────────────────────────────────────────────────────┐
-│                    FastAPI Backend                                   │
+│                         FastAPI Backend                             │
 │                                                                     │
 │  ┌─────────────────────────────────────────────────────────────┐   │
 │  │                  Medical Safety Classifier                   │   │
@@ -104,22 +115,25 @@ This system ingests research papers (PDF), indexes them by subspecialty, and ans
 │  │  2. Subspecialty classification (keyword, no LLM)           │   │
 │  │  3. Complexity detection                                     │   │
 │  │     └─ [complex] Decompose → HyDE per sub-question          │   │
-│  │  4. Parallel retrieval (sub-queries × subspecialties)       │   │
-│  │  5. Deduplicate chunks by chunk_id                          │   │
-│  │  6. Synthesizer LLM (structured clinical or literature fmt) │   │
-│  └───────────────────────────┬─────────────────────────────────┘   │
-│                              │                                      │
-│  ┌───────────────────────────▼─────────────────────────────────┐   │
-│  │                  Hybrid Retrieval                            │   │
-│  │   PubMedBERT Embeddings → ChromaDB → Cross-Encoder Rerank   │   │
+│  │  4. Knowledge graph expansion (BFS, 2-hop, scored)          │   │
+│  │  5. Parallel retrieval (sub-queries × subspecialties)       │   │
+│  │  6. Deduplicate chunks by chunk_id                          │   │
+│  │  7. Synthesizer LLM (structured clinical or literature fmt) │   │
+│  └──────────────┬──────────────────────────┬────────────────────┘  │
+│                 │                          │                        │
+│  ┌──────────────▼──────────────┐  ┌────────▼───────────────────┐   │
+│  │      Hybrid Retrieval       │  │   Medical Knowledge Graph   │   │
+│  │  PubMedBERT → ChromaDB →   │  │  SQLite graph_nodes +       │   │
+│  │  Cross-Encoder Reranker     │  │  graph_edges • BFS expand   │   │
+│  └─────────────────────────────┘  └────────────────────────────┘   │
+│                                                                     │
+│  ┌─────────────────────────────────────────────────────────────┐   │
+│  │                  Medical Document Parser                     │   │
+│  │   Docling HybridChunker • DOI/CrossRef • Evidence Grading   │   │
+│  │   + LLM entity/relation extraction → Knowledge Graph        │   │
 │  └─────────────────────────────────────────────────────────────┘   │
 │                                                                     │
-│  ┌────────────────────────────────────────────────────────────┐    │
-│  │               Medical Document Parser                       │    │
-│  │   Docling HybridChunker • DOI/CrossRef • Evidence Grading   │    │
-│  └────────────────────────────────────────────────────────────┘    │
-│                                                                     │
-│  SQLite (aiosqlite)          ChromaDB (embedded PersistentClient)  │
+│  SQLite (aiosqlite)           ChromaDB (embedded PersistentClient) │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -225,6 +239,7 @@ The script:
 - Extracts DOI, authors, year, journal from PDF text
 - Looks up paper URL via CrossRef API if no DOI/PMID found
 - Embeds and indexes all chunks in ChromaDB with subspecialty metadata
+- Runs LLM-based entity/relationship extraction to build the knowledge graph
 
 ---
 
@@ -284,6 +299,7 @@ NEXUSRAG_MIN_RELEVANCE_SCORE=0.3 # minimum reranker score
 | `GET` | `/api/v1/workspaces/{id}/history` | Conversation history |
 | `DELETE` | `/api/v1/workspaces/{id}/history` | Clear history |
 | `GET` | `/api/v1/workspaces/{id}/stats` | Workspace stats |
+| `GET` | `/api/v1/workspaces/{id}/graph` | Knowledge graph nodes + edges |
 
 ### Chat request body
 
@@ -330,7 +346,8 @@ medical-rag-system/
 │   │   ├── models/              # SQLAlchemy ORM models
 │   │   ├── schemas/             # Pydantic request/response schemas
 │   │   └── services/
-│   │       ├── chat_agent.py        # Agentic pipeline (decomp, HyDE, retrieval, synthesis)
+│   │       ├── chat_agent.py        # Agentic pipeline (decomp, HyDE, KG expand, retrieval, synthesis)
+│   │       ├── knowledge_graph.py   # Medical KG: LLM extraction, SQLite storage, BFS expansion
 │   │       ├── medical_safety_classifier.py  # literature / clinical_query / emergency
 │   │       ├── medical_document_parser.py    # Docling parser + metadata extraction
 │   │       ├── rag_service.py       # Document processing orchestration
@@ -396,3 +413,4 @@ All responses include inline citations with evidence levels so every claim is tr
 - **cross-encoder/ms-marco-MiniLM** — Cross-encoder reranking
 - **Oxford CEBM** — Evidence level classification framework
 - **CrossRef** — DOI and paper URL resolution API
+- **SQLite** — Knowledge graph storage (graph_nodes + graph_edges)
