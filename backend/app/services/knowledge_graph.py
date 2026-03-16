@@ -282,87 +282,146 @@ class MedicalKnowledgeGraph:
 
     # ── Query expansion ───────────────────────────────────────────────────────
 
+    async def _load_adjacency(
+        self, db: AsyncSession
+    ) -> tuple[dict[int, str], dict[int, list[tuple[int, float]]]]:
+        """
+        Load the entire workspace graph into memory as an adjacency list.
+
+        Returns
+        -------
+        id_to_name : {node_id: entity_name}
+        adjacency  : {node_id: [(neighbour_id, edge_weight), ...]}
+                     Both directions are stored so traversal is undirected.
+        """
+        node_rows = (
+            await db.execute(
+                text(
+                    "SELECT id, entity_name FROM graph_nodes "
+                    "WHERE workspace_id=:ws"
+                ),
+                {"ws": self.workspace_id},
+            )
+        ).fetchall()
+
+        edge_rows = (
+            await db.execute(
+                text(
+                    "SELECT source_id, target_id, weight FROM graph_edges "
+                    "WHERE workspace_id=:ws"
+                ),
+                {"ws": self.workspace_id},
+            )
+        ).fetchall()
+
+        id_to_name: dict[int, str] = {r[0]: r[1] for r in node_rows}
+
+        adjacency: dict[int, list[tuple[int, float]]] = {
+            node_id: [] for node_id in id_to_name
+        }
+        for src, tgt, weight in edge_rows:
+            if src in adjacency:
+                adjacency[src].append((tgt, weight))
+            if tgt in adjacency:
+                adjacency[tgt].append((src, weight))
+
+        return id_to_name, adjacency
+
     async def expand_query(
-        self, query: str, db: AsyncSession
+        self,
+        query: str,
+        db: AsyncSession,
+        hops: int = 2,
+        max_results: int = 15,
     ) -> list[str]:
         """
-        Return related entity names for the concepts mentioned in the query.
+        Return related entity names for concepts mentioned in the query.
 
-        Strategy
-        --------
-        1. Load all node names for this workspace (capped at 500 by mention_count).
-        2. Find which node names appear as substrings in the query.
-        3. For each matched node, fetch its 1-hop neighbours (both directions).
-        4. Return unique neighbour names not already in the query — up to 10.
+        Uses BFS up to `hops` depth from each matched seed node.
+        Nodes are scored by cumulative edge weight decayed by hop distance
+        (weight × 0.6^(hop-1)) so directly connected, strongly evidenced
+        concepts rank highest. Nodes already mentioned in the query are
+        excluded from the results.
+
+        Parameters
+        ----------
+        hops        : traversal depth (default 2)
+        max_results : maximum related terms to return (default 15)
         """
         try:
             await self._ensure_tables(db)
         except Exception:
             return []
 
-        # Load candidate nodes
-        rows = (
+        # Load all nodes and check graph is populated
+        node_rows = (
             await db.execute(
                 text(
                     "SELECT id, normalized_name FROM graph_nodes "
                     "WHERE workspace_id=:ws "
-                    "ORDER BY mention_count DESC LIMIT 500"
+                    "ORDER BY mention_count DESC LIMIT 1000"
                 ),
                 {"ws": self.workspace_id},
             )
         ).fetchall()
 
-        if not rows:
+        if not node_rows:
             return []
 
+        # Find seed nodes — graph entities that appear in the query text
         query_lower = query.lower()
-        matched_ids = [
+        seed_ids = [
             row[0]
-            for row in rows
+            for row in node_rows
             if row[1] in query_lower
         ]
 
-        if not matched_ids:
+        if not seed_ids:
             return []
 
-        # 1-hop traversal for each matched node
-        related: list[str] = []
-        seen_lower: set[str] = set()
+        # Load full adjacency list into memory (fast for typical graph sizes)
+        id_to_name, adjacency = await self._load_adjacency(db)
 
-        for node_id in matched_ids[:5]:  # limit traversal to top 5 matched
-            # Outgoing edges
-            out_rows = (
-                await db.execute(
-                    text(
-                        "SELECT n.entity_name FROM graph_edges e "
-                        "JOIN graph_nodes n ON e.target_id = n.id "
-                        "WHERE e.workspace_id=:ws AND e.source_id=:nid "
-                        "ORDER BY e.weight DESC LIMIT 8"
-                    ),
-                    {"ws": self.workspace_id, "nid": node_id},
-                )
-            ).fetchall()
+        # BFS with distance-decayed scoring
+        # scores[node_id] = best cumulative score seen so far
+        scores: dict[int, float] = {}
 
-            # Incoming edges
-            in_rows = (
-                await db.execute(
-                    text(
-                        "SELECT n.entity_name FROM graph_edges e "
-                        "JOIN graph_nodes n ON e.source_id = n.id "
-                        "WHERE e.workspace_id=:ws AND e.target_id=:nid "
-                        "ORDER BY e.weight DESC LIMIT 8"
-                    ),
-                    {"ws": self.workspace_id, "nid": node_id},
-                )
-            ).fetchall()
+        # frontier: list of (node_id, current_hop, accumulated_score)
+        frontier = [(nid, 0, 1.0) for nid in seed_ids]
+        visited: set[int] = set(seed_ids)
 
-            for (name,) in out_rows + in_rows:
-                nl = name.lower()
-                if nl not in query_lower and nl not in seen_lower:
-                    seen_lower.add(nl)
-                    related.append(name)
+        while frontier:
+            next_frontier = []
+            for node_id, hop, score in frontier:
+                if hop >= hops:
+                    continue
+                for neighbour_id, edge_weight in adjacency.get(node_id, []):
+                    neighbour_score = score * edge_weight * (0.6 ** hop)
+                    if neighbour_id not in visited:
+                        visited.add(neighbour_id)
+                        next_frontier.append(
+                            (neighbour_id, hop + 1, neighbour_score)
+                        )
+                        scores[neighbour_id] = neighbour_score
+                    elif neighbour_score > scores.get(neighbour_id, 0):
+                        # Found a higher-scoring path — update but don't re-expand
+                        scores[neighbour_id] = neighbour_score
 
-        return related[:10]
+            frontier = next_frontier
+
+        # Exclude seed nodes and terms already in the query
+        results: list[tuple[str, float]] = []
+        for node_id, score in scores.items():
+            name = id_to_name.get(node_id, "")
+            if not name:
+                continue
+            if name.lower() in query_lower:
+                continue
+            results.append((name, score))
+
+        # Sort by score descending, return top max_results names
+        results.sort(key=lambda x: x[1], reverse=True)
+        return [name for name, _ in results[:max_results]]
 
     # ── Graph export ──────────────────────────────────────────────────────────
 
