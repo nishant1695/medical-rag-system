@@ -1,0 +1,111 @@
+{
+  "pmid": "30217311",
+  "title": "Secondary breast reconstruction after mastectomy using the DIEP flap.",
+  "abstract": "INTRODUCTION: Breast reconstruction is an important element in the successful therapy of breast cancer [1]. Thereby, autologous microvascular breast reconstruction has been shown to be a reliable technique. The use of a deep inferior epigastric perforator (DIEP) flap or a muscle-sparing (MS) free transverse rectus abdominis musculocutaneous (TRAM) flap is recognized in many centres as gold standard for reconstructive options [2-4]. Based on our experiences with 137 patients over a 5-year period we want to highlight the technical aspects of the free microsurgical autologous breast reconstruction using a DIEP flap. PATIENTS AND METHODS: Between 01/2013 and 12/2017 we treated 137 patients (age 32-78 years, mean age 52 years) after mastectomy with autologous microsurgical free flap breast reconstruction. A DIEP flap was used for breast reconstruction in 33 patients. In 104 cases, we performed a muscle sparing TRAM flap. In this video we demonstrate the typical sequence of operative steps of a DIEP flap in a 32 year old patient after mastectomy due to an invasive ductal breast carcinoma. RESULTS: The rate of total flap loss in our department was 2.2% including all patients. In less than 1%, partial flap necrosis could be observed. 61% of the patients had undergone previous irradiation. Within the small number of flap loss, we could not observe a trend towards a correlation between flap loss and previous irradiation. CONCLUSION: Autologous breast reconstruction using a DIEP or MS-TRAM flap provides a surgically safe technique including a low incidence of flap loss in specialized centres.",
+  "authors": [
+    "Hauck T",
+    "Horch RE",
+    "Schmitz M",
+    "Arkudas A"
+  ],
+  "journal": "Surgical oncology",
+  "year": 2018,
+  "doi": "10.1016/j.suronc.2018.06.006",
+  "mesh_terms": [
+    "Breast Neoplasms/*surgery",
+    "Epigastric Arteries/*transplantation",
+    "Female",
+    "Humans",
+    "Mammaplasty/*methods",
+    "*Mastectomy",
+    "*Organ Sparing Treatments",
+    "Perforator Flap/blood supply",
+    "*Surgical Flaps"
+  ],
+  "raw_medline": {
+    "PMID": "30217311",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20190111",
+    "LR": "20190111",
+    "IS": "1879-3320 (Electronic) 0960-7404 (Linking)",
+    "VI": "27",
+    "IP": "3",
+    "DP": "2018 Sep",
+    "TI": "Secondary breast reconstruction after mastectomy using the DIEP flap.",
+    "PG": "513",
+    "LID": "S0960-7404(18)30097-5 [pii] 10.1016/j.suronc.2018.06.006 [doi]",
+    "AB": "INTRODUCTION: Breast reconstruction is an important element in the successful therapy of breast cancer [1]. Thereby, autologous microvascular breast reconstruction has been shown to be a reliable technique. The use of a deep inferior epigastric perforator (DIEP) flap or a muscle-sparing (MS) free transverse rectus abdominis musculocutaneous (TRAM) flap is recognized in many centres as gold standard for reconstructive options [2-4]. Based on our experiences with 137 patients over a 5-year period we want to highlight the technical aspects of the free microsurgical autologous breast reconstruction using a DIEP flap. PATIENTS AND METHODS: Between 01/2013 and 12/2017 we treated 137 patients (age 32-78 years, mean age 52 years) after mastectomy with autologous microsurgical free flap breast reconstruction. A DIEP flap was used for breast reconstruction in 33 patients. In 104 cases, we performed a muscle sparing TRAM flap. In this video we demonstrate the typical sequence of operative steps of a DIEP flap in a 32 year old patient after mastectomy due to an invasive ductal breast carcinoma. RESULTS: The rate of total flap loss in our department was 2.2% including all patients. In less than 1%, partial flap necrosis could be observed. 61% of the patients had undergone previous irradiation. Within the small number of flap loss, we could not observe a trend towards a correlation between flap loss and previous irradiation. CONCLUSION: Autologous breast reconstruction using a DIEP or MS-TRAM flap provides a surgically safe technique including a low incidence of flap loss in specialized centres.",
+    "CI": [
+      "Copyright (c) 2018. Published by Elsevier Ltd."
+    ],
+    "FAU": [
+      "Hauck, T",
+      "Horch, R E",
+      "Schmitz, M",
+      "Arkudas, A"
+    ],
+    "AU": [
+      "Hauck T",
+      "Horch RE",
+      "Schmitz M",
+      "Arkudas A"
+    ],
+    "AD": [
+      "Department of Plastic and Hand Surgery, University Hospital of Erlangen, Erlangen, Germany; Interdisciplinary Breast Center, University Hospital of Erlangen, Erlangen, Germany. Electronic address: theresa.hauck@uk-erlangen.de.",
+      "Department of Plastic and Hand Surgery, University Hospital of Erlangen, Erlangen, Germany; Interdisciplinary Breast Center, University Hospital of Erlangen, Erlangen, Germany.",
+      "Department of Plastic and Hand Surgery, University Hospital of Erlangen, Erlangen, Germany; Interdisciplinary Breast Center, University Hospital of Erlangen, Erlangen, Germany.",
+      "Department of Plastic and Hand Surgery, University Hospital of Erlangen, Erlangen, Germany; Interdisciplinary Breast Center, University Hospital of Erlangen, Erlangen, Germany."
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Journal Article"
+    ],
+    "DEP": "20180626",
+    "PL": "Netherlands",
+    "TA": "Surg Oncol",
+    "JT": "Surgical oncology",
+    "JID": "9208188",
+    "SB": "IM",
+    "MH": [
+      "Breast Neoplasms/*surgery",
+      "Epigastric Arteries/*transplantation",
+      "Female",
+      "Humans",
+      "Mammaplasty/*methods",
+      "*Mastectomy",
+      "*Organ Sparing Treatments",
+      "Perforator Flap/blood supply",
+      "*Surgical Flaps"
+    ],
+    "OTO": [
+      "NOTNLM"
+    ],
+    "OT": [
+      "Autologous breast reconstruction",
+      "DIEP flap",
+      "Reconstructive surgery"
+    ],
+    "EDAT": "2018/09/16 06:00",
+    "MHDA": "2019/01/12 06:00",
+    "CRDT": [
+      "2018/09/16 06:00"
+    ],
+    "PHST": [
+      "2018/03/27 00:00 [received]",
+      "2018/06/19 00:00 [revised]",
+      "2018/06/25 00:00 [accepted]",
+      "2018/09/16 06:00 [entrez]",
+      "2018/09/16 06:00 [pubmed]",
+      "2019/01/12 06:00 [medline]"
+    ],
+    "AID": [
+      "S0960-7404(18)30097-5 [pii]",
+      "10.1016/j.suronc.2018.06.006 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Surg Oncol. 2018 Sep;27(3):513. doi: 10.1016/j.suronc.2018.06.006. Epub 2018 Jun 26."
+  }
+}

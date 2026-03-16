@@ -18,6 +18,14 @@ async function req<T>(path: string, options?: RequestInit): Promise<T> {
     } catch { /* ignore */ }
     throw new Error(detail)
   }
+  // 204 No Content and empty bodies must not be passed to res.json()
+  if (res.status === 204 || res.headers.get('content-length') === '0') {
+    return undefined as T
+  }
+  const ct = res.headers.get('content-type') ?? ''
+  if (!ct.includes('application/json')) {
+    return undefined as T
+  }
   return res.json()
 }
 
@@ -43,7 +51,7 @@ export const api = {
       const form = new FormData()
       form.append('file', file)
       if (pmid) form.append('pmid', pmid)
-      return fetch(`${BASE}/workspaces/${workspaceId}/documents/upload`, {
+      return fetch(`${BASE}/workspaces/${workspaceId}/documents`, {
         method: 'POST',
         body: form,
       }).then(async r => {

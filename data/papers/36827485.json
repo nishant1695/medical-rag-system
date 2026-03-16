@@ -1,0 +1,113 @@
+{
+  "pmid": "36827485",
+  "title": "Replacing an Implant-Based with a DIEP Flap Breast Reconstruction: Breast Sensation and Quality of Life.",
+  "abstract": "BACKGROUND: In this cohort study, the authors compared breast sensation and quality of life (QoL) after replacement of an implant-based breast reconstruction with a deep inferior epigastric perforator (DIEP) flap reconstruction in a singular sample of women. METHODS: Women with implant-based breast reconstruction before their DIEP flap were included. Women formed their own control. Breast sensation was measured using Semmes-Weinstein monofilaments. QoL was evaluated using BREAST-Q questionnaires. Preoperative (T0) sensation and QoL were compared with postoperative values at 6 months (T1), at 12 months (T2), and at maximum follow-up (Tmax, sensation only). A linear mixed effects regression was used for Semmes-Weinstein monofilaments measurements; a paired samples t test was used for BREAST-Q scores. Most women chose replacement of their implant by a DIEP flap because of implant-related complaints. RESULTS: Postoperative sensation decreased significantly compared with preoperative sensation after T1 (mean, 5.1 months), T2 (mean, 14.6 months), and Tmax (mean, 17.6 months) for the total breast but recovers to preoperative levels for the native skin after an average of 1.5 years. Nerve coaptation positively influenced recovery of sensation. BREAST-Q scores increased significantly after 6 and 12 months over the domains Satisfaction with Breasts, Psychosocial Well-Being, Physical Well-Being of the Chest, and Sexual Well-Being. Scores decreased significantly in Physical Well-Being of the Abdomen after 6 months. CONCLUSION: Replacing an implant with a DIEP flap initially causes a decrease in overall breast sensation, gradually recovering to preoperative levels for native skin, and can significantly increase QoL with the right indication. Superior recovery of sensation and QoL may be obtained by accompanying the DIEP flap with nerve coaptation. CLINICAL QUESTION/LEVEL OF EVIDENCE: Therapeutic, IV.",
+  "authors": [
+    "van Rooij JAF",
+    "Bijkerk E",
+    "van der Hulst RRJW",
+    "van Kuijk SMJ",
+    "Tuinder SMH"
+  ],
+  "journal": "Plastic and reconstructive surgery",
+  "year": 2023,
+  "doi": "10.1097/PRS.0000000000010315",
+  "mesh_terms": [
+    "Female",
+    "Humans",
+    "Quality of Life",
+    "Cohort Studies",
+    "Surgical Flaps/innervation",
+    "*Mammaplasty",
+    "Sensation/physiology",
+    "*Perforator Flap",
+    "*Breast Neoplasms",
+    "Epigastric Arteries"
+  ],
+  "raw_medline": {
+    "PMID": "36827485",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20230731",
+    "LR": "20230907",
+    "IS": "1529-4242 (Electronic) 0032-1052 (Linking)",
+    "VI": "152",
+    "IP": "2",
+    "DP": "2023 Aug 1",
+    "TI": "Replacing an Implant-Based with a DIEP Flap Breast Reconstruction: Breast Sensation and Quality of Life.",
+    "PG": "293-304",
+    "LID": "10.1097/PRS.0000000000010315 [doi]",
+    "AB": "BACKGROUND: In this cohort study, the authors compared breast sensation and quality of life (QoL) after replacement of an implant-based breast reconstruction with a deep inferior epigastric perforator (DIEP) flap reconstruction in a singular sample of women. METHODS: Women with implant-based breast reconstruction before their DIEP flap were included. Women formed their own control. Breast sensation was measured using Semmes-Weinstein monofilaments. QoL was evaluated using BREAST-Q questionnaires. Preoperative (T0) sensation and QoL were compared with postoperative values at 6 months (T1), at 12 months (T2), and at maximum follow-up (Tmax, sensation only). A linear mixed effects regression was used for Semmes-Weinstein monofilaments measurements; a paired samples t test was used for BREAST-Q scores. Most women chose replacement of their implant by a DIEP flap because of implant-related complaints. RESULTS: Postoperative sensation decreased significantly compared with preoperative sensation after T1 (mean, 5.1 months), T2 (mean, 14.6 months), and Tmax (mean, 17.6 months) for the total breast but recovers to preoperative levels for the native skin after an average of 1.5 years. Nerve coaptation positively influenced recovery of sensation. BREAST-Q scores increased significantly after 6 and 12 months over the domains Satisfaction with Breasts, Psychosocial Well-Being, Physical Well-Being of the Chest, and Sexual Well-Being. Scores decreased significantly in Physical Well-Being of the Abdomen after 6 months. CONCLUSION: Replacing an implant with a DIEP flap initially causes a decrease in overall breast sensation, gradually recovering to preoperative levels for native skin, and can significantly increase QoL with the right indication. Superior recovery of sensation and QoL may be obtained by accompanying the DIEP flap with nerve coaptation. CLINICAL QUESTION/LEVEL OF EVIDENCE: Therapeutic, IV.",
+    "CI": [
+      "Copyright (c) 2023 by the American Society of Plastic Surgeons."
+    ],
+    "FAU": [
+      "van Rooij, Joep A F",
+      "Bijkerk, Ennie",
+      "van der Hulst, Rene R J W",
+      "van Kuijk, Sander M J",
+      "Tuinder, Stefania M H"
+    ],
+    "AU": [
+      "van Rooij JAF",
+      "Bijkerk E",
+      "van der Hulst RRJW",
+      "van Kuijk SMJ",
+      "Tuinder SMH"
+    ],
+    "AD": [
+      "From the Departments of Plastic, Reconstructive, and Hand Surgery.",
+      "From the Departments of Plastic, Reconstructive, and Hand Surgery.",
+      "GROW, School for Oncology and Developmental Biology, Maastricht University.",
+      "From the Departments of Plastic, Reconstructive, and Hand Surgery.",
+      "GROW, School for Oncology and Developmental Biology, Maastricht University.",
+      "Clinical Epidemiology and Medical Technology Assessment, Maastricht University Medical Center.",
+      "From the Departments of Plastic, Reconstructive, and Hand Surgery.",
+      "GROW, School for Oncology and Developmental Biology, Maastricht University."
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Journal Article"
+    ],
+    "DEP": "20230227",
+    "PL": "United States",
+    "TA": "Plast Reconstr Surg",
+    "JT": "Plastic and reconstructive surgery",
+    "JID": "1306050",
+    "SB": "IM",
+    "CIN": [
+      "Plast Reconstr Surg. 2023 Aug 1;152(2):305-306. doi:",
+      "10.1097/PRS.0000000000010416. PMID: 37498922"
+    ],
+    "MH": [
+      "Female",
+      "Humans",
+      "Quality of Life",
+      "Cohort Studies",
+      "Surgical Flaps/innervation",
+      "*Mammaplasty",
+      "Sensation/physiology",
+      "*Perforator Flap",
+      "*Breast Neoplasms",
+      "Epigastric Arteries"
+    ],
+    "EDAT": "2023/02/25 06:00",
+    "MHDA": "2023/07/31 06:42",
+    "CRDT": [
+      "2023/02/24 14:34"
+    ],
+    "PHST": [
+      "2023/07/31 06:42 [medline]",
+      "2023/02/25 06:00 [pubmed]",
+      "2023/02/24 14:34 [entrez]"
+    ],
+    "AID": [
+      "00006534-202308000-00009 [pii]",
+      "10.1097/PRS.0000000000010315 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Plast Reconstr Surg. 2023 Aug 1;152(2):293-304. doi: 10.1097/PRS.0000000000010315. Epub 2023 Feb 27."
+  }
+}

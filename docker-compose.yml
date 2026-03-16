@@ -27,9 +27,10 @@ services:
       - "8001:8000"
     volumes:
       - chromadb_data:/chroma/chroma
-    environment:
-      - CHROMA_SERVER_AUTHN_CREDENTIALS=test-token
-      - CHROMA_SERVER_AUTHN_PROVIDER=chromadb.auth.token.TokenAuthenticationServerProvider
+    # Auth disabled by default so the unauthenticated HttpClient works out of the box.
+    # To enable: set CHROMA_SERVER_AUTHN_CREDENTIALS and update vector_store.py to
+    # pass headers={"Authorization": "Bearer <token>"} to chromadb.HttpClient().
+    environment: []
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
       interval: 10s

@@ -1,0 +1,112 @@
+{
+  "pmid": "30170856",
+  "title": "[Breast reconstruction with the autologous latissimus dorsi flap].",
+  "abstract": "Amongst various techniques of breast reconstruction, Autologous Latissimus Dorsi (ALD) flap without breast implant is the newest technique that took advantage of recent improvement during the last decade. Surgical procedure is well standardized, and allows to harvest various fat areas attached to the muscle, to obtain an autologous reconstruction. Thoracodorsal pedicle is steady and makes ALD the most reliable flap that can be used in several indications, especially when DIEP or TRAM flap are inappropriate. Lipomodeling of the cleavage is performed during the first surgery. Additionnal lipomodeling is performed in the whole reconstructed breast area at 2 months to get the expected volume. In some cases, two lipomodelings may be required. Advantages of ALD flap are numerous such as its reliability, its trophicity, and a very low complications rate. After a learning curve, drawbacks are well controlled, since quilting suture of the donor site helped to reduce drastically seroma rate. Finally, ALD flap became the best technique, and the most used in our team for autologous breast reconstruction, and surpassed abdominal flaps such as TRAM flap or DIEP flap.",
+  "authors": [
+    "Delay E",
+    "Florzac AS",
+    "Frobert P"
+  ],
+  "journal": "Annales de chirurgie plastique et esthetique",
+  "year": 2018,
+  "doi": "10.1016/j.anplas.2018.07.004",
+  "mesh_terms": [
+    "Breast Neoplasms/surgery",
+    "Female",
+    "Humans",
+    "Mammaplasty/*methods",
+    "Superficial Back Muscles/*transplantation",
+    "*Surgical Flaps",
+    "Transplantation, Autologous"
+  ],
+  "raw_medline": {
+    "PMID": "30170856",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20190314",
+    "LR": "20190314",
+    "IS": "1768-319X (Electronic) 0294-1260 (Linking)",
+    "VI": "63",
+    "IP": "5-6",
+    "DP": "2018 Nov",
+    "TI": "[Breast reconstruction with the autologous latissimus dorsi flap].",
+    "PG": "422-436",
+    "LID": "S0294-1260(18)30131-6 [pii] 10.1016/j.anplas.2018.07.004 [doi]",
+    "AB": "Amongst various techniques of breast reconstruction, Autologous Latissimus Dorsi (ALD) flap without breast implant is the newest technique that took advantage of recent improvement during the last decade. Surgical procedure is well standardized, and allows to harvest various fat areas attached to the muscle, to obtain an autologous reconstruction. Thoracodorsal pedicle is steady and makes ALD the most reliable flap that can be used in several indications, especially when DIEP or TRAM flap are inappropriate. Lipomodeling of the cleavage is performed during the first surgery. Additionnal lipomodeling is performed in the whole reconstructed breast area at 2 months to get the expected volume. In some cases, two lipomodelings may be required. Advantages of ALD flap are numerous such as its reliability, its trophicity, and a very low complications rate. After a learning curve, drawbacks are well controlled, since quilting suture of the donor site helped to reduce drastically seroma rate. Finally, ALD flap became the best technique, and the most used in our team for autologous breast reconstruction, and surpassed abdominal flaps such as TRAM flap or DIEP flap.",
+    "CI": [
+      "Copyright (c) 2018 Elsevier Masson SAS. All rights reserved."
+    ],
+    "FAU": [
+      "Delay, E",
+      "Florzac, A S",
+      "Frobert, P"
+    ],
+    "AU": [
+      "Delay E",
+      "Florzac AS",
+      "Frobert P"
+    ],
+    "AD": [
+      "Departement de chirurgie plastique, centre Leon-Berard, 28, rue Laennec, 69008 Lyon, France. Electronic address: emmanuel.delay@lyon.unicancer.fr.",
+      "Departement de chirurgie plastique, centre Leon-Berard, 28, rue Laennec, 69008 Lyon, France.",
+      "Departement de chirurgie plastique, centre Leon-Berard, 28, rue Laennec, 69008 Lyon, France."
+    ],
+    "LA": [
+      "fre"
+    ],
+    "PT": [
+      "Journal Article"
+    ],
+    "TT": "Reconstruction mammaire par lambeau de grand dorsal autologue.",
+    "DEP": "20180828",
+    "PL": "France",
+    "TA": "Ann Chir Plast Esthet",
+    "JT": "Annales de chirurgie plastique et esthetique",
+    "JID": "8305839",
+    "SB": "IM",
+    "MH": [
+      "Breast Neoplasms/surgery",
+      "Female",
+      "Humans",
+      "Mammaplasty/*methods",
+      "Superficial Back Muscles/*transplantation",
+      "*Surgical Flaps",
+      "Transplantation, Autologous"
+    ],
+    "OTO": [
+      "NOTNLM"
+    ],
+    "OT": [
+      "Abdominal advancement flap",
+      "Autologous reconstruction",
+      "Breast reconstruction",
+      "Immediate reconstruction",
+      "Lambeau de grand dorsal",
+      "Lambeau d'avancement abdominal",
+      "Latissimus dorsi",
+      "Lipomodelage",
+      "Lipomodeling",
+      "Reconstruction autologue",
+      "Reconstruction immediate",
+      "Reconstruction mammaire"
+    ],
+    "EDAT": "2018/09/02 06:00",
+    "MHDA": "2019/03/15 06:00",
+    "CRDT": [
+      "2018/09/02 06:00"
+    ],
+    "PHST": [
+      "2018/06/27 00:00 [received]",
+      "2018/07/01 00:00 [accepted]",
+      "2018/09/02 06:00 [pubmed]",
+      "2019/03/15 06:00 [medline]",
+      "2018/09/02 06:00 [entrez]"
+    ],
+    "AID": [
+      "S0294-1260(18)30131-6 [pii]",
+      "10.1016/j.anplas.2018.07.004 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Ann Chir Plast Esthet. 2018 Nov;63(5-6):422-436. doi: 10.1016/j.anplas.2018.07.004. Epub 2018 Aug 28."
+  }
+}

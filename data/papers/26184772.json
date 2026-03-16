@@ -1,0 +1,124 @@
+{
+  "pmid": "26184772",
+  "title": "Porcine model for free-flap breast reconstruction training.",
+  "abstract": "BACKGROUND: Free-flap breast reconstruction is a challenging surgical procedure with a steep learning curve. A reproducible large animal model could be relevant for free-flap harvesting and microsurgical anastomosis training. The aim of this study was to assess the feasibility of a porcine model for free-flap breast reconstruction. METHODS: Three female pigs were placed under general anesthesia in order to study feasibility and estimate relevance for training. The deep inferior epigastric perforator (DIEP) flap, the transverse musculocutaneous gracilis (TMG) flap, and the superior gluteal artery perforator (SGAP) flap were harvested and anastomosed to the internal thoracic vessels. Differences were noted between pig and human anatomy, and the surgical procedure was adapted to build training models. RESULTS: Under a more prominent anterior thoracic wall, the internal thoracic vessels were slightly deeper and larger than in human anatomy. The DIEP flap was never feasible in the porcine model. However, the superior epigastric artery perforator (SEAP) flap showed anatomical similarity with the human DIEP flap, and it proved to be suitable for an inverted training model. The porcine TMG flap harvesting was close to the human one, reproducing specific dissection and anastomotic difficulties. The SGAP flap was not a muscular perforator flap in pigs but a septocutaneous flap. Because of the thinness of the hypodermal fat, porcine flaps were not considered adequate training models for breast-mound shaping. CONCLUSIONS: Despite any anatomical variations, the pig has proven to be a suitable training model for free-flap harvesting and transfer in the field of breast reconstruction.",
+  "authors": [
+    "Bodin F",
+    "Diana M",
+    "Koutsomanis A",
+    "Robert E",
+    "Marescaux J",
+    "Bruant-Rodier C"
+  ],
+  "journal": "Journal of plastic, reconstructive & aesthetic surgery : JPRAS",
+  "year": 2015,
+  "doi": "10.1016/j.bjps.2015.06.006",
+  "mesh_terms": [
+    "Animals",
+    "Disease Models, Animal",
+    "Education, Medical, Continuing/*methods",
+    "Female",
+    "*Free Tissue Flaps",
+    "Humans",
+    "Mammaplasty/*education/methods",
+    "Surgery, Plastic/*education",
+    "Swine"
+  ],
+  "raw_medline": {
+    "PMID": "26184772",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20151217",
+    "LR": "20220321",
+    "IS": "1878-0539 (Electronic) 1748-6815 (Linking)",
+    "VI": "68",
+    "IP": "10",
+    "DP": "2015 Oct",
+    "TI": "Porcine model for free-flap breast reconstruction training.",
+    "PG": "1402-9",
+    "LID": "S1748-6815(15)00290-9 [pii] 10.1016/j.bjps.2015.06.006 [doi]",
+    "AB": "BACKGROUND: Free-flap breast reconstruction is a challenging surgical procedure with a steep learning curve. A reproducible large animal model could be relevant for free-flap harvesting and microsurgical anastomosis training. The aim of this study was to assess the feasibility of a porcine model for free-flap breast reconstruction. METHODS: Three female pigs were placed under general anesthesia in order to study feasibility and estimate relevance for training. The deep inferior epigastric perforator (DIEP) flap, the transverse musculocutaneous gracilis (TMG) flap, and the superior gluteal artery perforator (SGAP) flap were harvested and anastomosed to the internal thoracic vessels. Differences were noted between pig and human anatomy, and the surgical procedure was adapted to build training models. RESULTS: Under a more prominent anterior thoracic wall, the internal thoracic vessels were slightly deeper and larger than in human anatomy. The DIEP flap was never feasible in the porcine model. However, the superior epigastric artery perforator (SEAP) flap showed anatomical similarity with the human DIEP flap, and it proved to be suitable for an inverted training model. The porcine TMG flap harvesting was close to the human one, reproducing specific dissection and anastomotic difficulties. The SGAP flap was not a muscular perforator flap in pigs but a septocutaneous flap. Because of the thinness of the hypodermal fat, porcine flaps were not considered adequate training models for breast-mound shaping. CONCLUSIONS: Despite any anatomical variations, the pig has proven to be a suitable training model for free-flap harvesting and transfer in the field of breast reconstruction.",
+    "CI": [
+      "Copyright (c) 2015 British Association of Plastic, Reconstructive and Aesthetic",
+      "Surgeons. Published by Elsevier Ltd. All rights reserved."
+    ],
+    "FAU": [
+      "Bodin, Frederic",
+      "Diana, Michele",
+      "Koutsomanis, Alexandre",
+      "Robert, Emeric",
+      "Marescaux, Jacques",
+      "Bruant-Rodier, Catherine"
+    ],
+    "AU": [
+      "Bodin F",
+      "Diana M",
+      "Koutsomanis A",
+      "Robert E",
+      "Marescaux J",
+      "Bruant-Rodier C"
+    ],
+    "AD": [
+      "Department of Plastic Surgery, University Hospital of Strasbourg, Strasbourg, France. Electronic address: frederic.bodin@chru-strasbourg.fr.",
+      "IRCAD, Research Institute Against Cancer of the Digestive Tract, Strasbourg, France; IHU-Strasbourg, Minimally Invasive Image-Guided Surgical Institute, Strasbourg, France.",
+      "Department of Plastic Surgery, University Hospital of Strasbourg, Strasbourg, France.",
+      "Department of Plastic Surgery, University Hospital of Strasbourg, Strasbourg, France.",
+      "IRCAD, Research Institute Against Cancer of the Digestive Tract, Strasbourg, France; IHU-Strasbourg, Minimally Invasive Image-Guided Surgical Institute, Strasbourg, France.",
+      "Department of Plastic Surgery, University Hospital of Strasbourg, Strasbourg, France."
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Journal Article",
+      "Research Support, Non-U.S. Gov't"
+    ],
+    "DEP": "20150612",
+    "PL": "Netherlands",
+    "TA": "J Plast Reconstr Aesthet Surg",
+    "JT": "Journal of plastic, reconstructive & aesthetic surgery : JPRAS",
+    "JID": "101264239",
+    "SB": "IM",
+    "MH": [
+      "Animals",
+      "Disease Models, Animal",
+      "Education, Medical, Continuing/*methods",
+      "Female",
+      "*Free Tissue Flaps",
+      "Humans",
+      "Mammaplasty/*education/methods",
+      "Surgery, Plastic/*education",
+      "Swine"
+    ],
+    "OTO": [
+      "NOTNLM"
+    ],
+    "OT": [
+      "Breast reconstruction",
+      "Free flap",
+      "Learning curve",
+      "Microsurgery",
+      "Porcine model",
+      "Surgical training models"
+    ],
+    "EDAT": "2015/07/18 06:00",
+    "MHDA": "2015/12/19 06:00",
+    "CRDT": [
+      "2015/07/18 06:00"
+    ],
+    "PHST": [
+      "2014/12/21 00:00 [received]",
+      "2015/04/06 00:00 [revised]",
+      "2015/06/08 00:00 [accepted]",
+      "2015/07/18 06:00 [entrez]",
+      "2015/07/18 06:00 [pubmed]",
+      "2015/12/19 06:00 [medline]"
+    ],
+    "AID": [
+      "S1748-6815(15)00290-9 [pii]",
+      "10.1016/j.bjps.2015.06.006 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "J Plast Reconstr Aesthet Surg. 2015 Oct;68(10):1402-9. doi: 10.1016/j.bjps.2015.06.006. Epub 2015 Jun 12."
+  }
+}

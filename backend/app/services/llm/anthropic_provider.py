@@ -35,14 +35,20 @@ class AnthropicProvider(BaseLLMProvider):
     """Anthropic Claude provider with streaming and tool calling."""
 
     def __init__(self):
-        self._client = None
+        self._client = None        # sync, used only by complete()
+        self._async_client = None  # async, used by astream()
 
     def _get_client(self):
         if self._client is None:
             import anthropic
-
             self._client = anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY)
         return self._client
+
+    def _get_async_client(self):
+        if self._async_client is None:
+            import anthropic
+            self._async_client = anthropic.AsyncAnthropic(api_key=settings.ANTHROPIC_API_KEY)
+        return self._async_client
 
     def complete(self, messages: List[LLMMessage], system_prompt: str = "") -> str:
         client = self._get_client()
@@ -102,45 +108,44 @@ class AnthropicProvider(BaseLLMProvider):
         if think and "claude-3-7" in settings.LLM_MODEL:
             kwargs["thinking"] = {"type": "enabled", "budget_tokens": 5000}
 
-        # Stream response
-        async with client.messages.stream(**kwargs) as stream:
+        # Stream response — must use AsyncAnthropic for async context manager support
+        async_client = self._get_async_client()
+        async with async_client.messages.stream(**kwargs) as stream:
             async for event in stream:
-                if hasattr(event, "type"):
-                    if event.type == "content_block_delta":
-                        delta = event.delta
-                        if hasattr(delta, "type"):
-                            if delta.type == "text_delta":
-                                yield StreamChunk(type="text", text=delta.text)
-                            elif delta.type == "thinking_delta":
-                                yield StreamChunk(type="thinking", text=delta.thinking)
-                    elif event.type == "content_block_start":
-                        block = event.content_block
-                        if hasattr(block, "type") and block.type == "tool_use":
-                            # Accumulate tool input
-                            self._pending_tool = {
-                                "name": block.name,
-                                "id": block.id,
-                                "input_json": "",
-                            }
-                    elif event.type == "content_block_stop":
-                        if hasattr(self, "_pending_tool") and self._pending_tool:
-                            import json
-                            try:
-                                args = json.loads(self._pending_tool["input_json"] or "{}")
-                            except Exception:
-                                args = {}
-                            yield StreamChunk(
-                                type="tool_call",
-                                tool_name=self._pending_tool["name"],
-                                tool_args=args,
-                            )
-                            self._pending_tool = None
-                    # Accumulate tool input JSON
-                    elif event.type == "content_block_delta":
-                        delta = event.delta
-                        if hasattr(delta, "type") and delta.type == "input_json_delta":
+                if not hasattr(event, "type"):
+                    continue
+                if event.type == "content_block_delta":
+                    delta = event.delta
+                    if hasattr(delta, "type"):
+                        if delta.type == "text_delta":
+                            yield StreamChunk(type="text", text=delta.text)
+                        elif delta.type == "thinking_delta":
+                            yield StreamChunk(type="thinking", text=delta.thinking)
+                        elif delta.type == "input_json_delta":
+                            # Accumulate tool-call input JSON
                             if hasattr(self, "_pending_tool") and self._pending_tool:
                                 self._pending_tool["input_json"] += delta.partial_json
+                elif event.type == "content_block_start":
+                    block = event.content_block
+                    if hasattr(block, "type") and block.type == "tool_use":
+                        self._pending_tool = {
+                            "name": block.name,
+                            "id": block.id,
+                            "input_json": "",
+                        }
+                elif event.type == "content_block_stop":
+                    if hasattr(self, "_pending_tool") and self._pending_tool:
+                        import json
+                        try:
+                            args = json.loads(self._pending_tool["input_json"] or "{}")
+                        except Exception:
+                            args = {}
+                        yield StreamChunk(
+                            type="tool_call",
+                            tool_name=self._pending_tool["name"],
+                            tool_args=args,
+                        )
+                        self._pending_tool = None
 
     def supports_vision(self) -> bool:
         return True

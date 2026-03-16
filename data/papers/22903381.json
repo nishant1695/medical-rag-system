@@ -1,0 +1,103 @@
+{
+  "pmid": "22903381",
+  "title": "Immediate nipple reconstruction utilizing the DIEP flap in areola-sparing mastectomy.",
+  "abstract": "The surgical treatment of breast cancer has dramatically evolved over the past decade toward an approach combining oncologic safety with aesthetic outcomes. The skin-sparing mastectomy initiated this paradigm shift amongst breast surgeons and can be oncologically safe, in some cases sparing both the areola and the nipple. In accordance with the emphasis on aesthetics, some general surgeons have adopted new methods of resecting only the nipple, sparing the areola in select patients. The superior aesthetic results, durability, and decreased donor site morbidity of perforator flaps have brought autologous reconstruction back to the forefront of breast reconstruction with the deep inferior epigastric artery perforator (DIEP) flap as the gold standard. We describe a technique utilizing the DIEP flap skin paddle for immediate nipple reconstruction at the time of mastectomy and reconstruction, eliminating the need for delayed reconstruction and limiting donor site morbidity by concealing the donor site below the mastectomy skin flaps. In the six cases described performed between 2010 and 2012 (mean with 53 years; range 46-59 years), there have been no complications to the flap or the nipple postoperatively, nor has there been a need for further nipple revisions for 6 months. The nipple position relative to the flap breast mound has remained unchanged for up to 6 months. The immediate nipple reconstruction does not significantly lengthen operative time, requiring approximately 30 additional operative minutes per nipple. Immediate nipple reconstruction utilizing the DIEP flap can be a cost-effective and feasible technique for recreating a natural-appearing and aesthetic nipple in select patients.",
+  "authors": [
+    "Craig ES",
+    "Walker ME",
+    "Salomon J",
+    "Fusi S"
+  ],
+  "journal": "Microsurgery",
+  "year": 2013,
+  "doi": "10.1002/micr.22020",
+  "mesh_terms": [
+    "Breast Neoplasms/pathology/*surgery",
+    "Cohort Studies",
+    "Female",
+    "*Free Tissue Flaps",
+    "Humans",
+    "Mammaplasty/*methods",
+    "*Mastectomy, Subcutaneous",
+    "Middle Aged",
+    "Patient Satisfaction",
+    "Time Factors",
+    "Treatment Outcome"
+  ],
+  "raw_medline": {
+    "PMID": "22903381",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20130820",
+    "LR": "20130207",
+    "IS": "1098-2752 (Electronic) 0738-1085 (Linking)",
+    "VI": "33",
+    "IP": "2",
+    "DP": "2013 Feb",
+    "TI": "Immediate nipple reconstruction utilizing the DIEP flap in areola-sparing mastectomy.",
+    "PG": "125-9",
+    "LID": "10.1002/micr.22020 [doi]",
+    "AB": "The surgical treatment of breast cancer has dramatically evolved over the past decade toward an approach combining oncologic safety with aesthetic outcomes. The skin-sparing mastectomy initiated this paradigm shift amongst breast surgeons and can be oncologically safe, in some cases sparing both the areola and the nipple. In accordance with the emphasis on aesthetics, some general surgeons have adopted new methods of resecting only the nipple, sparing the areola in select patients. The superior aesthetic results, durability, and decreased donor site morbidity of perforator flaps have brought autologous reconstruction back to the forefront of breast reconstruction with the deep inferior epigastric artery perforator (DIEP) flap as the gold standard. We describe a technique utilizing the DIEP flap skin paddle for immediate nipple reconstruction at the time of mastectomy and reconstruction, eliminating the need for delayed reconstruction and limiting donor site morbidity by concealing the donor site below the mastectomy skin flaps. In the six cases described performed between 2010 and 2012 (mean with 53 years; range 46-59 years), there have been no complications to the flap or the nipple postoperatively, nor has there been a need for further nipple revisions for 6 months. The nipple position relative to the flap breast mound has remained unchanged for up to 6 months. The immediate nipple reconstruction does not significantly lengthen operative time, requiring approximately 30 additional operative minutes per nipple. Immediate nipple reconstruction utilizing the DIEP flap can be a cost-effective and feasible technique for recreating a natural-appearing and aesthetic nipple in select patients.",
+    "CI": [
+      "Copyright (c) 2012 Wiley Periodicals, Inc."
+    ],
+    "FAU": [
+      "Craig, E Stirling",
+      "Walker, Marc E",
+      "Salomon, Jeffrey",
+      "Fusi, Stefano"
+    ],
+    "AU": [
+      "Craig ES",
+      "Walker ME",
+      "Salomon J",
+      "Fusi S"
+    ],
+    "AD": [
+      "Section of Plastic and Reconstructive Surgery, Department of Surgery, Yale University School of Medicine, New Haven, CT, USA. elizabeth.craig@yale.edu"
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Journal Article"
+    ],
+    "DEP": "20120818",
+    "PL": "United States",
+    "TA": "Microsurgery",
+    "JT": "Microsurgery",
+    "JID": "8309230",
+    "SB": "IM",
+    "MH": [
+      "Breast Neoplasms/pathology/*surgery",
+      "Cohort Studies",
+      "Female",
+      "*Free Tissue Flaps",
+      "Humans",
+      "Mammaplasty/*methods",
+      "*Mastectomy, Subcutaneous",
+      "Middle Aged",
+      "Patient Satisfaction",
+      "Time Factors",
+      "Treatment Outcome"
+    ],
+    "EDAT": "2012/08/21 06:00",
+    "MHDA": "2013/08/21 06:00",
+    "CRDT": [
+      "2012/08/21 06:00"
+    ],
+    "PHST": [
+      "2012/02/05 00:00 [received]",
+      "2012/05/17 00:00 [revised]",
+      "2012/05/29 00:00 [accepted]",
+      "2012/08/21 06:00 [entrez]",
+      "2012/08/21 06:00 [pubmed]",
+      "2013/08/21 06:00 [medline]"
+    ],
+    "AID": [
+      "10.1002/micr.22020 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Microsurgery. 2013 Feb;33(2):125-9. doi: 10.1002/micr.22020. Epub 2012 Aug 18."
+  }
+}

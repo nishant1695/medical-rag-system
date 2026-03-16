@@ -1,0 +1,160 @@
+{
+  "pmid": "32895743",
+  "title": "Immediate versus secondary DIEP flap breast reconstruction: a multicenter outcome study.",
+  "abstract": "PURPOSE: Immediate breast reconstruction (IBR) at the time of mastectomy is gaining popularity, as studies show no negative impact on recurrence or patient survival, but better aesthetic outcome, less psychological distress and lower treatment costs. Using the largest database available in Europe, the presented study compared outcomes and complications of IBR vs. delayed breast reconstruction (DBR). METHODS: 3926 female patients underwent 4577 free DIEP-flap breast reconstructions after malignancies in 22 different German breast cancer centers. The cases were divided into two groups according to the time of reconstruction: an IBR and a DBR group. Surgical complications were accounted for and the groups were then compared. RESULTS: Overall, the rate of partial-(1.0 versus 1.2 percent of cases; p = 0.706) and total flap loss (2.3 versus 1.9 percent of cases; p = 0.516) showed no significant difference between the groups. The rate of revision surgery was slightly, but significantly lower in the IBR group (7.7 versus 9.8 percent; p = 0.039). Postoperative mobilization was commenced significantly earlier in the IBR group (mobilization on postoperative day 1: 82.1 versus 68.7 percent; p < 0.001), and concordantly the mean length of hospital stay was significantly shorter (7.3 (SD3.7) versus 8.9 (SD13.0) days; p < 0.001). CONCLUSION: IBR is feasible and cannot be considered a risk factor for complications or flap outcome. Our results support the current trend towards an increasing number of IBR. Especially in times of economic pressure in health care, the importance of a decrease of hospitalization cannot be overemphasized.",
+  "authors": [
+    "Prantl L",
+    "Moellhoff N",
+    "von Fritschen U",
+    "Giunta RE",
+    "Germann G",
+    "Kehrer A",
+    "Lonic D",
+    "Zeman F",
+    "Broer PN",
+    "Heidekrueger PI"
+  ],
+  "journal": "Archives of gynecology and obstetrics",
+  "year": 2020,
+  "doi": "10.1007/s00404-020-05779-w",
+  "mesh_terms": [
+    "Adult",
+    "Breast Neoplasms/pathology/*surgery",
+    "Esthetics",
+    "Female",
+    "Germany",
+    "Humans",
+    "Mammaplasty/*methods/statistics & numerical data",
+    "Mastectomy/*methods",
+    "Middle Aged",
+    "Neoplasm Recurrence, Local/surgery",
+    "Postoperative Complications/surgery",
+    "Reoperation/methods/*statistics & numerical data",
+    "Retrospective Studies",
+    "Risk Factors",
+    "*Surgical Flaps",
+    "Treatment Outcome"
+  ],
+  "raw_medline": {
+    "PMID": "32895743",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20210121",
+    "LR": "20210602",
+    "IS": "1432-0711 (Electronic) 0932-0067 (Print) 0932-0067 (Linking)",
+    "VI": "302",
+    "IP": "6",
+    "DP": "2020 Dec",
+    "TI": "Immediate versus secondary DIEP flap breast reconstruction: a multicenter outcome study.",
+    "PG": "1451-1459",
+    "LID": "10.1007/s00404-020-05779-w [doi]",
+    "AB": "PURPOSE: Immediate breast reconstruction (IBR) at the time of mastectomy is gaining popularity, as studies show no negative impact on recurrence or patient survival, but better aesthetic outcome, less psychological distress and lower treatment costs. Using the largest database available in Europe, the presented study compared outcomes and complications of IBR vs. delayed breast reconstruction (DBR). METHODS: 3926 female patients underwent 4577 free DIEP-flap breast reconstructions after malignancies in 22 different German breast cancer centers. The cases were divided into two groups according to the time of reconstruction: an IBR and a DBR group. Surgical complications were accounted for and the groups were then compared. RESULTS: Overall, the rate of partial-(1.0 versus 1.2 percent of cases; p = 0.706) and total flap loss (2.3 versus 1.9 percent of cases; p = 0.516) showed no significant difference between the groups. The rate of revision surgery was slightly, but significantly lower in the IBR group (7.7 versus 9.8 percent; p = 0.039). Postoperative mobilization was commenced significantly earlier in the IBR group (mobilization on postoperative day 1: 82.1 versus 68.7 percent; p < 0.001), and concordantly the mean length of hospital stay was significantly shorter (7.3 (SD3.7) versus 8.9 (SD13.0) days; p < 0.001). CONCLUSION: IBR is feasible and cannot be considered a risk factor for complications or flap outcome. Our results support the current trend towards an increasing number of IBR. Especially in times of economic pressure in health care, the importance of a decrease of hospitalization cannot be overemphasized.",
+    "FAU": [
+      "Prantl, L",
+      "Moellhoff, N",
+      "von Fritschen, U",
+      "Giunta, R E",
+      "Germann, G",
+      "Kehrer, A",
+      "Lonic, D",
+      "Zeman, F",
+      "Broer, P N",
+      "Heidekrueger, P I"
+    ],
+    "AU": [
+      "Prantl L",
+      "Moellhoff N",
+      "von Fritschen U",
+      "Giunta RE",
+      "Germann G",
+      "Kehrer A",
+      "Lonic D",
+      "Zeman F",
+      "Broer PN",
+      "Heidekrueger PI"
+    ],
+    "AD": [
+      "Centre of Plastic, Aesthetic, Hand and Reconstructive Surgery, University of Regensburg, Franz-Josef-Strauss-Allee 11, 93053, Regensburg, Germany.",
+      "Division of Hand, Plastic and Aesthetic Surgery, University Hospital, LMU Munich, Munich, Germany.",
+      "Department of Plastic and Esthetic Surgery, Hand Surgery, Helios Hospital Emil von Behring, Berlin, Germany.",
+      "Division of Hand, Plastic and Aesthetic Surgery, University Hospital, LMU Munich, Munich, Germany.",
+      "Department of Plastic, Reconstructive, Esthetic and Handsurgery, ETHIANUM Klinik, Heidelberg, Germany.",
+      "Centre of Plastic, Aesthetic, Hand and Reconstructive Surgery, University of Regensburg, Franz-Josef-Strauss-Allee 11, 93053, Regensburg, Germany.",
+      "Centre of Plastic, Aesthetic, Hand and Reconstructive Surgery, University of Regensburg, Franz-Josef-Strauss-Allee 11, 93053, Regensburg, Germany.",
+      "Center for Clinical Studies, University Medical Center Regensburg, Regensburg, Germany.",
+      "Department of Plastic, Reconstructive, Hand and Burn Surgery, Bogenhausen Academic Teaching Hospital, Munich, Germany.",
+      "Centre of Plastic, Aesthetic, Hand and Reconstructive Surgery, University of Regensburg, Franz-Josef-Strauss-Allee 11, 93053, Regensburg, Germany. paul@heidekrueger.net."
+    ],
+    "AUID": [
+      "ORCID: 0000-0002-4656-3808"
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Comparative Study",
+      "Journal Article"
+    ],
+    "DEP": "20200907",
+    "PL": "Germany",
+    "TA": "Arch Gynecol Obstet",
+    "JT": "Archives of gynecology and obstetrics",
+    "JID": "8710213",
+    "SB": "IM",
+    "MH": [
+      "Adult",
+      "Breast Neoplasms/pathology/*surgery",
+      "Esthetics",
+      "Female",
+      "Germany",
+      "Humans",
+      "Mammaplasty/*methods/statistics & numerical data",
+      "Mastectomy/*methods",
+      "Middle Aged",
+      "Neoplasm Recurrence, Local/surgery",
+      "Postoperative Complications/surgery",
+      "Reoperation/methods/*statistics & numerical data",
+      "Retrospective Studies",
+      "Risk Factors",
+      "*Surgical Flaps",
+      "Treatment Outcome"
+    ],
+    "PMC": "PMC7584555",
+    "OTO": [
+      "NOTNLM"
+    ],
+    "OT": [
+      "Breast reconstruction",
+      "DIEP flap",
+      "Delayed breast reconstruction",
+      "Immediate breast reconstruction",
+      "Microsurgery"
+    ],
+    "COIS": [
+      "The authors declare that they have no conflict of interest."
+    ],
+    "EDAT": "2020/09/09 06:00",
+    "MHDA": "2021/01/22 06:00",
+    "PMCR": [
+      "2020/09/07"
+    ],
+    "CRDT": [
+      "2020/09/08 05:24"
+    ],
+    "PHST": [
+      "2020/06/18 00:00 [received]",
+      "2020/08/28 00:00 [accepted]",
+      "2020/09/09 06:00 [pubmed]",
+      "2021/01/22 06:00 [medline]",
+      "2020/09/08 05:24 [entrez]",
+      "2020/09/07 00:00 [pmc-release]"
+    ],
+    "AID": [
+      "10.1007/s00404-020-05779-w [pii]",
+      "5779 [pii]",
+      "10.1007/s00404-020-05779-w [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Arch Gynecol Obstet. 2020 Dec;302(6):1451-1459. doi: 10.1007/s00404-020-05779-w. Epub 2020 Sep 7."
+  }
+}

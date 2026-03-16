@@ -1,0 +1,96 @@
+{
+  "pmid": "20091858",
+  "title": "Vascular pedicle avulsion in free flap breast reconstruction: a case of diep flap salvage following early avulsion of venous anastomosis and literature review.",
+  "abstract": "Free flap vascular pedicle avulsion represents an extremely rare complication in reconstructive microsurgery. Very few cases have been reported in the literature, most of them identified in free flap breast reconstruction. As a result, little data is currently available on the etiology and treatment of this rare complication. Herein, we report a unique case of early venous anastomosis avulsion following free DIEP flap transfer for delayed breast reconstruction. Venous outflow was successfully restored with the use of an interposition vein graft, and the flap survived completely. In addition, the relevant literature is reviewed; and the possible causes, preventive strategies, and management options are analyzed.",
+  "authors": [
+    "Lykoudis EG",
+    "Ziogas DE",
+    "Papanikolaou GE"
+  ],
+  "journal": "Microsurgery",
+  "year": 2010,
+  "doi": "10.1002/micr.20738",
+  "mesh_terms": [
+    "Anastomosis, Surgical",
+    "Female",
+    "Humans",
+    "*Mammaplasty",
+    "Microsurgery",
+    "Middle Aged",
+    "Postoperative Nausea and Vomiting/*complications",
+    "Salvage Therapy",
+    "Surgical Flaps/*blood supply",
+    "Veins/injuries/*surgery/transplantation",
+    "Venous Thrombosis/etiology/*surgery"
+  ],
+  "raw_medline": {
+    "PMID": "20091858",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20100609",
+    "LR": "20100316",
+    "IS": "1098-2752 (Electronic) 0738-1085 (Linking)",
+    "VI": "30",
+    "IP": "3",
+    "DP": "2010",
+    "TI": "Vascular pedicle avulsion in free flap breast reconstruction: a case of diep flap salvage following early avulsion of venous anastomosis and literature review.",
+    "PG": "233-7",
+    "LID": "10.1002/micr.20738 [doi]",
+    "AB": "Free flap vascular pedicle avulsion represents an extremely rare complication in reconstructive microsurgery. Very few cases have been reported in the literature, most of them identified in free flap breast reconstruction. As a result, little data is currently available on the etiology and treatment of this rare complication. Herein, we report a unique case of early venous anastomosis avulsion following free DIEP flap transfer for delayed breast reconstruction. Venous outflow was successfully restored with the use of an interposition vein graft, and the flap survived completely. In addition, the relevant literature is reviewed; and the possible causes, preventive strategies, and management options are analyzed.",
+    "FAU": [
+      "Lykoudis, Efstathios G",
+      "Ziogas, Dimosthenis E",
+      "Papanikolaou, George E"
+    ],
+    "AU": [
+      "Lykoudis EG",
+      "Ziogas DE",
+      "Papanikolaou GE"
+    ],
+    "AD": [
+      "Department of Plastic Surgery, Ioannina University School of Medicine, Ioannina, Greece. elykoudi@cc.uoi.gr"
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Case Reports",
+      "Journal Article",
+      "Review"
+    ],
+    "PL": "United States",
+    "TA": "Microsurgery",
+    "JT": "Microsurgery",
+    "JID": "8309230",
+    "SB": "IM",
+    "MH": [
+      "Anastomosis, Surgical",
+      "Female",
+      "Humans",
+      "*Mammaplasty",
+      "Microsurgery",
+      "Middle Aged",
+      "Postoperative Nausea and Vomiting/*complications",
+      "Salvage Therapy",
+      "Surgical Flaps/*blood supply",
+      "Veins/injuries/*surgery/transplantation",
+      "Venous Thrombosis/etiology/*surgery"
+    ],
+    "RF": "26",
+    "EDAT": "2010/01/22 06:00",
+    "MHDA": "2010/06/10 06:00",
+    "CRDT": [
+      "2010/01/22 06:00"
+    ],
+    "PHST": [
+      "2010/01/22 06:00 [entrez]",
+      "2010/01/22 06:00 [pubmed]",
+      "2010/06/10 06:00 [medline]"
+    ],
+    "AID": [
+      "10.1002/micr.20738 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Microsurgery. 2010;30(3):233-7. doi: 10.1002/micr.20738."
+  }
+}

@@ -111,13 +111,14 @@ async def get_chat_history(
     Return the most recent chat messages for a workspace (newest-last order).
     Used by the frontend to restore conversation on page load.
     """
+    # Fetch the most-recent `limit` rows (desc), then reverse to chronological order
     result = await db.execute(
         select(ChatMessageModel)
         .where(ChatMessageModel.workspace_id == workspace_id)
-        .order_by(ChatMessageModel.created_at.asc())
+        .order_by(ChatMessageModel.created_at.desc())
         .limit(limit)
     )
-    return result.scalars().all()
+    return list(reversed(result.scalars().all()))
 
 
 @router.delete("/history", status_code=204)

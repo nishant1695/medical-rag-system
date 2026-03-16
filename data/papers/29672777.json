@@ -1,0 +1,128 @@
+{
+  "pmid": "29672777",
+  "title": "DIEP Flap Breast Reconstruction Complication Rate in Previously Irradiated Internal Mammary Nodes.",
+  "abstract": "BACKGROUND:  Postmastectomy radiation therapy (PMRT) is a widely accepted treatment for locally advanced breast cancer. Some patients require additional boost radiation to the internal mammary nodes as the part of regional nodal irradiation (RNI). Delayed breast reconstruction with an autologous free flap using the internal mammary vessels for microvascular flap anastomosis is a common practice for these patients. The aim of our study was to evaluate the effect of RNI on autologous microvascular breast reconstruction. PATIENTS AND METHODS:  A retrospective study was performed on 57 patients (69 flaps) undergoing deep inferior epigastric perforator (DIEP) flap for delayed breast reconstruction after radiation therapy. The study group included 37 patients (65%) who received PMRT and RNI to the internal mammary nodes. The control group included 20 patients (35%) who received PMRT alone. Early and delayed surgical complications, including wound complications, fat necrosis, and flap loss, were compared between the groups. RESULTS:  The patient demographics in both groups were similar. Complication rate showed a higher trend in the study group for flap loss (8.3% versus 0%) and vascular anastomosis failure (5.6% versus 0%), but with no statistical difference (p = 0.54, 0.53, respectively). The control group showed a higher trend in fat necrosis (25% versus 8.3%, p = 0.11). CONCLUSIONS:  DIEP flap breast reconstructions with internal mammary vessels anastomosis should be performed with cautious in patients who had received RNI to internal mammary nodes because of potential added risk for surgical complications.",
+  "authors": [
+    "Shechter S",
+    "Arad E",
+    "Inbal A",
+    "Friedman O",
+    "Gur E",
+    "Barnea Y"
+  ],
+  "journal": "Journal of reconstructive microsurgery",
+  "year": 2018,
+  "doi": "10.1055/s-0038-1625986",
+  "mesh_terms": [
+    "Adult",
+    "Breast Neoplasms/*radiotherapy/surgery",
+    "Fat Necrosis",
+    "Female",
+    "Follow-Up Studies",
+    "Graft Rejection",
+    "Humans",
+    "Lymph Nodes/*pathology/radiation effects",
+    "*Mammaplasty/methods",
+    "*Mastectomy",
+    "Middle Aged",
+    "Perforator Flap/*blood supply",
+    "Postoperative Complications/*pathology/surgery",
+    "*Radiotherapy, Adjuvant",
+    "Retrospective Studies",
+    "Time Factors",
+    "Treatment Outcome"
+  ],
+  "raw_medline": {
+    "PMID": "29672777",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20181224",
+    "LR": "20181224",
+    "IS": "1098-8947 (Electronic) 0743-684X (Linking)",
+    "VI": "34",
+    "IP": "6",
+    "DP": "2018 Jul",
+    "TI": "DIEP Flap Breast Reconstruction Complication Rate in Previously Irradiated Internal Mammary Nodes.",
+    "PG": "399-403",
+    "LID": "10.1055/s-0038-1625986 [doi]",
+    "AB": "BACKGROUND:  Postmastectomy radiation therapy (PMRT) is a widely accepted treatment for locally advanced breast cancer. Some patients require additional boost radiation to the internal mammary nodes as the part of regional nodal irradiation (RNI). Delayed breast reconstruction with an autologous free flap using the internal mammary vessels for microvascular flap anastomosis is a common practice for these patients. The aim of our study was to evaluate the effect of RNI on autologous microvascular breast reconstruction. PATIENTS AND METHODS:  A retrospective study was performed on 57 patients (69 flaps) undergoing deep inferior epigastric perforator (DIEP) flap for delayed breast reconstruction after radiation therapy. The study group included 37 patients (65%) who received PMRT and RNI to the internal mammary nodes. The control group included 20 patients (35%) who received PMRT alone. Early and delayed surgical complications, including wound complications, fat necrosis, and flap loss, were compared between the groups. RESULTS:  The patient demographics in both groups were similar. Complication rate showed a higher trend in the study group for flap loss (8.3% versus 0%) and vascular anastomosis failure (5.6% versus 0%), but with no statistical difference (p = 0.54, 0.53, respectively). The control group showed a higher trend in fat necrosis (25% versus 8.3%, p = 0.11). CONCLUSIONS:  DIEP flap breast reconstructions with internal mammary vessels anastomosis should be performed with cautious in patients who had received RNI to internal mammary nodes because of potential added risk for surgical complications.",
+    "CI": [
+      "Thieme Medical Publishers 333 Seventh Avenue, New York, NY 10001, USA."
+    ],
+    "FAU": [
+      "Shechter, Shirley",
+      "Arad, Ehud",
+      "Inbal, Amir",
+      "Friedman, Or",
+      "Gur, Eyal",
+      "Barnea, Yoav"
+    ],
+    "AU": [
+      "Shechter S",
+      "Arad E",
+      "Inbal A",
+      "Friedman O",
+      "Gur E",
+      "Barnea Y"
+    ],
+    "AD": [
+      "Department of Plastic and Reconstructive Surgery, Tel-Aviv Sourasky Medical Center, Affiliated with the Sackler Faculty of Medicine, Tel-Aviv University, Tel-Aviv, Israel.",
+      "Department of Plastic and Reconstructive Surgery, Tel-Aviv Sourasky Medical Center, Affiliated with the Sackler Faculty of Medicine, Tel-Aviv University, Tel-Aviv, Israel.",
+      "Department of Plastic and Reconstructive Surgery, Tel-Aviv Sourasky Medical Center, Affiliated with the Sackler Faculty of Medicine, Tel-Aviv University, Tel-Aviv, Israel.",
+      "Department of Plastic and Reconstructive Surgery, Tel-Aviv Sourasky Medical Center, Affiliated with the Sackler Faculty of Medicine, Tel-Aviv University, Tel-Aviv, Israel.",
+      "Department of Plastic and Reconstructive Surgery, Tel-Aviv Sourasky Medical Center, Affiliated with the Sackler Faculty of Medicine, Tel-Aviv University, Tel-Aviv, Israel.",
+      "Department of Plastic and Reconstructive Surgery, Tel-Aviv Sourasky Medical Center, Affiliated with the Sackler Faculty of Medicine, Tel-Aviv University, Tel-Aviv, Israel."
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Journal Article"
+    ],
+    "DEP": "20180419",
+    "PL": "United States",
+    "TA": "J Reconstr Microsurg",
+    "JT": "Journal of reconstructive microsurgery",
+    "JID": "8502670",
+    "SB": "IM",
+    "MH": [
+      "Adult",
+      "Breast Neoplasms/*radiotherapy/surgery",
+      "Fat Necrosis",
+      "Female",
+      "Follow-Up Studies",
+      "Graft Rejection",
+      "Humans",
+      "Lymph Nodes/*pathology/radiation effects",
+      "*Mammaplasty/methods",
+      "*Mastectomy",
+      "Middle Aged",
+      "Perforator Flap/*blood supply",
+      "Postoperative Complications/*pathology/surgery",
+      "*Radiotherapy, Adjuvant",
+      "Retrospective Studies",
+      "Time Factors",
+      "Treatment Outcome"
+    ],
+    "COIS": [
+      "No funding was provided for this article. Dr. Barnea is a speaker for Johnson",
+      "Medical. None of the other authors have financial interest or personal",
+      "relationship to declare in relation to the content of this article."
+    ],
+    "EDAT": "2018/04/20 06:00",
+    "MHDA": "2018/12/26 06:00",
+    "CRDT": [
+      "2018/04/20 06:00"
+    ],
+    "PHST": [
+      "2018/04/20 06:00 [pubmed]",
+      "2018/12/26 06:00 [medline]",
+      "2018/04/20 06:00 [entrez]"
+    ],
+    "AID": [
+      "10.1055/s-0038-1625986 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "J Reconstr Microsurg. 2018 Jul;34(6):399-403. doi: 10.1055/s-0038-1625986. Epub 2018 Apr 19."
+  }
+}

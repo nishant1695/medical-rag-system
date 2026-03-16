@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS graph_edges (
     target_id    INTEGER NOT NULL,
     relationship TEXT    NOT NULL,
     weight       REAL    DEFAULT 1.0,
+    document_id  INTEGER,
     created_at   DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (workspace_id) REFERENCES knowledge_bases(id) ON DELETE CASCADE,
     FOREIGN KEY (source_id)    REFERENCES graph_nodes(id)     ON DELETE CASCADE,
@@ -117,6 +118,12 @@ class MedicalKnowledgeGraph:
             return
         await db.execute(text(_CREATE_NODES))
         await db.execute(text(_CREATE_EDGES))
+        # Migrate existing graph_edges tables that pre-date the document_id column
+        try:
+            await db.execute(text("ALTER TABLE graph_edges ADD COLUMN document_id INTEGER"))
+            await db.commit()
+        except Exception:
+            pass  # Column already exists — safe to ignore
         await db.commit()
         self._tables_ensured = True
 
@@ -127,6 +134,7 @@ class MedicalKnowledgeGraph:
         chunks: list[dict],
         db: AsyncSession,
         provider,
+        document_id: Optional[int] = None,
     ) -> int:
         """
         Extract entities/relationships from document chunks and store them.
@@ -146,7 +154,7 @@ class MedicalKnowledgeGraph:
             )
             data = await self._extract_triples(batch_text, provider)
             if data:
-                n = await self._store_triples(data, db)
+                n = await self._store_triples(data, db, document_id=document_id)
                 total_edges += n
 
         logger.info(
@@ -181,7 +189,9 @@ class MedicalKnowledgeGraph:
             logger.debug(f"KG extraction error: {exc}")
         return None
 
-    async def _store_triples(self, data: dict, db: AsyncSession) -> int:
+    async def _store_triples(
+        self, data: dict, db: AsyncSession, document_id: Optional[int] = None
+    ) -> int:
         """Upsert nodes and edges. Returns number of new edges inserted."""
         entity_ids: dict[str, int] = {}  # normalized_name → row id
 
@@ -265,20 +275,64 @@ class MedicalKnowledgeGraph:
                 await db.execute(
                     text(
                         "INSERT INTO graph_edges "
-                        "(workspace_id, source_id, target_id, relationship) "
-                        "VALUES (:ws, :s, :t, :r)"
+                        "(workspace_id, source_id, target_id, relationship, document_id) "
+                        "VALUES (:ws, :s, :t, :r, :doc)"
                     ),
                     {
                         "ws": self.workspace_id,
                         "s": src_id,
                         "t": tgt_id,
                         "r": relation,
+                        "doc": document_id,
                     },
                 )
                 new_edges += 1
 
         await db.commit()
         return new_edges
+
+    # ── Document deletion ─────────────────────────────────────────────────────
+
+    async def delete_document_edges(
+        self, document_id: int, db: AsyncSession
+    ) -> None:
+        """
+        Remove all graph edges contributed by a specific document, then prune
+        any nodes that have become fully isolated (no remaining edges).
+
+        Called by rag_service.delete_document() to keep graph state consistent
+        with the vector store — deleted papers no longer influence KG expansion.
+        """
+        await self._ensure_tables(db)
+
+        # Delete edges contributed by this document
+        await db.execute(
+            text(
+                "DELETE FROM graph_edges "
+                "WHERE workspace_id=:ws AND document_id=:doc"
+            ),
+            {"ws": self.workspace_id, "doc": document_id},
+        )
+
+        # Prune nodes with no remaining edges in either direction
+        await db.execute(
+            text(
+                "DELETE FROM graph_nodes "
+                "WHERE workspace_id=:ws "
+                "AND id NOT IN ("
+                "  SELECT source_id FROM graph_edges WHERE workspace_id=:ws "
+                "  UNION "
+                "  SELECT target_id FROM graph_edges WHERE workspace_id=:ws"
+                ")"
+            ),
+            {"ws": self.workspace_id},
+        )
+
+        await db.commit()
+        logger.info(
+            f"KG workspace={self.workspace_id}: "
+            f"removed edges for document {document_id}, pruned orphan nodes"
+        )
 
     # ── Query expansion ───────────────────────────────────────────────────────
 

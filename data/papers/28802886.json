@@ -1,0 +1,140 @@
+{
+  "pmid": "28802886",
+  "title": "[Lumbar artery perforator flap for breast reconstruction].",
+  "abstract": "Even though DIEP-SIEA flaps or latissimus dorsi musculocutaneous flap are the most frequently used, a wide variety of flaps have been described for autologous breast reconstruction. Concerning the choice of donor-site, the aim is to prevent and to limit the morbidity. That is why the donor-site should be carefully chosen, according to the morphology of the patient. Lumbar artery perforator flap (LAP) is an option for breast reconstruction, but it is not well known and its use is limited. This study summarizes the authors' early experience with free LAP flap for breast reconstruction. Three patients underwent immediate or delayed autologous breast reconstruction using a LAP flap. No vascular by pass was required to lengthen the pedicle. No partial or complete flap necrosis has been reported. There was no surgical donor-site complication. Mean operative time was 7hours. LAP flap can be considered as a good option for autologous breast reconstruction, especially in patients with unfavorable abdominal donor-site, and impossibility to use a DIEP flap.",
+  "authors": [
+    "Honart JF",
+    "Leymarie N",
+    "Sarfati B",
+    "Alknashnam H",
+    "Rem K",
+    "Rimareix F",
+    "Kolb F"
+  ],
+  "journal": "Annales de chirurgie plastique et esthetique",
+  "year": 2018,
+  "doi": "10.1016/j.anplas.2017.07.011",
+  "mesh_terms": [
+    "Adult",
+    "Arteries/surgery",
+    "Body Mass Index",
+    "Breast Neoplasms/surgery",
+    "Female",
+    "Humans",
+    "*Mammaplasty/methods",
+    "Middle Aged",
+    "Operative Time",
+    "Perforator Flap/*blood supply",
+    "Retrospective Studies",
+    "Risk Assessment",
+    "Risk Factors",
+    "Treatment Outcome"
+  ],
+  "raw_medline": {
+    "PMID": "28802886",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20181017",
+    "LR": "20181017",
+    "IS": "1768-319X (Electronic) 0294-1260 (Linking)",
+    "VI": "63",
+    "IP": "1",
+    "DP": "2018 Feb",
+    "TI": "[Lumbar artery perforator flap for breast reconstruction].",
+    "PG": "25-30",
+    "LID": "S0294-1260(17)30116-4 [pii] 10.1016/j.anplas.2017.07.011 [doi]",
+    "AB": "Even though DIEP-SIEA flaps or latissimus dorsi musculocutaneous flap are the most frequently used, a wide variety of flaps have been described for autologous breast reconstruction. Concerning the choice of donor-site, the aim is to prevent and to limit the morbidity. That is why the donor-site should be carefully chosen, according to the morphology of the patient. Lumbar artery perforator flap (LAP) is an option for breast reconstruction, but it is not well known and its use is limited. This study summarizes the authors' early experience with free LAP flap for breast reconstruction. Three patients underwent immediate or delayed autologous breast reconstruction using a LAP flap. No vascular by pass was required to lengthen the pedicle. No partial or complete flap necrosis has been reported. There was no surgical donor-site complication. Mean operative time was 7hours. LAP flap can be considered as a good option for autologous breast reconstruction, especially in patients with unfavorable abdominal donor-site, and impossibility to use a DIEP flap.",
+    "CI": [
+      "Copyright (c) 2017 Elsevier Masson SAS. All rights reserved."
+    ],
+    "FAU": [
+      "Honart, J-F",
+      "Leymarie, N",
+      "Sarfati, B",
+      "Alknashnam, H",
+      "Rem, K",
+      "Rimareix, F",
+      "Kolb, F"
+    ],
+    "AU": [
+      "Honart JF",
+      "Leymarie N",
+      "Sarfati B",
+      "Alknashnam H",
+      "Rem K",
+      "Rimareix F",
+      "Kolb F"
+    ],
+    "AD": [
+      "Service de chirurgie plastique et reconstructrice, Gustave-Roussy, 114, rue Edouard-Vaillant, 94805 Villejuif, France. Electronic address: jfhonart@gmail.com.",
+      "Service de chirurgie plastique et reconstructrice, Gustave-Roussy, 114, rue Edouard-Vaillant, 94805 Villejuif, France.",
+      "Service de chirurgie plastique et reconstructrice, Gustave-Roussy, 114, rue Edouard-Vaillant, 94805 Villejuif, France.",
+      "Service de chirurgie plastique et reconstructrice, Gustave-Roussy, 114, rue Edouard-Vaillant, 94805 Villejuif, France.",
+      "Service de chirurgie plastique et reconstructrice, Gustave-Roussy, 114, rue Edouard-Vaillant, 94805 Villejuif, France.",
+      "Service de chirurgie plastique et reconstructrice, Gustave-Roussy, 114, rue Edouard-Vaillant, 94805 Villejuif, France.",
+      "Service de chirurgie plastique et reconstructrice, Gustave-Roussy, 114, rue Edouard-Vaillant, 94805 Villejuif, France."
+    ],
+    "LA": [
+      "fre"
+    ],
+    "PT": [
+      "Journal Article"
+    ],
+    "TT": "Reconstruction mammaire autologue par lambeau perforant lombaire.",
+    "DEP": "20170810",
+    "PL": "France",
+    "TA": "Ann Chir Plast Esthet",
+    "JT": "Annales de chirurgie plastique et esthetique",
+    "JID": "8305839",
+    "SB": "IM",
+    "MH": [
+      "Adult",
+      "Arteries/surgery",
+      "Body Mass Index",
+      "Breast Neoplasms/surgery",
+      "Female",
+      "Humans",
+      "*Mammaplasty/methods",
+      "Middle Aged",
+      "Operative Time",
+      "Perforator Flap/*blood supply",
+      "Retrospective Studies",
+      "Risk Assessment",
+      "Risk Factors",
+      "Treatment Outcome"
+    ],
+    "OTO": [
+      "NOTNLM"
+    ],
+    "OT": [
+      "Breast reconstruction",
+      "Free flap",
+      "LAP flap",
+      "Lambeau LAP",
+      "Lambeau libre",
+      "Lambeau perforant",
+      "Microchirurgie",
+      "Microsurgery",
+      "Perforator flap",
+      "Reconstruction mammaire"
+    ],
+    "EDAT": "2017/08/15 06:00",
+    "MHDA": "2018/10/18 06:00",
+    "CRDT": [
+      "2017/08/14 06:00"
+    ],
+    "PHST": [
+      "2017/02/20 00:00 [received]",
+      "2017/07/17 00:00 [accepted]",
+      "2017/08/15 06:00 [pubmed]",
+      "2018/10/18 06:00 [medline]",
+      "2017/08/14 06:00 [entrez]"
+    ],
+    "AID": [
+      "S0294-1260(17)30116-4 [pii]",
+      "10.1016/j.anplas.2017.07.011 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Ann Chir Plast Esthet. 2018 Feb;63(1):25-30. doi: 10.1016/j.anplas.2017.07.011. Epub 2017 Aug 10."
+  }
+}

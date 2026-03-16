@@ -1,0 +1,94 @@
+{
+  "pmid": "30782463",
+  "title": "[SIEA flap in breast reconstruction: Its place beside DIEP flap].",
+  "abstract": "",
+  "authors": [
+    "Quilichini J",
+    "Hivelin M",
+    "Le Masurier P",
+    "Guihard T",
+    "Lantieri L"
+  ],
+  "journal": "Annales de chirurgie plastique et esthetique",
+  "year": 2019,
+  "doi": "10.1016/j.anplas.2019.01.006",
+  "mesh_terms": [
+    "*Mammaplasty",
+    "Surgical Flaps"
+  ],
+  "raw_medline": {
+    "PMID": "30782463",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20200220",
+    "LR": "20200220",
+    "IS": "1768-319X (Electronic) 0294-1260 (Linking)",
+    "VI": "64",
+    "IP": "2",
+    "DP": "2019 Apr",
+    "TI": "[SIEA flap in breast reconstruction: Its place beside DIEP flap].",
+    "PG": "215-216",
+    "LID": "S0294-1260(19)30026-3 [pii] 10.1016/j.anplas.2019.01.006 [doi]",
+    "FAU": [
+      "Quilichini, J",
+      "Hivelin, M",
+      "Le Masurier, P",
+      "Guihard, T",
+      "Lantieri, L"
+    ],
+    "AU": [
+      "Quilichini J",
+      "Hivelin M",
+      "Le Masurier P",
+      "Guihard T",
+      "Lantieri L"
+    ],
+    "AD": [
+      "Service de chirurgie plastique, reconstructrice et esthetique, centre hospitalier R. Ballanger, boulevard Ballanger, 93600 Aulnay-sous-Bois, France; Faculte de medecine Paris XIII, hopitaux universitaires Paris Seine-Saint-Denis, CHU Avicenne, 93000 Bobigny, France. Electronic address: julien.quilichini@gmail.com.",
+      "Service de chirurgie plastique, reconstructrice et esthetique, faculte de medecine Paris Descartes, hopital europeen G. Pompidou, 75015 Paris, France.",
+      "Hopital Rene-Huguenin, institut Curie, 92210 Saint-Cloud, France; 21, rue Chevert, 75007 Paris, France.",
+      "Hopital Rene-Huguenin, institut Curie, 92210 Saint-Cloud, France; 21, rue Chevert, 75007 Paris, France.",
+      "Service de chirurgie plastique, reconstructrice et esthetique, faculte de medecine Paris Descartes, hopital europeen G. Pompidou, 75015 Paris, France."
+    ],
+    "LA": [
+      "fre"
+    ],
+    "PT": [
+      "Comment",
+      "Letter"
+    ],
+    "TT": "Lambeau de SIEA en reconstruction mammaire : quelle place par rapport au DIEP ?",
+    "DEP": "20190216",
+    "PL": "France",
+    "TA": "Ann Chir Plast Esthet",
+    "JT": "Annales de chirurgie plastique et esthetique",
+    "JID": "8305839",
+    "SB": "IM",
+    "CON": [
+      "Ann Chir Plast Esthet. 2019 Apr;64(2):199-203. doi: 10.1016/j.anplas.2018.08.007.",
+      "PMID: 30269883"
+    ],
+    "MH": [
+      "*Mammaplasty",
+      "Surgical Flaps"
+    ],
+    "EDAT": "2019/02/21 06:00",
+    "MHDA": "2020/02/23 06:00",
+    "CRDT": [
+      "2019/02/21 06:00"
+    ],
+    "PHST": [
+      "2019/01/20 00:00 [received]",
+      "2019/01/27 00:00 [accepted]",
+      "2019/02/21 06:00 [pubmed]",
+      "2020/02/23 06:00 [medline]",
+      "2019/02/21 06:00 [entrez]"
+    ],
+    "AID": [
+      "S0294-1260(19)30026-3 [pii]",
+      "10.1016/j.anplas.2019.01.006 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Ann Chir Plast Esthet. 2019 Apr;64(2):215-216. doi: 10.1016/j.anplas.2019.01.006. Epub 2019 Feb 16."
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "pmid": "31079136",
+  "title": "Autologous Breast Reconstruction with Transverse Rectus Abdominis Musculocutaneous (TRAM) or Deep Inferior Epigastric Perforator (DIEP) Flaps: An Analysis of the 100 Most Cited Articles.",
+  "abstract": "Post-mastectomy autologous reconstruction with abdominal tissue has evolved over the past 4 decades and is a common reconstructive modality today. To gain more insight into this evolution, we performed an analysis of the 100 most commonly cited articles focusing on autologous breast reconstruction with transverse rectus abdominis musculocutaneous (TRAM) or deep inferior epigastric perforator (DIEP) flaps. A review of the ISI Web of Knowledge database was performed. Only peer-reviewed articles in English were included for analysis. Articles were ranked by their total citations as well as citation density (citations divided by years since publication). The 100 most cited articles were analyzed by their bibliographic parameters. The 100 most cited articles were published in 12 journals. The highest ranked plastic surgery journal published almost 2/3 of the articles. All articles were published within 23 years and marked the \"rising age\" of autologous breast reconstruction with TRAM and DIEP flaps. The focus of clinical research changed over this time period and ranged from innovations in surgical technique to analysis of clinical outcomes, comparative analyses with other reconstructive modalities, timing of reconstruction, and preoperative diagnostic workup, as well as cost-effectiveness analyses. This literature review illustrates the dramatic change that has occurred subsequent to introduction of abdominal flaps for breast reconstruction. While the use of abdominal flaps has become widely accepted for breast reconstruction, many questions remain unanswered, thus highlighting the need for ongoing clinical investigation.",
+  "authors": [
+    "Cai A",
+    "Suckau J",
+    "Arkudas A",
+    "Beier JP",
+    "Momeni A",
+    "Horch RE"
+  ],
+  "journal": "Medical science monitor : international medical journal of experimental and clinical research",
+  "year": 2019,
+  "doi": "10.12659/MSM.914665",
+  "mesh_terms": [
+    "Breast Neoplasms/*surgery",
+    "Female",
+    "Humans",
+    "Mammaplasty/*methods",
+    "Mastectomy/*methods",
+    "Patient Satisfaction",
+    "Perforator Flap/surgery",
+    "Postoperative Complications",
+    "Rectus Abdominis/surgery",
+    "Retrospective Studies"
+  ],
+  "raw_medline": {
+    "PMID": "31079136",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20191126",
+    "LR": "20200225",
+    "IS": "1643-3750 (Electronic) 1234-1010 (Print) 1234-1010 (Linking)",
+    "VI": "25",
+    "DP": "2019 May 12",
+    "TI": "Autologous Breast Reconstruction with Transverse Rectus Abdominis Musculocutaneous (TRAM) or Deep Inferior Epigastric Perforator (DIEP) Flaps: An Analysis of the 100 Most Cited Articles.",
+    "PG": "3520-3536",
+    "LID": "10.12659/MSM.914665 [doi]",
+    "AB": "Post-mastectomy autologous reconstruction with abdominal tissue has evolved over the past 4 decades and is a common reconstructive modality today. To gain more insight into this evolution, we performed an analysis of the 100 most commonly cited articles focusing on autologous breast reconstruction with transverse rectus abdominis musculocutaneous (TRAM) or deep inferior epigastric perforator (DIEP) flaps. A review of the ISI Web of Knowledge database was performed. Only peer-reviewed articles in English were included for analysis. Articles were ranked by their total citations as well as citation density (citations divided by years since publication). The 100 most cited articles were analyzed by their bibliographic parameters. The 100 most cited articles were published in 12 journals. The highest ranked plastic surgery journal published almost 2/3 of the articles. All articles were published within 23 years and marked the \"rising age\" of autologous breast reconstruction with TRAM and DIEP flaps. The focus of clinical research changed over this time period and ranged from innovations in surgical technique to analysis of clinical outcomes, comparative analyses with other reconstructive modalities, timing of reconstruction, and preoperative diagnostic workup, as well as cost-effectiveness analyses. This literature review illustrates the dramatic change that has occurred subsequent to introduction of abdominal flaps for breast reconstruction. While the use of abdominal flaps has become widely accepted for breast reconstruction, many questions remain unanswered, thus highlighting the need for ongoing clinical investigation.",
+    "FAU": [
+      "Cai, Aijia",
+      "Suckau, Jan",
+      "Arkudas, Andreas",
+      "Beier, Justus P",
+      "Momeni, Arash",
+      "Horch, Raymund E"
+    ],
+    "AU": [
+      "Cai A",
+      "Suckau J",
+      "Arkudas A",
+      "Beier JP",
+      "Momeni A",
+      "Horch RE"
+    ],
+    "AD": [
+      "Department of Plastic and Hand Surgery, University Hospital Erlangen, Friedrich Alexander University Erlangen-Nuernberg FAU, Erlangen, Germany.",
+      "Department of Plastic and Hand Surgery, University Hospital Erlangen, Friedrich Alexander University Erlangen-Nuernberg FAU, Erlangen, Germany.",
+      "Department of Plastic and Hand Surgery, University Hospital Erlangen, Friedrich Alexander University Erlangen-Nuernberg FAU, Erlangen, Germany.",
+      "Department of Plastic and Hand Surgery, University Hospital Erlangen, Friedrich Alexander University Erlangen-Nuernberg FAU, Erlangen, Germany.",
+      "Department of Plastic Hand and Burn Surgery, University Hospital, RWTH Aachen, Aachen, Germany.",
+      "Division of Plastic and Reconstructive Surgery, Stanford University Medical Center, Palo Alto, CA, USA.",
+      "Department of Plastic and Hand Surgery, University Hospital Erlangen, Friedrich Alexander University Erlangen-Nuernberg FAU, Erlangen, Germany."
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Journal Article",
+      "Review"
+    ],
+    "DEP": "20190512",
+    "PL": "United States",
+    "TA": "Med Sci Monit",
+    "JT": "Medical science monitor : international medical journal of experimental and clinical research",
+    "JID": "9609063",
+    "SB": "IM",
+    "MH": [
+      "Breast Neoplasms/*surgery",
+      "Female",
+      "Humans",
+      "Mammaplasty/*methods",
+      "Mastectomy/*methods",
+      "Patient Satisfaction",
+      "Perforator Flap/surgery",
+      "Postoperative Complications",
+      "Rectus Abdominis/surgery",
+      "Retrospective Studies"
+    ],
+    "PMC": "PMC6528547",
+    "EDAT": "2019/05/13 06:00",
+    "MHDA": "2019/11/27 06:00",
+    "PMCR": [
+      "2019/05/12"
+    ],
+    "CRDT": [
+      "2019/05/13 06:00"
+    ],
+    "PHST": [
+      "2019/05/13 06:00 [entrez]",
+      "2019/05/13 06:00 [pubmed]",
+      "2019/11/27 06:00 [medline]",
+      "2019/05/12 00:00 [pmc-release]"
+    ],
+    "AID": [
+      "914665 [pii]",
+      "10.12659/MSM.914665 [doi]"
+    ],
+    "PST": "epublish",
+    "SO": "Med Sci Monit. 2019 May 12;25:3520-3536. doi: 10.12659/MSM.914665."
+  }
+}

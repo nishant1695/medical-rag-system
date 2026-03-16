@@ -1,0 +1,109 @@
+{
+  "pmid": "17950976",
+  "title": "[Breast reconstruction by DIEP free flap: a 30 cases experience].",
+  "abstract": "PURPOSE: The purpose of this study was to analyse the surgical procedure and the complications in case of breast reconstruction by deep inferior epigastric perforator flap (DIEP). MATERIALS AND METHODS: This retrospective study concerns 30 cases performed between 2001 and 2005. The reconstruction was delayed (73%), immediate (3%) or realised after failed attempt to reconstruct the breast with implant or flap (27%). We studied perforator selection, operative time, total flap loss, partial flap loss, and postoperative complications. RESULTS: Flap was raised with one pedicle in 22 cases and with two pedicles in eight cases. The recipient vessels were the axillary vessels (70%), circumflex scapular vessels (27%), and the thoracodorsal vessels (1%). Mean operating time was 6h 17min for the one-pedicle flaps and 8h 43min for the double-pedicle flaps. We noted two total flap necrosis, four partial flap necrosis, one deep venous thrombosis and one pulmonary embolism. Postoperative abdominal hernia or bulge never occurred. CONCLUSION: Although the use of DIEP flap reduces morbidity of the harvest, long operative time and thrombosis complications cause significant morbidity. Therefore we only use the DIEP flap when other procedures cannot be performed.",
+  "authors": [
+    "Binder JP",
+    "May P",
+    "Masson J",
+    "Revol M",
+    "Servant JM"
+  ],
+  "journal": "Annales de chirurgie plastique et esthetique",
+  "year": 2008,
+  "doi": "10.1016/j.anplas.2007.07.008",
+  "mesh_terms": [
+    "Adult",
+    "Aged",
+    "Breast Neoplasms/surgery",
+    "Epigastric Arteries/*transplantation",
+    "Female",
+    "Humans",
+    "Length of Stay",
+    "Mammaplasty/adverse effects/*methods",
+    "Mastectomy, Modified Radical/*rehabilitation",
+    "Middle Aged",
+    "Retrospective Studies",
+    "Surgical Flaps/*blood supply",
+    "Treatment Outcome"
+  ],
+  "raw_medline": {
+    "PMID": "17950976",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20081117",
+    "LR": "20080721",
+    "IS": "1768-319X (Electronic) 0294-1260 (Linking)",
+    "VI": "53",
+    "IP": "4",
+    "DP": "2008 Aug",
+    "TI": "[Breast reconstruction by DIEP free flap: a 30 cases experience].",
+    "PG": "318-24",
+    "AB": "PURPOSE: The purpose of this study was to analyse the surgical procedure and the complications in case of breast reconstruction by deep inferior epigastric perforator flap (DIEP). MATERIALS AND METHODS: This retrospective study concerns 30 cases performed between 2001 and 2005. The reconstruction was delayed (73%), immediate (3%) or realised after failed attempt to reconstruct the breast with implant or flap (27%). We studied perforator selection, operative time, total flap loss, partial flap loss, and postoperative complications. RESULTS: Flap was raised with one pedicle in 22 cases and with two pedicles in eight cases. The recipient vessels were the axillary vessels (70%), circumflex scapular vessels (27%), and the thoracodorsal vessels (1%). Mean operating time was 6h 17min for the one-pedicle flaps and 8h 43min for the double-pedicle flaps. We noted two total flap necrosis, four partial flap necrosis, one deep venous thrombosis and one pulmonary embolism. Postoperative abdominal hernia or bulge never occurred. CONCLUSION: Although the use of DIEP flap reduces morbidity of the harvest, long operative time and thrombosis complications cause significant morbidity. Therefore we only use the DIEP flap when other procedures cannot be performed.",
+    "FAU": [
+      "Binder, J-P",
+      "May, P",
+      "Masson, J",
+      "Revol, M",
+      "Servant, J-M"
+    ],
+    "AU": [
+      "Binder JP",
+      "May P",
+      "Masson J",
+      "Revol M",
+      "Servant JM"
+    ],
+    "AD": [
+      "Service de chirurgie plastique reconstructrice et esthetique, hopital Saint-Louis, 1, avenue Claude-Vellefaux, 75010 Paris, France. docteurbinder@orange.fr"
+    ],
+    "LA": [
+      "fre"
+    ],
+    "PT": [
+      "Comparative Study",
+      "English Abstract",
+      "Journal Article"
+    ],
+    "TT": "Reconstruction mammaire par lambeau libre DIEP : a propos de 30 cas.",
+    "DEP": "20071024",
+    "PL": "France",
+    "TA": "Ann Chir Plast Esthet",
+    "JT": "Annales de chirurgie plastique et esthetique",
+    "JID": "8305839",
+    "SB": "IM",
+    "MH": [
+      "Adult",
+      "Aged",
+      "Breast Neoplasms/surgery",
+      "Epigastric Arteries/*transplantation",
+      "Female",
+      "Humans",
+      "Length of Stay",
+      "Mammaplasty/adverse effects/*methods",
+      "Mastectomy, Modified Radical/*rehabilitation",
+      "Middle Aged",
+      "Retrospective Studies",
+      "Surgical Flaps/*blood supply",
+      "Treatment Outcome"
+    ],
+    "EDAT": "2007/10/24 09:00",
+    "MHDA": "2008/11/18 09:00",
+    "CRDT": [
+      "2007/10/24 09:00"
+    ],
+    "PHST": [
+      "2007/06/29 00:00 [received]",
+      "2007/07/08 00:00 [accepted]",
+      "2007/10/24 09:00 [pubmed]",
+      "2008/11/18 09:00 [medline]",
+      "2007/10/24 09:00 [entrez]"
+    ],
+    "AID": [
+      "S0294-1260(07)00163-X [pii]",
+      "10.1016/j.anplas.2007.07.008 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Ann Chir Plast Esthet. 2008 Aug;53(4):318-24. doi: 10.1016/j.anplas.2007.07.008. Epub 2007 Oct 24."
+  }
+}

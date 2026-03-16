@@ -154,7 +154,7 @@ class MedicalRAGService:
                     kg = get_knowledge_graph(self.workspace_id)
                     provider = get_llm_provider()
                     n_edges = await kg.build_from_document(
-                        parsed.chunks, self.db, provider
+                        parsed.chunks, self.db, provider, document_id=document_id
                     )
                     logger.info(
                         f"Knowledge graph: {n_edges} new edges for doc {document_id}"
@@ -209,9 +209,15 @@ class MedicalRAGService:
         return self.vector_store.count_by_subspecialty()
 
     async def delete_document(self, document_id: int) -> None:
-        """Delete document from vector store."""
+        """Delete document from vector store and knowledge graph."""
         self.vector_store.delete_by_document_id(document_id)
         logger.info(f"Deleted document {document_id} from vector store")
+        try:
+            from app.services.knowledge_graph import get_knowledge_graph
+            kg = get_knowledge_graph(self.workspace_id)
+            await kg.delete_document_edges(document_id, self.db)
+        except Exception as kg_exc:
+            logger.warning(f"KG cleanup skipped for document {document_id}: {kg_exc}")
 
     def get_chunk_count(self) -> int:
         """Get total number of chunks in vector store."""

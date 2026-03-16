@@ -1,0 +1,108 @@
+{
+  "pmid": "37171382",
+  "title": "Surgical Outcomes of Autologous Breast Reconstruction in Low Body Mass Index Patients: Beyond the Standard DIEP Flap.",
+  "abstract": "BACKGROUND: Autologous breast reconstruction provides higher satisfaction than implant-based reconstruction in women with low body mass index (BMI). However, the accepted standard of microvascular breast reconstruction, the deep inferior epigastric perforator (DIEP) flap, can be challenging to achieve due to the paucity of adnominal bulk in these patients. This study compared operative outcomes in women with BMI less than 23.5 following reconstruction after one of three free flap methods: the DIEP flap, alternative flaps (ie, lumbar artery perforator flap or profounda artery perforator flap), and stacked flaps. METHODS: A retrospective study was conducted on thin patients (BMI <23.5) who underwent autologous breast reconstruction between 2010 and 2021 by two senior authors (N.T.H. and S.S.T.) at a single institution. One hundred fifteen patients were divided into three reconstructive groups. Flap weights, complication rates, secondary revisions, and fat grafting in each group were then compared. RESULTS: The success rate in all three groups was 100%, with only one partial flap loss in the stacked group. There was a significant difference in overall minor complications and donor complications among the three groups, with alternative flaps experiencing the most. All three groups had similar incidences of recipient breast complications, medical complications, need for secondary revisions, and amount of fat grafted. CONCLUSIONS: Autologous breast reconstruction in low BMI patients yields successful and durable results. This study shows that predictable results in the thin patient population can be obtained via alternate autologous methods beyond the standard DIEP flap. CLINICAL QUESTION/LEVEL OF EVIDENCE: Therapeutic, III.",
+  "authors": [
+    "Haddock NT",
+    "Martinez VM",
+    "Teotia SS"
+  ],
+  "journal": "Plastic and reconstructive surgery",
+  "year": 2023,
+  "doi": "10.1097/PRS.0000000000010490",
+  "mesh_terms": [
+    "Humans",
+    "Female",
+    "Body Mass Index",
+    "Retrospective Studies",
+    "Epigastric Arteries/transplantation",
+    "*Mammaplasty/methods",
+    "*Perforator Flap/blood supply",
+    "Postoperative Complications/epidemiology/etiology",
+    "Treatment Outcome",
+    "*Breast Neoplasms/surgery/complications"
+  ],
+  "raw_medline": {
+    "PMID": "37171382",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20230929",
+    "LR": "20250501",
+    "IS": "1529-4242 (Electronic) 0032-1052 (Print) 0032-1052 (Linking)",
+    "VI": "152",
+    "IP": "4S",
+    "DP": "2023 Oct 1",
+    "TI": "Surgical Outcomes of Autologous Breast Reconstruction in Low Body Mass Index Patients: Beyond the Standard DIEP Flap.",
+    "PG": "3S-15S",
+    "LID": "10.1097/PRS.0000000000010490 [doi]",
+    "AB": "BACKGROUND: Autologous breast reconstruction provides higher satisfaction than implant-based reconstruction in women with low body mass index (BMI). However, the accepted standard of microvascular breast reconstruction, the deep inferior epigastric perforator (DIEP) flap, can be challenging to achieve due to the paucity of adnominal bulk in these patients. This study compared operative outcomes in women with BMI less than 23.5 following reconstruction after one of three free flap methods: the DIEP flap, alternative flaps (ie, lumbar artery perforator flap or profounda artery perforator flap), and stacked flaps. METHODS: A retrospective study was conducted on thin patients (BMI <23.5) who underwent autologous breast reconstruction between 2010 and 2021 by two senior authors (N.T.H. and S.S.T.) at a single institution. One hundred fifteen patients were divided into three reconstructive groups. Flap weights, complication rates, secondary revisions, and fat grafting in each group were then compared. RESULTS: The success rate in all three groups was 100%, with only one partial flap loss in the stacked group. There was a significant difference in overall minor complications and donor complications among the three groups, with alternative flaps experiencing the most. All three groups had similar incidences of recipient breast complications, medical complications, need for secondary revisions, and amount of fat grafted. CONCLUSIONS: Autologous breast reconstruction in low BMI patients yields successful and durable results. This study shows that predictable results in the thin patient population can be obtained via alternate autologous methods beyond the standard DIEP flap. CLINICAL QUESTION/LEVEL OF EVIDENCE: Therapeutic, III.",
+    "CI": [
+      "Copyright (c) 2023 The Authors. Published by Wolters Kluwer Health, Inc. on behalf",
+      "of the American Society of Plastic Surgeons."
+    ],
+    "FAU": [
+      "Haddock, Nicholas T",
+      "Martinez, Valeria Mejia",
+      "Teotia, Sumeet S"
+    ],
+    "AU": [
+      "Haddock NT",
+      "Martinez VM",
+      "Teotia SS"
+    ],
+    "AD": [
+      "From the University of Texas Southwestern.",
+      "From the University of Texas Southwestern.",
+      "From the University of Texas Southwestern."
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Journal Article"
+    ],
+    "DEP": "20230928",
+    "PL": "United States",
+    "TA": "Plast Reconstr Surg",
+    "JT": "Plastic and reconstructive surgery",
+    "JID": "1306050",
+    "SB": "IM",
+    "MH": [
+      "Humans",
+      "Female",
+      "Body Mass Index",
+      "Retrospective Studies",
+      "Epigastric Arteries/transplantation",
+      "*Mammaplasty/methods",
+      "*Perforator Flap/blood supply",
+      "Postoperative Complications/epidemiology/etiology",
+      "Treatment Outcome",
+      "*Breast Neoplasms/surgery/complications"
+    ],
+    "PMC": "PMC10521770",
+    "COIS": [
+      "The authors have no financial interests to declare in relation to the content of",
+      "this article."
+    ],
+    "EDAT": "2023/05/12 13:08",
+    "MHDA": "2023/09/29 06:44",
+    "PMCR": [
+      "2023/09/26"
+    ],
+    "CRDT": [
+      "2023/05/12 10:23"
+    ],
+    "PHST": [
+      "2023/09/29 06:44 [medline]",
+      "2023/05/12 13:08 [pubmed]",
+      "2023/05/12 10:23 [entrez]",
+      "2023/09/26 00:00 [pmc-release]"
+    ],
+    "AID": [
+      "00006534-202310001-00002 [pii]",
+      "10.1097/PRS.0000000000010490 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Plast Reconstr Surg. 2023 Oct 1;152(4S):3S-15S. doi: 10.1097/PRS.0000000000010490. Epub 2023 Sep 28."
+  }
+}

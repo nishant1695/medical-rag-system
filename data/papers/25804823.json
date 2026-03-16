@@ -1,0 +1,132 @@
+{
+  "pmid": "25804823",
+  "title": "The DIEP flap breast reconstruction: Starting from scratch in a university hospital.",
+  "abstract": "PURPOSE: The deep inferior epigastric perforator (DIEP) flap provides excellent results when performed by a trained surgical team. However, the beginning of the procedure is often complicated. To date, few authors have published their initial experiences. This study presents our team's experience using a DIEP flap in breast reconstruction. METHODS: From June 2008 until December 2013, the same leading operator performed 132 consecutive DIEP flaps. Breast reconstructions were immediate (n=18) or delayed (n=114), unilateral (n=110) or bilateral (n=11). The learning curve was assessed using the operating time, ischemic time, postoperative hospital stay, and complications. For statistical comparisons, unilateral reconstructions were divided into five chronologic groups of 22 consecutive DIEP flaps and two chronologic groups of 55 flaps. RESULTS: The average time of surgery was 291 min (range, 185-645) for unilateral breast reconstruction and 513 min (range, 400-790) for bilateral breast reconstruction. The global complication rate was 24.5%. In the unilateral series, the time of surgery decreased progressively from 415 min to 233 min (P=4.8x10(-8)). The mean postoperative hospital stay was reduced from 7.14 days to 6.32 days (P=0.042). The complications and flap failure rates had regular time distributions. Initially, the revision rate reached 50% for the first ten unilateral cases but decreased rapidly and remained steady at 6% for the following cases (P=0.0012). CONCLUSIONS: Our initial experience of DIEP flap breast reconstruction showed a significant improvement of surgical performances exceeding 50 cases, with a critical ten first case period.",
+  "authors": [
+    "Bodin F",
+    "Dissaux C",
+    "Lutz JC",
+    "Hendriks S",
+    "Fiquet C",
+    "Bruant-Rodier C"
+  ],
+  "journal": "Annales de chirurgie plastique et esthetique",
+  "year": 2015,
+  "doi": "10.1016/j.anplas.2015.02.005",
+  "mesh_terms": [
+    "Adult",
+    "Aged",
+    "Female",
+    "Hospitals, University",
+    "Humans",
+    "Learning Curve",
+    "*Mammaplasty",
+    "Mastectomy",
+    "Middle Aged",
+    "Operative Time",
+    "*Perforator Flap",
+    "Reoperation/statistics & numerical data",
+    "Retrospective Studies",
+    "Young Adult"
+  ],
+  "raw_medline": {
+    "PMID": "25804823",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20161213",
+    "LR": "20161230",
+    "IS": "1768-319X (Electronic) 0294-1260 (Linking)",
+    "VI": "60",
+    "IP": "3",
+    "DP": "2015 Jun",
+    "TI": "The DIEP flap breast reconstruction: Starting from scratch in a university hospital.",
+    "PG": "171-8",
+    "LID": "S0294-1260(15)00032-1 [pii] 10.1016/j.anplas.2015.02.005 [doi]",
+    "AB": "PURPOSE: The deep inferior epigastric perforator (DIEP) flap provides excellent results when performed by a trained surgical team. However, the beginning of the procedure is often complicated. To date, few authors have published their initial experiences. This study presents our team's experience using a DIEP flap in breast reconstruction. METHODS: From June 2008 until December 2013, the same leading operator performed 132 consecutive DIEP flaps. Breast reconstructions were immediate (n=18) or delayed (n=114), unilateral (n=110) or bilateral (n=11). The learning curve was assessed using the operating time, ischemic time, postoperative hospital stay, and complications. For statistical comparisons, unilateral reconstructions were divided into five chronologic groups of 22 consecutive DIEP flaps and two chronologic groups of 55 flaps. RESULTS: The average time of surgery was 291 min (range, 185-645) for unilateral breast reconstruction and 513 min (range, 400-790) for bilateral breast reconstruction. The global complication rate was 24.5%. In the unilateral series, the time of surgery decreased progressively from 415 min to 233 min (P=4.8x10(-8)). The mean postoperative hospital stay was reduced from 7.14 days to 6.32 days (P=0.042). The complications and flap failure rates had regular time distributions. Initially, the revision rate reached 50% for the first ten unilateral cases but decreased rapidly and remained steady at 6% for the following cases (P=0.0012). CONCLUSIONS: Our initial experience of DIEP flap breast reconstruction showed a significant improvement of surgical performances exceeding 50 cases, with a critical ten first case period.",
+    "CI": [
+      "Copyright (c) 2015 Elsevier Masson SAS. All rights reserved."
+    ],
+    "FAU": [
+      "Bodin, F",
+      "Dissaux, C",
+      "Lutz, J-C",
+      "Hendriks, S",
+      "Fiquet, C",
+      "Bruant-Rodier, C"
+    ],
+    "AU": [
+      "Bodin F",
+      "Dissaux C",
+      "Lutz JC",
+      "Hendriks S",
+      "Fiquet C",
+      "Bruant-Rodier C"
+    ],
+    "AD": [
+      "Department of plastic surgery, Strasbourg academic hospital, 1, place de l'Hopital, BP 426, 67091 Strasbourg, France. Electronic address: frederic.bodin@chru-strasbourg.fr.",
+      "Department of plastic surgery, Strasbourg academic hospital, 1, place de l'Hopital, BP 426, 67091 Strasbourg, France.",
+      "Department of plastic surgery, Strasbourg academic hospital, 1, place de l'Hopital, BP 426, 67091 Strasbourg, France.",
+      "Department of plastic surgery, Strasbourg academic hospital, 1, place de l'Hopital, BP 426, 67091 Strasbourg, France.",
+      "Department of plastic surgery, Strasbourg academic hospital, 1, place de l'Hopital, BP 426, 67091 Strasbourg, France.",
+      "Department of plastic surgery, Strasbourg academic hospital, 1, place de l'Hopital, BP 426, 67091 Strasbourg, France."
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Journal Article"
+    ],
+    "DEP": "20150321",
+    "PL": "France",
+    "TA": "Ann Chir Plast Esthet",
+    "JT": "Annales de chirurgie plastique et esthetique",
+    "JID": "8305839",
+    "SB": "IM",
+    "MH": [
+      "Adult",
+      "Aged",
+      "Female",
+      "Hospitals, University",
+      "Humans",
+      "Learning Curve",
+      "*Mammaplasty",
+      "Mastectomy",
+      "Middle Aged",
+      "Operative Time",
+      "*Perforator Flap",
+      "Reoperation/statistics & numerical data",
+      "Retrospective Studies",
+      "Young Adult"
+    ],
+    "OTO": [
+      "NOTNLM"
+    ],
+    "OT": [
+      "Breast reconstruction",
+      "Courbe d'apprentissage",
+      "Deep inferior epigastric perforator flap (DIEP)",
+      "Learning curve",
+      "Microchirurgie",
+      "Microsurgery",
+      "Reconstruction mammaire"
+    ],
+    "EDAT": "2015/03/26 06:00",
+    "MHDA": "2016/12/15 06:00",
+    "CRDT": [
+      "2015/03/26 06:00"
+    ],
+    "PHST": [
+      "2014/12/16 00:00 [received]",
+      "2015/02/18 00:00 [accepted]",
+      "2015/03/26 06:00 [entrez]",
+      "2015/03/26 06:00 [pubmed]",
+      "2016/12/15 06:00 [medline]"
+    ],
+    "AID": [
+      "S0294-1260(15)00032-1 [pii]",
+      "10.1016/j.anplas.2015.02.005 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Ann Chir Plast Esthet. 2015 Jun;60(3):171-8. doi: 10.1016/j.anplas.2015.02.005. Epub 2015 Mar 21."
+  }
+}

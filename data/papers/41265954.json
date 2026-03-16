@@ -1,0 +1,112 @@
+{
+  "pmid": "41265954",
+  "title": "Microsurgical Breast Reconstruction.",
+  "abstract": "This article reviews the approach to microsurgical breast reconstruction. Innovations including the role of indocyanine green angiography, resensation, adapting techniques for safe outcomes in an obese patient population, robotic deep inferior epigastric perforator, and prophylactic lymphovenous bypass are highlighted. Recipient vessel considerations and troubleshooting are reviewed, in addition to first-line and alternative flap options and their characteristics. Emphasis is placed on practical elements of flap selection and surgical technique.",
+  "authors": [
+    "Moltaji S",
+    "Selber JC",
+    "Chaiyasate K",
+    "Lipa JE"
+  ],
+  "journal": "Clinics in plastic surgery",
+  "year": 2026,
+  "doi": "10.1016/j.cps.2025.08.004",
+  "mesh_terms": [
+    "Humans",
+    "*Mammaplasty/methods",
+    "*Microsurgery/methods",
+    "Female",
+    "Perforator Flap/blood supply",
+    "*Surgical Flaps/blood supply",
+    "Breast Neoplasms/surgery"
+  ],
+  "raw_medline": {
+    "PMID": "41265954",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20251120",
+    "LR": "20251120",
+    "IS": "1558-0504 (Electronic) 0094-1298 (Linking)",
+    "VI": "53",
+    "IP": "1",
+    "DP": "2026 Jan",
+    "TI": "Microsurgical Breast Reconstruction.",
+    "PG": "121-134",
+    "LID": "S0094-1298(25)00067-7 [pii] 10.1016/j.cps.2025.08.004 [doi]",
+    "AB": "This article reviews the approach to microsurgical breast reconstruction. Innovations including the role of indocyanine green angiography, resensation, adapting techniques for safe outcomes in an obese patient population, robotic deep inferior epigastric perforator, and prophylactic lymphovenous bypass are highlighted. Recipient vessel considerations and troubleshooting are reviewed, in addition to first-line and alternative flap options and their characteristics. Emphasis is placed on practical elements of flap selection and surgical technique.",
+    "CI": [
+      "Copyright (c) 2025 Elsevier Inc. All rights reserved."
+    ],
+    "FAU": [
+      "Moltaji, Syena",
+      "Selber, Jesse C",
+      "Chaiyasate, Kongkrit",
+      "Lipa, Joan E"
+    ],
+    "AU": [
+      "Moltaji S",
+      "Selber JC",
+      "Chaiyasate K",
+      "Lipa JE"
+    ],
+    "AD": [
+      "University Health Network, Toronto, Ontario, Canada; Division of Plastic Reconstructive & Aesthetic Surgery, Department of Surgery, Temerty Faculty of Medicine, University of Toronto.",
+      "Corewell Health East, Royal Oak, MI, USA; Division of Plastic Surgery, Corewell Health William Beaumont University Hospital, Royal Oak, MI, USA.",
+      "Corewell Health East, Royal Oak, MI, USA; Division of Plastic Surgery, Corewell Health William Beaumont University Hospital, Royal Oak, MI, USA.",
+      "Division of Plastic Reconstructive & Aesthetic Surgery, Department of Surgery, Temerty Faculty of Medicine, University of Toronto; Breast Reconstruction Surgery, University of Toronto, Sunnybrook Health Sciences Centre and the Sunnybrook Foundation, Toronto, Ontario, Canada. Electronic address: joan.lipa@sunnybrook.ca."
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Journal Article",
+      "Review"
+    ],
+    "PL": "United States",
+    "TA": "Clin Plast Surg",
+    "JT": "Clinics in plastic surgery",
+    "JID": "0424767",
+    "SB": "IM",
+    "MH": [
+      "Humans",
+      "*Mammaplasty/methods",
+      "*Microsurgery/methods",
+      "Female",
+      "Perforator Flap/blood supply",
+      "*Surgical Flaps/blood supply",
+      "Breast Neoplasms/surgery"
+    ],
+    "OTO": [
+      "NOTNLM"
+    ],
+    "OT": [
+      "Autologous breast reconstruction",
+      "DIEP",
+      "DUG/TUG",
+      "GAP",
+      "LAP",
+      "Microsurgery",
+      "PAP"
+    ],
+    "COIS": [
+      "Disclosure J.C. Selber is a consultant for MMI and Microsure. The other authors",
+      "have no relevant financial disclosures pertaining to this study."
+    ],
+    "EDAT": "2025/11/21 00:27",
+    "MHDA": "2025/11/21 00:28",
+    "CRDT": [
+      "2025/11/20 20:57"
+    ],
+    "PHST": [
+      "2025/11/21 00:28 [medline]",
+      "2025/11/21 00:27 [pubmed]",
+      "2025/11/20 20:57 [entrez]"
+    ],
+    "AID": [
+      "S0094-1298(25)00067-7 [pii]",
+      "10.1016/j.cps.2025.08.004 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Clin Plast Surg. 2026 Jan;53(1):121-134. doi: 10.1016/j.cps.2025.08.004."
+  }
+}

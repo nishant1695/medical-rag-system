@@ -38,11 +38,22 @@ async def upload_document(
             detail=f"Workspace {workspace_id} not found",
         )
 
-    # Save file
+    # Save file — strip any path components from the filename to prevent traversal
+    safe_name = Path(file.filename).name if file.filename else "upload"
+    if not safe_name:
+        safe_name = "upload"
+
     upload_dir = settings.BASE_DIR / "data" / "papers" / f"workspace_{workspace_id}"
     upload_dir.mkdir(parents=True, exist_ok=True)
 
-    file_path = upload_dir / file.filename
+    file_path = (upload_dir / safe_name).resolve()
+    # Guard: resolved path must still be inside upload_dir
+    if not str(file_path).startswith(str(upload_dir.resolve())):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid filename.",
+        )
+
     with open(file_path, "wb") as f:
         content = await file.read()
         f.write(content)
@@ -144,9 +155,13 @@ async def delete_document(
     rag_service = get_rag_service(db, workspace_id)
     await rag_service.delete_document(document_id)
 
-    # Delete file
-    if document.file_path and Path(document.file_path).exists():
-        os.remove(document.file_path)
+    # Delete file — verify the stored path is inside the expected workspace dir
+    # before removing, so a crafted DB record can't delete arbitrary files.
+    if document.file_path:
+        stored = Path(document.file_path).resolve()
+        allowed = (settings.BASE_DIR / "data" / "papers").resolve()
+        if str(stored).startswith(str(allowed)) and stored.exists():
+            os.remove(stored)
 
     # Delete from database
     await db.delete(document)

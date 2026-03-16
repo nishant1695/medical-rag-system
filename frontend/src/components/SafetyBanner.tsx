@@ -19,13 +19,13 @@ const config: Record<SafetyClass, {
     message: 'This is a summary of published research and should not replace clinical judgment.',
     cls: 'safety-literature',
   },
-  patient_specific: {
+  clinical_query: {
     icon: <AlertTriangle size={14} />,
-    title: 'Patient-Specific Query Detected',
+    title: 'Clinical Decision Support',
     message:
-      'This system provides literature summaries only. For individual patient decisions, '
-      + 'please consult a qualified clinician.',
-    cls: 'safety-patient_specific',
+      'This response synthesises published evidence for qualified healthcare professionals. '
+      + 'Clinical decisions must integrate individual patient factors and professional judgment.',
+    cls: 'safety-clinical_query',
   },
   emergency: {
     icon: <ShieldAlert size={14} />,

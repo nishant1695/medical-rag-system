@@ -1,0 +1,123 @@
+{
+  "pmid": "40781005",
+  "title": "Bilateral breast reconstruction with a two-stage DIEP flap: A single-center experience.",
+  "abstract": "BACKGROUND: The deep inferior epigastric perforator flap (DIEP) is the gold standard for autologous breast reconstruction (ABR), but its viability can be challenged in resource-reduced environments like Mexico, where bilateral DIEP reconstructions are rare due to their complexity. A two-stage procedure has been introduced to improve flap viability and mitigate surgeon-related factors. OBJECTIVE: This study is to describe the two-stage technique to improve flap survival in bilateral DIEP flap reconstructions and to report the results in a center with limited hours and resources. METHODS: A retrospective case series included women aged>/=18years who underwent two-stage bilateral DIEP flap procedures, either immediately or delayed, from January 2021 to July 2024. Key variables assessed included flap success rates, demographics, risk factors, complications, and surgical times. RESULTS: Twenty breasts were reconstructed in 10 patients. The mean age was 49.5years, 4 were smokers, 3 had prior abdominal surgeries, and 7 had received radiotherapy. The first-stage surgery averaged 145.5minutes, with a 4.3-day interval before the second stage, which lasted 243minutes. The overall flap success was 100%, with one case of partial flap loss, which did not compromise the final outcome. Complications included wound dehiscence (10%) and venous congestion (5%). The average hospital stay was 9.6days. CONCLUSIONS: The two-stage DIEP flap technique is a viable option for high-risk patients, yielding satisfactory outcomes and reducing complications. This method addresses surgeon-related challenges, enhancing overall results. Further research on flap delay in free flaps is recommended for improved practices in difficult settings.",
+  "authors": [
+    "Salazar I",
+    "Fernandez A",
+    "Luis D",
+    "Calix Garcia MA"
+  ],
+  "journal": "Annales de chirurgie plastique et esthetique",
+  "year": 2026,
+  "doi": "10.1016/j.anplas.2025.06.009",
+  "mesh_terms": [
+    "Humans",
+    "*Mammaplasty/methods",
+    "Female",
+    "*Perforator Flap/transplantation",
+    "Retrospective Studies",
+    "Middle Aged",
+    "Adult",
+    "Epigastric Arteries/transplantation",
+    "Breast Neoplasms/surgery",
+    "Aged"
+  ],
+  "raw_medline": {
+    "PMID": "40781005",
+    "OWN": "NLM",
+    "STAT": "MEDLINE",
+    "DCOM": "20260305",
+    "LR": "20260305",
+    "IS": "1768-319X (Electronic) 0294-1260 (Linking)",
+    "VI": "71",
+    "IP": "2",
+    "DP": "2026 Mar",
+    "TI": "Bilateral breast reconstruction with a two-stage DIEP flap: A single-center experience.",
+    "PG": "116-125",
+    "LID": "S0294-1260(25)00108-6 [pii] 10.1016/j.anplas.2025.06.009 [doi]",
+    "AB": "BACKGROUND: The deep inferior epigastric perforator flap (DIEP) is the gold standard for autologous breast reconstruction (ABR), but its viability can be challenged in resource-reduced environments like Mexico, where bilateral DIEP reconstructions are rare due to their complexity. A two-stage procedure has been introduced to improve flap viability and mitigate surgeon-related factors. OBJECTIVE: This study is to describe the two-stage technique to improve flap survival in bilateral DIEP flap reconstructions and to report the results in a center with limited hours and resources. METHODS: A retrospective case series included women aged>/=18years who underwent two-stage bilateral DIEP flap procedures, either immediately or delayed, from January 2021 to July 2024. Key variables assessed included flap success rates, demographics, risk factors, complications, and surgical times. RESULTS: Twenty breasts were reconstructed in 10 patients. The mean age was 49.5years, 4 were smokers, 3 had prior abdominal surgeries, and 7 had received radiotherapy. The first-stage surgery averaged 145.5minutes, with a 4.3-day interval before the second stage, which lasted 243minutes. The overall flap success was 100%, with one case of partial flap loss, which did not compromise the final outcome. Complications included wound dehiscence (10%) and venous congestion (5%). The average hospital stay was 9.6days. CONCLUSIONS: The two-stage DIEP flap technique is a viable option for high-risk patients, yielding satisfactory outcomes and reducing complications. This method addresses surgeon-related challenges, enhancing overall results. Further research on flap delay in free flaps is recommended for improved practices in difficult settings.",
+    "CI": [
+      "Copyright (c) 2025 Elsevier Masson SAS. All rights reserved."
+    ],
+    "FAU": [
+      "Salazar, I",
+      "Fernandez, A",
+      "Luis, D",
+      "Calix Garcia, M A"
+    ],
+    "AU": [
+      "Salazar I",
+      "Fernandez A",
+      "Luis D",
+      "Calix Garcia MA"
+    ],
+    "AD": [
+      "Plastic and Reconstructive Surgery Service, State Oncology Center, State of Mexico, Mexico.",
+      "Plastic and Reconstructive Surgery Service, ISSEMyM Medical Center, State of Mexico, Mexico.",
+      "Plastic and Reconstructive Surgery Service, ISSEMyM Medical Center, State of Mexico, Mexico.",
+      "Plastic, Aesthetic and Reconstructive Surgery Service, Plastic Surgery Center, Colonia Escalon, El Salvador. Electronic address: ma_calgarcia@hotmail.com."
+    ],
+    "LA": [
+      "eng"
+    ],
+    "PT": [
+      "Journal Article"
+    ],
+    "DEP": "20250807",
+    "PL": "France",
+    "TA": "Ann Chir Plast Esthet",
+    "JT": "Annales de chirurgie plastique et esthetique",
+    "JID": "8305839",
+    "SB": "IM",
+    "MH": [
+      "Humans",
+      "*Mammaplasty/methods",
+      "Female",
+      "*Perforator Flap/transplantation",
+      "Retrospective Studies",
+      "Middle Aged",
+      "Adult",
+      "Epigastric Arteries/transplantation",
+      "Breast Neoplasms/surgery",
+      "Aged"
+    ],
+    "OTO": [
+      "NOTNLM"
+    ],
+    "OT": [
+      "Autologous breast reconstruction (ABR)",
+      "Bilateral reconstruction",
+      "Deep inferior epigastric perforator flap (DIEP)",
+      "Environnements a ressources limitees",
+      "Lambeau de la perforatrice epigastrique inferieure profonde (DIEP)",
+      "Procedure en deux temps",
+      "Reconstruction bilaterale",
+      "Reconstruction mammaire autologue (ABR)",
+      "Resource-limited settings",
+      "Two-stage procedure"
+    ],
+    "COIS": [
+      "Disclosure of interest The authors declare that they have no competing interest."
+    ],
+    "EDAT": "2025/08/09 13:46",
+    "MHDA": "2026/03/06 09:08",
+    "CRDT": [
+      "2025/08/08 22:02"
+    ],
+    "PHST": [
+      "2025/03/12 00:00 [received]",
+      "2025/05/28 00:00 [revised]",
+      "2025/06/07 00:00 [accepted]",
+      "2026/03/06 09:08 [medline]",
+      "2025/08/09 13:46 [pubmed]",
+      "2025/08/08 22:02 [entrez]"
+    ],
+    "AID": [
+      "S0294-1260(25)00108-6 [pii]",
+      "10.1016/j.anplas.2025.06.009 [doi]"
+    ],
+    "PST": "ppublish",
+    "SO": "Ann Chir Plast Esthet. 2026 Mar;71(2):116-125. doi: 10.1016/j.anplas.2025.06.009. Epub 2025 Aug 7."
+  }
+}

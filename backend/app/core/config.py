@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     VECTOR_STORE_TYPE: str = "chromadb"  # or "qdrant"
     CHROMADB_HOST: str = "localhost"
     CHROMADB_PORT: int = 8001
-    CHROMADB_LOCAL_PATH: Optional[str] = None  # If set, use embedded ChromaDB
+    CHROMADB_LOCAL_PATH: Optional[str] = "./data/chromadb"  # Embedded by default; set to "" to use HTTP server
     QDRANT_URL: str = "http://localhost:6333"
     VECTOR_DIM: int = 768  # PubMedBERT dimension
 
