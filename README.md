@@ -47,11 +47,11 @@ This system ingests research papers (PDF), indexes them by subspecialty, and ans
 - **Automatic extraction** — after each document is indexed, an LLM extracts medical entities and typed relationships from the chunks (batched, 4 chunks per call)
 - **Entity types**: procedure, condition, outcome, anatomy, technique, population, drug
 - **Relation types**: treats, complicates, compared_to, requires, associated_with, contraindicates, part_of, predicts
-- **Persistent storage** in SQLite (`graph_nodes` + `graph_edges` tables); entities accumulate `mention_count` and edges accumulate `weight` as more papers are ingested — frequently co-occurring concepts become more strongly connected
+- **Persistent storage** in the application database (`graph_nodes`, `graph_edges`, `graph_edge_mentions`); entities accumulate `mention_count` and edges accumulate `weight` as more papers are ingested while per-document provenance keeps deletion accurate
 - **BFS query expansion** — at retrieval time, the query is matched against graph nodes; a breadth-first search up to 2 hops expands it with related concepts scored by `edge_weight × 0.6^(hop−1)` (directly connected, strongly evidenced concepts rank highest)
 - **Example**: query "DIEP flap complications" → hop-1: Flap Failure, Fat Necrosis, Donor Site Morbidity → hop-2: Venous Congestion, Re-exploration, Seroma — all appended to the embedding query
 - **REST endpoint** `GET /workspaces/{id}/graph` returns `{nodes, edges}` for visualisation (D3, Cytoscape, etc.)
-- No external graph database required — SQLite is sufficient at current scale; the `MedicalKnowledgeGraph` interface can be swapped for Neo4j if multi-hop reasoning or graph algorithms are needed later
+- No external graph database required — the existing application database is sufficient at current scale; the `MedicalKnowledgeGraph` interface can be swapped for Neo4j if multi-hop reasoning or graph algorithms are needed later
 
 ### Hybrid Retrieval Pipeline
 - **PubMedBERT embeddings** (`microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext`, 768-dim) for medical domain semantic search
@@ -123,8 +123,8 @@ This system ingests research papers (PDF), indexes them by subspecialty, and ans
 │                 │                          │                        │
 │  ┌──────────────▼──────────────┐  ┌────────▼───────────────────┐   │
 │  │      Hybrid Retrieval       │  │   Medical Knowledge Graph   │   │
-│  │  PubMedBERT → ChromaDB →   │  │  SQLite graph_nodes +       │   │
-│  │  Cross-Encoder Reranker     │  │  graph_edges • BFS expand   │   │
+│  │  PubMedBERT → ChromaDB →   │  │  SQL graph tables +         │   │
+│  │  Cross-Encoder Reranker     │  │  BFS expansion              │   │
 │  └─────────────────────────────┘  └────────────────────────────┘   │
 │                                                                     │
 │  ┌─────────────────────────────────────────────────────────────┐   │
@@ -287,7 +287,7 @@ NEXUSRAG_MIN_RELEVANCE_SCORE=0.3 # minimum reranker score
 | Method | Endpoint | Description |
 |---|---|---|
 | `GET` | `/api/v1/workspaces/{id}/documents` | List documents |
-| `POST` | `/api/v1/workspaces/{id}/documents/upload` | Upload PDF |
+| `POST` | `/api/v1/workspaces/{id}/documents` | Upload PDF |
 | `DELETE` | `/api/v1/workspaces/{id}/documents/{doc_id}` | Delete document |
 
 ### Chat
@@ -310,8 +310,7 @@ NEXUSRAG_MIN_RELEVANCE_SCORE=0.3 # minimum reranker score
     { "role": "user", "content": "..." },
     { "role": "assistant", "content": "..." }
   ],
-  "enable_thinking": false,
-  "force_search": true
+  "enable_thinking": false
 }
 ```
 
@@ -347,7 +346,7 @@ medical-rag-system/
 │   │   ├── schemas/             # Pydantic request/response schemas
 │   │   └── services/
 │   │       ├── chat_agent.py        # Agentic pipeline (decomp, HyDE, KG expand, retrieval, synthesis)
-│   │       ├── knowledge_graph.py   # Medical KG: LLM extraction, SQLite storage, BFS expansion
+│   │       ├── knowledge_graph.py   # Medical KG: LLM extraction, SQL storage, BFS expansion
 │   │       ├── medical_safety_classifier.py  # literature / clinical_query / emergency
 │   │       ├── medical_document_parser.py    # Docling parser + metadata extraction
 │   │       ├── rag_service.py       # Document processing orchestration
@@ -413,4 +412,4 @@ All responses include inline citations with evidence levels so every claim is tr
 - **cross-encoder/ms-marco-MiniLM** — Cross-encoder reranking
 - **Oxford CEBM** — Evidence level classification framework
 - **CrossRef** — DOI and paper URL resolution API
-- **SQLite** — Knowledge graph storage (graph_nodes + graph_edges)
+- **Application database** — Knowledge graph storage (`graph_nodes`, `graph_edges`, `graph_edge_mentions`)

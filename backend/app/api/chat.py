@@ -95,7 +95,7 @@ async def chat_stream(
     Example curl (raw SSE stream):
     curl -N -H "Accept: text/event-stream" -H "Content-Type: application/json" \
       -X POST "http://localhost:8000/api/v1/workspaces/1/chat" \
-      -d '{"message":"What are the outcomes of DIEP flap surgery?","history":[],"enable_thinking":false,"force_search":true}'
+      -d '{"message":"What are the outcomes of DIEP flap surgery?","history":[],"enable_thinking":false}'
     """
     # Delegate to chat agent's stream endpoint which returns a StreamingResponse
     return await chat_stream_endpoint(workspace_id=workspace_id, request=request, db=db)
@@ -191,4 +191,3 @@ async def get_knowledge_graph_data(
     from app.services.knowledge_graph import get_knowledge_graph
     kg = get_knowledge_graph(workspace_id)
     return await kg.get_graph_data(db)
-

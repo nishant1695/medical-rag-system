@@ -78,7 +78,6 @@ class ChatRequest(BaseModel):
     message: str
     history: List[ChatMessage] = []
     enable_thinking: bool = False
-    force_search: bool = False
 
 
 class SourceChunk(BaseModel):

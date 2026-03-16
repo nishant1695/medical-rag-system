@@ -50,6 +50,9 @@ data/agents/*/raw_papers/*.json
 data/agents/*/processed/*
 data/*.json
 !data/evaluation/*.json  # Keep evaluation datasets
+data/papers/
+data/chromadb/
+data/medrag.db
 
 # Logs
 *.log

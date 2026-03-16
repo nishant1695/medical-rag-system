@@ -136,7 +136,6 @@ export function ChatPage({ workspaceId }: ChatPageProps) {
           setStreaming(false)
         },
       },
-      { forceSearch: true },
     )
   }, [input, streaming, messages, workspaceId, updateLastMessage])
 

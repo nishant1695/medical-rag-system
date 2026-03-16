@@ -678,7 +678,6 @@ async def _agent_stream(
     db: AsyncSession,
     system_prompt: str,
     enable_thinking: bool,
-    force_search: bool,
     safety_class: str,
 ) -> AsyncGenerator[dict, None]:
     """
@@ -1052,7 +1051,6 @@ async def chat_stream_endpoint(
                 db=db,
                 system_prompt=system_prompt,
                 enable_thinking=request.enable_thinking,
-                force_search=request.force_search,
                 safety_class=safety_class,
             ):
                 event_type = event["event"]

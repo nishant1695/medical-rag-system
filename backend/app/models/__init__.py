@@ -193,7 +193,7 @@ class ChatMessage(Base):
     agent_steps = Column(JSON)
 
     # Medical enhancements
-    safety_classification = Column(String(50))   # literature, patient_specific, emergency
+    safety_classification = Column(String(50))   # literature, clinical_query, emergency
     related_entities = Column(JSON)              # Extracted medical entities list
     evidence_quality = Column(JSON)              # Summary: {level_I: 3, level_II: 2, ...}
 

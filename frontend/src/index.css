@@ -51,6 +51,7 @@
 
 /* Safety warning variants */
 .safety-literature      { @apply bg-emerald-50 border-emerald-200 text-emerald-700; }
+.safety-clinical_query,
 .safety-patient_specific { @apply bg-amber-50 border-amber-300 text-amber-800; }
 .safety-emergency       { @apply bg-red-50 border-red-300 text-red-800; }
 

@@ -12,15 +12,15 @@ Pipeline
 --------
 Ingestion : extract (entity, relation, entity) triples from document chunks
             via a single batched LLM call per 4-chunk window. Triples are
-            upserted into two SQLite tables (graph_nodes, graph_edges).
-            Repeated mentions increment mention_count / weight.
+            upserted into SQL tables and tracked per document so deletions can
+            remove only the evidence contributed by the deleted paper.
 
-Retrieval : match query text against node names → 1-hop graph traversal →
-            return related entity names → caller appends them to the retrieval
-            query string to enrich the embedding.
+Retrieval : match query text against node names → graph traversal → return
+            related entity names → caller appends them to the retrieval query
+            string to enrich the embedding.
 
-Tables are created with CREATE TABLE IF NOT EXISTS on first use, so they are
-added to existing databases automatically without a migration.
+Tables are created on first use without a formal migration layer so the graph
+feature can be added to existing databases incrementally.
 """
 from __future__ import annotations
 
@@ -29,9 +29,21 @@ import logging
 import re
 from typing import Optional
 
-from sqlalchemy import text
+from sqlalchemy import (
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Table,
+    UniqueConstraint,
+    text,
+)
+from sqlalchemy.schema import CreateTable
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.database import Base
 from app.services.llm.base import LLMMessage
 
 logger = logging.getLogger(__name__)
@@ -72,36 +84,69 @@ Text:
 {text}
 """
 
-_CREATE_NODES = """
-CREATE TABLE IF NOT EXISTS graph_nodes (
-    id               INTEGER PRIMARY KEY AUTOINCREMENT,
-    workspace_id     INTEGER NOT NULL,
-    entity_name      TEXT    NOT NULL,
-    entity_type      TEXT    NOT NULL,
-    normalized_name  TEXT    NOT NULL,
-    mention_count    INTEGER DEFAULT 1,
-    created_at       DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (workspace_id) REFERENCES knowledge_bases(id) ON DELETE CASCADE,
-    UNIQUE (workspace_id, normalized_name)
-)
-"""
+_GRAPH_METADATA = Base.metadata
 
-_CREATE_EDGES = """
-CREATE TABLE IF NOT EXISTS graph_edges (
-    id           INTEGER PRIMARY KEY AUTOINCREMENT,
-    workspace_id INTEGER NOT NULL,
-    source_id    INTEGER NOT NULL,
-    target_id    INTEGER NOT NULL,
-    relationship TEXT    NOT NULL,
-    weight       REAL    DEFAULT 1.0,
-    document_id  INTEGER,
-    created_at   DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (workspace_id) REFERENCES knowledge_bases(id) ON DELETE CASCADE,
-    FOREIGN KEY (source_id)    REFERENCES graph_nodes(id)     ON DELETE CASCADE,
-    FOREIGN KEY (target_id)    REFERENCES graph_nodes(id)     ON DELETE CASCADE,
-    UNIQUE (source_id, target_id, relationship)
+_GRAPH_NODES = Table(
+    "graph_nodes",
+    _GRAPH_METADATA,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column(
+        "workspace_id",
+        Integer,
+        ForeignKey("knowledge_bases.id", ondelete="CASCADE"),
+        nullable=False,
+    ),
+    Column("entity_name", String, nullable=False),
+    Column("entity_type", String, nullable=False),
+    Column("normalized_name", String, nullable=False),
+    Column("mention_count", Integer, nullable=False, server_default=text("1")),
+    Column("created_at", DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    UniqueConstraint("workspace_id", "normalized_name", name="uq_graph_nodes_workspace_name"),
 )
-"""
+
+_GRAPH_EDGES = Table(
+    "graph_edges",
+    _GRAPH_METADATA,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column(
+        "workspace_id",
+        Integer,
+        ForeignKey("knowledge_bases.id", ondelete="CASCADE"),
+        nullable=False,
+    ),
+    Column("source_id", Integer, ForeignKey("graph_nodes.id", ondelete="CASCADE"), nullable=False),
+    Column("target_id", Integer, ForeignKey("graph_nodes.id", ondelete="CASCADE"), nullable=False),
+    Column("relationship", String, nullable=False),
+    Column("weight", Float, nullable=False, server_default=text("1.0")),
+    # Legacy column retained for backward-compatible backfill from older DBs.
+    Column("document_id", Integer, nullable=True),
+    Column("created_at", DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    UniqueConstraint("source_id", "target_id", "relationship", name="uq_graph_edges_relation"),
+)
+
+_GRAPH_EDGE_MENTIONS = Table(
+    "graph_edge_mentions",
+    _GRAPH_METADATA,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column(
+        "workspace_id",
+        Integer,
+        ForeignKey("knowledge_bases.id", ondelete="CASCADE"),
+        nullable=False,
+    ),
+    Column("edge_id", Integer, ForeignKey("graph_edges.id", ondelete="CASCADE"), nullable=False),
+    Column("document_id", Integer, nullable=False),
+    Column("mention_count", Integer, nullable=False, server_default=text("1")),
+    Column("created_at", DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP")),
+    UniqueConstraint("edge_id", "document_id", name="uq_graph_edge_mentions_edge_doc"),
+)
+
+
+def _weight_for_mentions(total_mentions: int) -> float:
+    """Map relation mentions to the aggregate edge weight used for traversal."""
+    if total_mentions <= 1:
+        return 1.0
+    return 1.0 + (total_mentions - 1) * 0.1
 
 
 class MedicalKnowledgeGraph:
@@ -116,14 +161,39 @@ class MedicalKnowledgeGraph:
     async def _ensure_tables(self, db: AsyncSession) -> None:
         if self._tables_ensured:
             return
-        await db.execute(text(_CREATE_NODES))
-        await db.execute(text(_CREATE_EDGES))
-        # Migrate existing graph_edges tables that pre-date the document_id column
+        await db.execute(CreateTable(_GRAPH_NODES, if_not_exists=True))
+        await db.execute(CreateTable(_GRAPH_EDGES, if_not_exists=True))
+        await db.execute(CreateTable(_GRAPH_EDGE_MENTIONS, if_not_exists=True))
+        await db.commit()
+
+        # Older graph_edges tables may predate the legacy document_id column.
         try:
             await db.execute(text("ALTER TABLE graph_edges ADD COLUMN document_id INTEGER"))
             await db.commit()
         except Exception:
-            pass  # Column already exists — safe to ignore
+            await db.rollback()
+
+        # Backfill provenance for graph data that predates graph_edge_mentions.
+        # Existing aggregate edge weight is converted into an approximate
+        # mention_count for the stored document_id so delete semantics remain
+        # consistent for already-ingested papers.
+        await db.execute(
+            text(
+                "INSERT INTO graph_edge_mentions "
+                "(workspace_id, edge_id, document_id, mention_count) "
+                "SELECT e.workspace_id, e.id, e.document_id, "
+                "       CASE "
+                "         WHEN e.weight IS NULL OR e.weight <= 1 THEN 1 "
+                "         ELSE CAST(ROUND((e.weight - 1.0) / 0.1) AS INTEGER) + 1 "
+                "       END "
+                "FROM graph_edges e "
+                "WHERE e.document_id IS NOT NULL "
+                "AND NOT EXISTS ("
+                "  SELECT 1 FROM graph_edge_mentions gem "
+                "  WHERE gem.edge_id = e.id AND gem.document_id = e.document_id"
+                ")"
+            )
+        )
         await db.commit()
         self._tables_ensured = True
 
@@ -203,6 +273,20 @@ class MedicalKnowledgeGraph:
                 continue
             norm = name.lower()
 
+            await db.execute(
+                text(
+                    "INSERT INTO graph_nodes "
+                    "(workspace_id, entity_name, entity_type, normalized_name, mention_count) "
+                    "VALUES (:ws, :name, :type, :norm, 0) "
+                    "ON CONFLICT (workspace_id, normalized_name) DO NOTHING"
+                ),
+                {
+                    "ws": self.workspace_id,
+                    "name": name,
+                    "type": etype,
+                    "norm": norm,
+                },
+            )
             row = (
                 await db.execute(
                     text(
@@ -212,31 +296,17 @@ class MedicalKnowledgeGraph:
                     {"ws": self.workspace_id, "n": norm},
                 )
             ).fetchone()
+            if not row:
+                continue
 
-            if row:
-                entity_ids[norm] = row[0]
-                await db.execute(
-                    text(
-                        "UPDATE graph_nodes SET mention_count = mention_count + 1 "
-                        "WHERE id=:id"
-                    ),
-                    {"id": row[0]},
-                )
-            else:
-                result = await db.execute(
-                    text(
-                        "INSERT INTO graph_nodes "
-                        "(workspace_id, entity_name, entity_type, normalized_name) "
-                        "VALUES (:ws, :name, :type, :norm)"
-                    ),
-                    {
-                        "ws": self.workspace_id,
-                        "name": name,
-                        "type": etype,
-                        "norm": norm,
-                    },
-                )
-                entity_ids[norm] = result.lastrowid
+            entity_ids[norm] = row[0]
+            await db.execute(
+                text(
+                    "UPDATE graph_nodes SET mention_count = mention_count + 1 "
+                    "WHERE id=:id"
+                ),
+                {"id": row[0]},
+            )
 
         # ── Upsert edges ──────────────────────────────────────────────────────
         new_edges = 0
@@ -264,19 +334,14 @@ class MedicalKnowledgeGraph:
             ).fetchone()
 
             if existing:
-                await db.execute(
-                    text(
-                        "UPDATE graph_edges SET weight = weight + 0.1 "
-                        "WHERE source_id=:s AND target_id=:t AND relationship=:r"
-                    ),
-                    {"s": src_id, "t": tgt_id, "r": relation},
-                )
+                edge_id = existing[0]
             else:
                 await db.execute(
                     text(
                         "INSERT INTO graph_edges "
-                        "(workspace_id, source_id, target_id, relationship, document_id) "
-                        "VALUES (:ws, :s, :t, :r, :doc)"
+                        "(workspace_id, source_id, target_id, relationship, weight, document_id) "
+                        "VALUES (:ws, :s, :t, :r, 1.0, :doc) "
+                        "ON CONFLICT (source_id, target_id, relationship) DO NOTHING"
                     ),
                     {
                         "ws": self.workspace_id,
@@ -286,7 +351,74 @@ class MedicalKnowledgeGraph:
                         "doc": document_id,
                     },
                 )
+                edge_row = (
+                    await db.execute(
+                        text(
+                            "SELECT id FROM graph_edges "
+                            "WHERE source_id=:s AND target_id=:t AND relationship=:r"
+                        ),
+                        {"s": src_id, "t": tgt_id, "r": relation},
+                    )
+                ).fetchone()
+                if not edge_row:
+                    continue
+                edge_id = edge_row[0]
                 new_edges += 1
+
+            if document_id is not None:
+                await db.execute(
+                    text(
+                        "INSERT INTO graph_edge_mentions "
+                        "(workspace_id, edge_id, document_id, mention_count) "
+                        "VALUES (:ws, :edge_id, :doc, 0) "
+                        "ON CONFLICT (edge_id, document_id) DO NOTHING"
+                    ),
+                    {
+                        "ws": self.workspace_id,
+                        "edge_id": edge_id,
+                        "doc": document_id,
+                    },
+                )
+                await db.execute(
+                    text(
+                        "UPDATE graph_edge_mentions "
+                        "SET mention_count = mention_count + 1 "
+                        "WHERE edge_id=:edge_id AND document_id=:doc"
+                    ),
+                    {
+                        "edge_id": edge_id,
+                        "doc": document_id,
+                    },
+                )
+                total_mentions = (
+                    await db.execute(
+                        text(
+                            "SELECT COALESCE(SUM(mention_count), 0) "
+                            "FROM graph_edge_mentions WHERE edge_id=:edge_id"
+                        ),
+                        {"edge_id": edge_id},
+                    )
+                ).scalar_one()
+                await db.execute(
+                    text(
+                        "UPDATE graph_edges "
+                        "SET weight=:weight, document_id=COALESCE(document_id, :doc) "
+                        "WHERE id=:edge_id"
+                    ),
+                    {
+                        "weight": _weight_for_mentions(int(total_mentions or 0)),
+                        "doc": document_id,
+                        "edge_id": edge_id,
+                    },
+                )
+            elif existing:
+                await db.execute(
+                    text(
+                        "UPDATE graph_edges SET weight = weight + 0.1 "
+                        "WHERE id=:edge_id"
+                    ),
+                    {"edge_id": edge_id},
+                )
 
         await db.commit()
         return new_edges
@@ -305,11 +437,70 @@ class MedicalKnowledgeGraph:
         """
         await self._ensure_tables(db)
 
-        # Delete edges contributed by this document
+        edge_ids = [
+            row[0]
+            for row in (
+                await db.execute(
+                    text(
+                        "SELECT DISTINCT edge_id FROM graph_edge_mentions "
+                        "WHERE workspace_id=:ws AND document_id=:doc"
+                    ),
+                    {"ws": self.workspace_id, "doc": document_id},
+                )
+            ).fetchall()
+        ]
+
+        # Delete edge-mention provenance contributed by this document.
+        await db.execute(
+            text(
+                "DELETE FROM graph_edge_mentions "
+                "WHERE workspace_id=:ws AND document_id=:doc"
+            ),
+            {"ws": self.workspace_id, "doc": document_id},
+        )
+
+        for edge_id in edge_ids:
+            total_mentions = (
+                await db.execute(
+                    text(
+                        "SELECT COALESCE(SUM(mention_count), 0) "
+                        "FROM graph_edge_mentions WHERE edge_id=:edge_id"
+                    ),
+                    {"edge_id": edge_id},
+                )
+            ).scalar_one()
+            if total_mentions:
+                await db.execute(
+                    text(
+                        "UPDATE graph_edges "
+                        "SET weight=:weight, "
+                        "    document_id=("
+                        "      SELECT MIN(document_id) FROM graph_edge_mentions "
+                        "      WHERE edge_id=:edge_id"
+                        "    ) "
+                        "WHERE id=:edge_id"
+                    ),
+                    {
+                        "weight": _weight_for_mentions(int(total_mentions)),
+                        "edge_id": edge_id,
+                    },
+                )
+            else:
+                await db.execute(
+                    text("DELETE FROM graph_edges WHERE id=:edge_id"),
+                    {"edge_id": edge_id},
+                )
+
+        # Legacy cleanup for old rows that only tracked a single document_id and
+        # do not yet have provenance rows.
         await db.execute(
             text(
                 "DELETE FROM graph_edges "
-                "WHERE workspace_id=:ws AND document_id=:doc"
+                "WHERE workspace_id=:ws AND document_id=:doc "
+                "AND NOT EXISTS ("
+                "  SELECT 1 FROM graph_edge_mentions gem "
+                "  WHERE gem.edge_id = graph_edges.id"
+                ")"
             ),
             {"ws": self.workspace_id, "doc": document_id},
         )

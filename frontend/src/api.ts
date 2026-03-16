@@ -109,7 +109,7 @@ export function streamChat(
   message: string,
   history: { role: string; content: string }[],
   callbacks: SSECallbacks,
-  opts: { enableThinking?: boolean; forceSearch?: boolean } = {},
+  opts: { enableThinking?: boolean } = {},
 ): AbortController {
   const controller = new AbortController()
 
@@ -123,7 +123,6 @@ export function streamChat(
           message,
           history,
           enable_thinking: opts.enableThinking ?? false,
-          force_search: opts.forceSearch ?? true,
         }),
         signal: controller.signal,
       })
