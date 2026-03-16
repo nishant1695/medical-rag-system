@@ -105,6 +105,12 @@ class Document(Base):
     publication_date = Column(DateTime)
     mesh_terms = Column(JSON)     # stored as JSON array
 
+    # Online link (doi.org, PubMed, or CrossRef-resolved URL)
+    paper_url = Column(Text)
+
+    # Subspecialty tag (breast, hand, craniofacial, microsurgery, burns, aesthetic, lower_extremity)
+    subspecialty = Column(String(100))
+
     # Study characteristics
     study_design = Column(String(100))
     evidence_level = Column(String(10))

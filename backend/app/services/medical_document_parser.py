@@ -56,6 +56,9 @@ class ParsedMedicalDocument:
         self.limitations: List[str] = []
         self.medical_entities: List[Dict[str, Any]] = []
 
+        # Resolved online link (doi.org, PubMed, or CrossRef lookup)
+        self.paper_url: Optional[str] = None
+
 
 class MedicalDocumentParser:
     """
@@ -141,6 +144,16 @@ class MedicalDocumentParser:
         result.tables = parsed.get("tables", [])
         result.tables_count = len(result.tables)
 
+        # Step 2b: Extract metadata from PDF text when not populated by PubMed
+        if not result.doi:
+            result.doi = self._extract_doi_from_text(result.markdown) or ""
+        if not result.authors:
+            result.authors = self._extract_authors_from_pdf(result.markdown)
+        if not result.publication_year:
+            result.publication_year = self._extract_year_from_text(result.markdown)
+        if not result.journal:
+            result.journal = self._extract_journal_from_text(result.markdown) or ""
+
         # Step 3: Extract medical metadata from text if not from PubMed
         full_text = result.markdown or ""
         if result.title:
@@ -174,6 +187,11 @@ class MedicalDocumentParser:
             result,
         )
 
+        # Resolve online paper URL
+        result.paper_url = self._resolve_paper_url(
+            result.doi or None, result.pmid, result.title
+        )
+
         elapsed_ms = int((time.time() - start_time) * 1000)
         logger.info(
             f"Parsed medical document {document_id} ({original_filename}) in {elapsed_ms}ms: "
@@ -183,6 +201,123 @@ class MedicalDocumentParser:
         )
 
         return result
+
+    # ── PDF metadata extraction helpers ───────────────────────────────────────
+
+    def _extract_doi_from_text(self, text: str) -> Optional[str]:
+        """Extract DOI from document text via regex."""
+        match = re.search(r'\b(10\.\d{4,9}/[^\s\]\[>"\'<,;)]+)', text)
+        if match:
+            return match.group(1).rstrip('.')
+        return None
+
+    def _extract_authors_from_pdf(self, markdown: str) -> List[str]:
+        """Heuristic extraction of author names from PDF markdown header."""
+        header = markdown[:3000]
+
+        # Pattern 1: explicit "Author(s):" label
+        authors_match = re.search(
+            r'(?:authors?|by)[:\s]+([A-Z][a-z]+(?:[\s\-][A-Z][a-z]+)*'
+            r'(?:,\s*[A-Z][a-z]+(?:[\s\-][A-Z][a-z]+)*){1,})',
+            header, re.IGNORECASE,
+        )
+        if authors_match:
+            raw = authors_match.group(1)
+            parts = [a.strip() for a in re.split(r',\s*', raw) if a.strip()]
+            if len(parts) >= 2:
+                return parts[:10]
+
+        # Pattern 2: line of comma-separated "Lastname Initial" entries
+        for line in header.split('\n')[:30]:
+            line = line.strip()
+            if not 10 <= len(line) <= 300:
+                continue
+            if re.search(r'\d{4}', line):  # skip lines with years
+                continue
+            if re.match(
+                r'^[A-Z][a-z]+\s+[A-Z][a-z]?\s*(?:,\s*[A-Z][a-z]+\s+[A-Z][a-z]?\s*){2,}',
+                line,
+            ):
+                parts = [p.strip() for p in re.split(r',\s*', line) if p.strip()]
+                if 2 <= len(parts) <= 15:
+                    return parts[:10]
+
+        return []
+
+    def _extract_year_from_text(self, text: str) -> Optional[int]:
+        """Extract most recent plausible publication year from document header."""
+        header = text[:2000]
+        matches = re.findall(r'\b(19[0-9]{2}|20[0-2][0-9])\b', header)
+        if matches:
+            years = [int(y) for y in matches if 1950 <= int(y) <= 2030]
+            if years:
+                return max(years)
+        return None
+
+    def _extract_journal_from_text(self, text: str) -> Optional[str]:
+        """Heuristic extraction of journal name from PDF header/footer text."""
+        header = text[:3000]
+        match = re.search(
+            r'\b((?:Journal|Annals|Archives|British|European|American|International|'
+            r'Plastic|Aesthetic|Reconstructive|Microsurgery|Surgery)[^\n]{5,80})',
+            header, re.IGNORECASE,
+        )
+        if match:
+            candidate = match.group(1).strip()
+            if len(candidate) <= 80 and not re.search(
+                r'\b(the|this|study|patients?|results?|we|were|was)\b',
+                candidate, re.I,
+            ):
+                return candidate
+        return None
+
+    def _resolve_paper_url(
+        self,
+        doi: Optional[str],
+        pmid: Optional[str],
+        title: str,
+    ) -> Optional[str]:
+        """
+        Resolve an online URL for the paper.
+
+        Priority:
+          1. DOI  → https://doi.org/{doi}
+          2. PMID → https://pubmed.ncbi.nlm.nih.gov/{pmid}/
+          3. Title → CrossRef API lookup → DOI URL
+        """
+        if doi:
+            return f"https://doi.org/{doi}"
+        if pmid:
+            return f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
+        if title:
+            try:
+                import json as _json
+                import urllib.parse
+                import urllib.request
+
+                encoded = urllib.parse.quote(title[:200])
+                url = (
+                    f"https://api.crossref.org/works"
+                    f"?query.bibliographic={encoded}&rows=1&select=DOI"
+                )
+                req = urllib.request.Request(
+                    url,
+                    headers={
+                        "User-Agent": (
+                            f"MedicalRAG/1.0 (mailto:{settings.PUBMED_EMAIL})"
+                        )
+                    },
+                )
+                with urllib.request.urlopen(req, timeout=5) as resp:
+                    data = _json.loads(resp.read())
+                items = data.get("message", {}).get("items", [])
+                if items and items[0].get("DOI"):
+                    return f"https://doi.org/{items[0]['DOI']}"
+            except Exception as e:
+                logger.debug(f"CrossRef lookup failed for '{title[:50]}': {e}")
+        return None
+
+    # ── PubMed fetch ────────────────────────────────────────────────────────────
 
     def _fetch_pubmed_metadata(self, pmid: str) -> Optional[Dict[str, Any]]:
         """Fetch metadata from PubMed API."""

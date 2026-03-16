@@ -25,6 +25,8 @@ export interface Document {
   study_design?: string
   evidence_level?: 'I' | 'II' | 'III' | 'IV' | 'V'
   sample_size?: number
+  paper_url?: string
+  subspecialty?: string
   created_at: string
 }
 
@@ -38,6 +40,15 @@ export interface SourceChunk {
   score: number
   pmid?: string
   evidence_level?: string
+  paper_url?: string
+  subspecialty?: string
+}
+
+export interface SpecialistContext {
+  subspecialty: string
+  label: string
+  source_count: number
+  evidence_summary: Record<string, number>
 }
 
 export type SafetyClass = 'literature' | 'patient_specific' | 'emergency'
@@ -48,6 +59,7 @@ export interface ChatResponse {
   safety_classification: SafetyClass
   evidence_summary: Record<string, number>
   thinking?: string
+  specialist_contexts?: SpecialistContext[]
 }
 
 export interface SearchResponse {
@@ -77,6 +89,7 @@ export interface Message {
   thinking?: string
   streaming?: boolean    // true while tokens are arriving
   error?: string
+  specialist_contexts?: SpecialistContext[]
 }
 
 export type Tab = 'chat' | 'search' | 'documents'

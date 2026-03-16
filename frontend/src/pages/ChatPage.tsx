@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { Trash2 } from 'lucide-react'
 import { nanoid } from '../utils/nanoid'
-import { streamChat } from '../api'
+import { streamChat, api } from '../api'
 import type { Message, SourceChunk } from '../types'
 import { ChatMessageBubble } from '../components/ChatMessage'
 import { ChatInput } from '../components/ChatInput'
@@ -20,13 +21,41 @@ export function ChatPage({ workspaceId }: ChatPageProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [streaming, setStreaming] = useState(false)
+  const [loadingHistory, setLoadingHistory] = useState(true)
   const bottomRef = useRef<HTMLDivElement>(null)
   const abortRef = useRef<AbortController | null>(null)
+
+  // Load persisted chat history when workspace changes
+  useEffect(() => {
+    setMessages([])
+    setLoadingHistory(true)
+    api.chat.history(workspaceId)
+      .then(rows => {
+        const restored: Message[] = rows.map(r => ({
+          id: r.message_id,
+          role: r.role as Message['role'],
+          content: r.content,
+          sources: (r.sources as SourceChunk[]) ?? [],
+          evidence_summary: r.evidence_quality ?? {},
+          safety_classification: r.safety_classification as Message['safety_classification'],
+          thinking: r.thinking ?? undefined,
+        }))
+        setMessages(restored)
+      })
+      .catch(() => { /* ignore — history is non-critical */ })
+      .finally(() => setLoadingHistory(false))
+  }, [workspaceId])
 
   // Scroll to bottom on new content
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  const handleClearHistory = async () => {
+    if (!confirm('Clear conversation history for this workspace?')) return
+    await api.chat.clearHistory(workspaceId).catch(() => {})
+    setMessages([])
+  }
 
   const updateLastMessage = useCallback((updater: (m: Message) => Message) => {
     setMessages(prev => {
@@ -63,8 +92,8 @@ export function ChatPage({ workspaceId }: ChatPageProps) {
     setInput('')
     setStreaming(true)
 
-    // Build history for context (exclude the new placeholder)
-    const history = [...messages, userMsg].map(m => ({
+    // Build history from prior turns only (current question is sent as `message`)
+    const history = messages.map(m => ({
       role: m.role,
       content: m.content,
     }))
@@ -86,13 +115,14 @@ export function ChatPage({ workspaceId }: ChatPageProps) {
         onSources(sources) {
           pendingSources = sources
         },
-        onDone({ safety_classification, evidence_summary }) {
+        onDone({ safety_classification, evidence_summary, specialist_contexts }) {
           updateLastMessage(m => ({
             ...m,
             streaming: false,
             sources: pendingSources,
             safety_classification: safety_classification as Message['safety_classification'],
             evidence_summary,
+            specialist_contexts,
           }))
           setStreaming(false)
         },
@@ -124,7 +154,11 @@ export function ChatPage({ workspaceId }: ChatPageProps) {
     <div className="flex flex-col h-full">
       {/* Messages area */}
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-        {messages.length === 0 ? (
+        {loadingHistory ? (
+          <div className="flex items-center justify-center h-full text-slate-400 text-sm">
+            Loading conversation…
+          </div>
+        ) : messages.length === 0 ? (
           /* Welcome / empty state */
           <div className="flex flex-col items-center justify-center h-full gap-6 text-center pb-16">
             <div>
@@ -164,9 +198,21 @@ export function ChatPage({ workspaceId }: ChatPageProps) {
           onStop={handleStop}
           streaming={streaming}
         />
-        <p className="text-xs text-slate-400 text-center mt-2">
-          For research only — not clinical advice. Always apply professional judgment.
-        </p>
+        <div className="flex items-center justify-between mt-2">
+          <p className="text-xs text-slate-400">
+            For research only — not clinical advice. Always apply professional judgment.
+          </p>
+          {messages.length > 0 && !streaming && (
+            <button
+              onClick={handleClearHistory}
+              className="flex items-center gap-1 text-xs text-slate-400 hover:text-red-500 transition-colors"
+              title="Clear conversation history"
+            >
+              <Trash2 size={11} />
+              Clear
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )

@@ -135,14 +135,14 @@ export function DocumentsTab({ workspaceId }: DocumentsTabProps) {
                         {doc.status}
                       </span>
                       <EvidenceBadge level={doc.evidence_level} />
-                      {doc.pmid && (
+                      {(doc.paper_url || doc.pmid) && (
                         <a
-                          href={`https://pubmed.ncbi.nlm.nih.gov/${doc.pmid}/`}
+                          href={doc.paper_url ?? `https://pubmed.ncbi.nlm.nih.gov/${doc.pmid}/`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-0.5 text-xs text-medical-600 hover:underline font-mono"
                         >
-                          PMID {doc.pmid}
+                          {doc.pmid ? `PMID ${doc.pmid}` : 'View paper'}
                           <ExternalLink size={10} />
                         </a>
                       )}

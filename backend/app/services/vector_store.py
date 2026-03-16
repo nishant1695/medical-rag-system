@@ -162,6 +162,20 @@ class VectorStore:
             logger.error(f"Failed to count documents: {e}")
             return 0
 
+    def count_by_subspecialty(self) -> dict[str, int]:
+        """Return chunk counts grouped by subspecialty metadata tag."""
+        try:
+            collection = self._get_collection()
+            all_meta = collection.get(include=["metadatas"])["metadatas"] or []
+            counts: dict[str, int] = {}
+            for m in all_meta:
+                spec = (m.get("subspecialty") or "untagged").strip() or "untagged"
+                counts[spec] = counts.get(spec, 0) + 1
+            return counts
+        except Exception as e:
+            logger.error(f"Failed to count by subspecialty: {e}")
+            return {}
+
 
 def get_vector_store(workspace_id: int) -> VectorStore:
     """Get vector store instance for a workspace."""

@@ -31,6 +31,8 @@ class RetrievedChunk:
     pmid: Optional[str] = None
     evidence_level: Optional[str] = None
     study_design: Optional[str] = None
+    paper_url: Optional[str] = None
+    subspecialty: Optional[str] = None
 
 
 @dataclass
@@ -43,6 +45,7 @@ class Citation:
     heading_path: List[str]
     pmid: Optional[str] = None
     evidence_level: Optional[str] = None
+    paper_url: Optional[str] = None
 
     def format(self) -> str:
         """Format citation as string."""
@@ -91,6 +94,7 @@ class MedicalRetriever:
         top_k: int = 5,
         document_ids: Optional[List[int]] = None,
         min_evidence_level: Optional[str] = None,
+        subspecialty: Optional[str] = None,
     ) -> RetrievalResult:
         """
         Retrieve relevant chunks for a query.
@@ -109,9 +113,19 @@ class MedicalRetriever:
 
         query_embedding = self.embedder.embed_query(query)
 
-        where_filter = None
+        # Build where filter combining document_ids and subspecialty
+        where_conditions = []
         if document_ids:
-            where_filter = {"document_id": {"$in": document_ids}}
+            where_conditions.append({"document_id": {"$in": document_ids}})
+        if subspecialty:
+            where_conditions.append({"subspecialty": subspecialty})
+
+        if len(where_conditions) == 0:
+            where_filter = None
+        elif len(where_conditions) == 1:
+            where_filter = where_conditions[0]
+        else:
+            where_filter = {"$and": where_conditions}
 
         vector_results = self.vector_store.query(
             query_embedding=query_embedding.tolist(),
@@ -172,6 +186,8 @@ class MedicalRetriever:
             if evidence_level:
                 evidence_summary[evidence_level] = evidence_summary.get(evidence_level, 0) + 1
 
+            paper_url = metadata.get("paper_url") or None
+
             chunk = RetrievedChunk(
                 content=ranked.text,
                 chunk_id=vector_results["ids"][idx],
@@ -182,6 +198,8 @@ class MedicalRetriever:
                 pmid=metadata.get("pmid"),
                 evidence_level=evidence_level,
                 study_design=metadata.get("study_design"),
+                paper_url=paper_url,
+                subspecialty=metadata.get("subspecialty") or subspecialty,
             )
             chunks.append(chunk)
 
@@ -192,6 +210,7 @@ class MedicalRetriever:
                 heading_path=heading_path,
                 pmid=metadata.get("pmid"),
                 evidence_level=evidence_level,
+                paper_url=paper_url,
             )
             citations.append(citation)
 

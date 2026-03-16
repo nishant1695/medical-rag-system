@@ -97,14 +97,14 @@ export function SearchTab({ workspaceId }: SearchTabProps) {
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="citation-badge">{chunk.index}</span>
                   <EvidenceBadge level={chunk.evidence_level} />
-                  {chunk.pmid && (
+                  {(chunk.paper_url || chunk.pmid) && (
                     <a
-                      href={`https://pubmed.ncbi.nlm.nih.gov/${chunk.pmid}/`}
+                      href={chunk.paper_url ?? `https://pubmed.ncbi.nlm.nih.gov/${chunk.pmid}/`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-0.5 text-xs text-medical-600 hover:underline font-mono"
                     >
-                      PMID {chunk.pmid}
+                      {chunk.pmid ? `PMID ${chunk.pmid}` : 'View paper'}
                       <ExternalLink size={10} />
                     </a>
                   )}

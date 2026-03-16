@@ -40,6 +40,7 @@ class MedicalRAGService:
         document_id: int,
         file_path: str,
         pmid: Optional[str] = None,
+        subspecialty: Optional[str] = None,
     ) -> int:
         """
         Process a document through the full pipeline.
@@ -94,6 +95,8 @@ class MedicalRAGService:
             document.evidence_level = parsed.evidence_level
             document.sample_size = parsed.sample_size
             document.limitations = parsed.limitations
+            document.paper_url = parsed.paper_url
+            document.subspecialty = subspecialty or ""
 
             document.parser_version = "medical_v1"
             await self.db.commit()
@@ -125,6 +128,8 @@ class MedicalRAGService:
                         "pmid": parsed.pmid or "",
                         "evidence_level": parsed.evidence_level or "",
                         "study_design": parsed.study_design or "",
+                        "paper_url": parsed.paper_url or "",
+                        "subspecialty": subspecialty or "",
                     }
                     metadatas.append(metadata)
 
@@ -162,6 +167,7 @@ class MedicalRAGService:
         question: str,
         top_k: int = 5,
         document_ids: Optional[List[int]] = None,
+        subspecialty: Optional[str] = None,
     ) -> RetrievalResult:
         """
         Query the knowledge base.
@@ -170,6 +176,7 @@ class MedicalRAGService:
             question: User question
             top_k: Number of results
             document_ids: Optional filter to specific documents
+            subspecialty: Optional subspecialty filter (e.g. "breast", "hand")
 
         Returns:
             RetrievalResult with chunks and citations
@@ -178,7 +185,12 @@ class MedicalRAGService:
             query=question,
             top_k=top_k,
             document_ids=document_ids,
+            subspecialty=subspecialty,
         )
+
+    async def get_subspecialty_coverage(self) -> dict[str, int]:
+        """Return chunk counts per subspecialty in this workspace."""
+        return self.vector_store.count_by_subspecialty()
 
     async def delete_document(self, document_id: int) -> None:
         """Delete document from vector store."""

@@ -23,7 +23,7 @@ async function req<T>(path: string, options?: RequestInit): Promise<T> {
 
 // ─── Workspaces ────────────────────────────────────────────────────────────────
 
-import type { Workspace, Document, SearchResponse, WorkspaceStats } from './types'
+import type { Workspace, Document, SearchResponse, WorkspaceStats, Message, SourceChunk, SpecialistContext } from './types'
 
 export const api = {
   workspaces: {
@@ -62,7 +62,24 @@ export const api = {
         method: 'POST',
         body: JSON.stringify({ query, top_k: topK }),
       }),
+
+    history: (workspaceId: number, limit = 50): Promise<HistoryMessage[]> =>
+      req(`/workspaces/${workspaceId}/history?limit=${limit}`),
+
+    clearHistory: (workspaceId: number): Promise<void> =>
+      req(`/workspaces/${workspaceId}/history`, { method: 'DELETE' }),
   },
+}
+
+export interface HistoryMessage {
+  message_id: string
+  role: string
+  content: string
+  sources?: SourceChunk[]
+  thinking?: string
+  safety_classification?: string
+  evidence_quality?: Record<string, number>
+  created_at: string
 }
 
 // ─── SSE streaming chat ────────────────────────────────────────────────────────
@@ -71,7 +88,7 @@ export interface SSECallbacks {
   onText:     (delta: string) => void
   onThinking: (text: string) => void
   onSources:  (sources: import('./types').SourceChunk[]) => void
-  onDone:     (data: { safety_classification: string; evidence_summary: Record<string, number> }) => void
+  onDone:     (data: { safety_classification: string; evidence_summary: Record<string, number>; specialist_contexts?: import('./types').SpecialistContext[] }) => void
   onError:    (msg: string) => void
 }
 
@@ -143,8 +160,8 @@ export function streamChat(
           try {
             const data = JSON.parse(rawData)
             switch (currentEvent) {
-              case 'text':
-                callbacks.onText(data.delta ?? '')
+              case 'token':
+                callbacks.onText(data.text ?? '')
                 break
               case 'thinking':
                 callbacks.onThinking(data.text ?? '')
@@ -152,10 +169,11 @@ export function streamChat(
               case 'sources':
                 callbacks.onSources(data.sources ?? [])
                 break
-              case 'done':
+              case 'complete':
                 callbacks.onDone({
                   safety_classification: data.safety_classification ?? 'literature',
                   evidence_summary: data.evidence_summary ?? {},
+                  specialist_contexts: data.specialist_contexts,
                 })
                 break
               case 'error':

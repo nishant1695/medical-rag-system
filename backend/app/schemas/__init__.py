@@ -55,6 +55,8 @@ class DocumentResponse(BaseModel):
     study_design: Optional[str]
     evidence_level: Optional[str]
     sample_size: Optional[int]
+    paper_url: Optional[str] = None
+    subspecialty: Optional[str] = None
 
     created_at: datetime
 
@@ -91,6 +93,17 @@ class SourceChunk(BaseModel):
     score: float
     pmid: Optional[str] = None
     evidence_level: Optional[str] = None
+    paper_url: Optional[str] = None
+    subspecialty: Optional[str] = None
+
+
+class SpecialistContext(BaseModel):
+    """Per-subspecialty retrieval summary included in chat responses."""
+
+    subspecialty: str
+    label: str
+    source_count: int
+    evidence_summary: Dict[str, int]
 
 
 class ChatResponse(BaseModel):
@@ -101,6 +114,24 @@ class ChatResponse(BaseModel):
     safety_classification: str
     evidence_summary: Dict[str, int]
     thinking: Optional[str] = None
+    specialist_contexts: List[SpecialistContext] = []
+
+
+# Chat history schemas
+class HistoryMessage(BaseModel):
+    """A persisted chat message returned by GET /history."""
+
+    message_id: str
+    role: str
+    content: str
+    sources: Optional[List[Any]] = None
+    thinking: Optional[str] = None
+    safety_classification: Optional[str] = None
+    evidence_quality: Optional[Dict[str, int]] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
 
 
 # Search schemas

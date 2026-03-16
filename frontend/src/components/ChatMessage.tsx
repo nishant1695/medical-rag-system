@@ -2,10 +2,31 @@ import { clsx } from 'clsx'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { AlertCircle, Bot, User } from 'lucide-react'
-import type { Message } from '../types'
-import { EvidenceSummary } from './EvidenceBadge'
+import type { Message, SpecialistContext } from '../types'
+import { EvidenceBadge, EvidenceSummary } from './EvidenceBadge'
 import { SafetyBanner } from './SafetyBanner'
 import { CitationPanel } from './CitationPanel'
+
+function SpecialistPanel({ contexts }: { contexts: SpecialistContext[] }) {
+  if (!contexts.length) return null
+  return (
+    <div className="flex flex-wrap gap-2">
+      {contexts.map(c => (
+        <div
+          key={c.subspecialty}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs"
+        >
+          <span className="font-medium text-slate-700">{c.label}</span>
+          <span className="text-slate-400">·</span>
+          <span className="text-slate-500">{c.source_count} sources</span>
+          {Object.entries(c.evidence_summary).map(([lvl, n]) => (
+            <EvidenceBadge key={lvl} level={lvl} className="scale-90" />
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
 
 interface ChatMessageProps {
   message: Message
@@ -91,6 +112,11 @@ export function ChatMessageBubble({ message }: ChatMessageProps) {
         {/* Safety banner */}
         {!message.streaming && message.safety_classification && message.safety_classification !== 'literature' && (
           <SafetyBanner classification={message.safety_classification} />
+        )}
+
+        {/* Specialist retrieval summary */}
+        {!message.streaming && message.specialist_contexts && message.specialist_contexts.length > 1 && (
+          <SpecialistPanel contexts={message.specialist_contexts} />
         )}
 
         {/* Evidence summary */}

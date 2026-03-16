@@ -10,8 +10,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
-from app.models import KnowledgeBase
-from app.schemas import SearchRequest, SearchResponse, SourceChunk, ChatRequest
+from app.models import KnowledgeBase, ChatMessage as ChatMessageModel
+from app.schemas import SearchRequest, SearchResponse, SourceChunk, ChatRequest, HistoryMessage
 from app.services.rag_service import get_rag_service
 from app.services.medical_safety_classifier import safety_classifier
 from app.services.chat_agent import chat_stream_endpoint
@@ -99,6 +99,38 @@ async def chat_stream(
     """
     # Delegate to chat agent's stream endpoint which returns a StreamingResponse
     return await chat_stream_endpoint(workspace_id=workspace_id, request=request, db=db)
+
+
+@router.get("/history", response_model=list[HistoryMessage])
+async def get_chat_history(
+    workspace_id: int,
+    limit: int = 50,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Return the most recent chat messages for a workspace (newest-last order).
+    Used by the frontend to restore conversation on page load.
+    """
+    result = await db.execute(
+        select(ChatMessageModel)
+        .where(ChatMessageModel.workspace_id == workspace_id)
+        .order_by(ChatMessageModel.created_at.asc())
+        .limit(limit)
+    )
+    return result.scalars().all()
+
+
+@router.delete("/history", status_code=204)
+async def clear_chat_history(
+    workspace_id: int,
+    db: AsyncSession = Depends(get_db),
+):
+    """Delete all chat messages for a workspace."""
+    from sqlalchemy import delete
+    await db.execute(
+        delete(ChatMessageModel).where(ChatMessageModel.workspace_id == workspace_id)
+    )
+    await db.commit()
 
 
 @router.get("/stats")
