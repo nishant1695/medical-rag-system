@@ -34,6 +34,7 @@ from app.schemas import ChatRequest
 from app.services.llm import get_llm_provider
 from app.services.llm.base import LLMMessage
 from app.services.medical_safety_classifier import safety_classifier
+from app.services.knowledge_graph import get_knowledge_graph
 from app.services.rag_service import get_rag_service
 from app.services.retrieval import RetrievedChunk
 
@@ -753,6 +754,23 @@ async def _agent_stream(
     else:
         sub_questions = [retrieval_query]
         retrieval_queries = [retrieval_query]
+
+    # ── Step 2b: Knowledge graph query expansion ───────────────────────────────
+    try:
+        kg = get_knowledge_graph(workspace_id)
+        expanded_queries = []
+        for rq in retrieval_queries:
+            related = await kg.expand_query(rq, db)
+            if related:
+                expanded_queries.append(
+                    f"{rq}\nRelated concepts: {', '.join(related)}"
+                )
+                logger.debug(f"KG expanded query with: {related}")
+            else:
+                expanded_queries.append(rq)
+        retrieval_queries = expanded_queries
+    except Exception as kg_exc:
+        logger.debug(f"KG query expansion skipped: {kg_exc}")
 
     # ── Step 3: Parallel retrievals per (query × subspecialty) ────────────────
     is_multi = len(subspecialties) > 1

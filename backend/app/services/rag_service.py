@@ -146,6 +146,22 @@ class MedicalRAGService:
             document.status = DocumentStatus.INDEXED
             await self.db.commit()
 
+            # Build knowledge graph (errors here don't fail the overall ingest)
+            try:
+                from app.services.knowledge_graph import get_knowledge_graph
+                from app.services.llm import get_llm_provider
+                if parsed.chunks:
+                    kg = get_knowledge_graph(self.workspace_id)
+                    provider = get_llm_provider()
+                    n_edges = await kg.build_from_document(
+                        parsed.chunks, self.db, provider
+                    )
+                    logger.info(
+                        f"Knowledge graph: {n_edges} new edges for doc {document_id}"
+                    )
+            except Exception as kg_exc:
+                logger.warning(f"Knowledge graph extraction skipped: {kg_exc}")
+
             logger.info(
                 f"Successfully processed document {document_id}: "
                 f"{len(parsed.chunks)} chunks, "

@@ -160,3 +160,34 @@ async def get_workspace_stats(
         "name": workspace.name,
         "subspecialty": workspace.subspecialty,
     }
+
+
+@router.get("/graph")
+async def get_knowledge_graph_data(
+    workspace_id: int,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Return the knowledge graph for a workspace as {nodes, edges}.
+
+    Nodes are medical entities extracted from the literature (procedures,
+    conditions, outcomes, anatomy, techniques, populations, drugs).
+    Edges are typed relationships between them (treats, complicates,
+    compared_to, requires, associated_with, contraindicates, part_of).
+
+    Useful for visualising what concepts the system has learned and how
+    they are connected across the indexed papers.
+    """
+    result = await db.execute(
+        select(KnowledgeBase).where(KnowledgeBase.id == workspace_id)
+    )
+    if not result.scalar_one_or_none():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Workspace {workspace_id} not found",
+        )
+
+    from app.services.knowledge_graph import get_knowledge_graph
+    kg = get_knowledge_graph(workspace_id)
+    return await kg.get_graph_data(db)
+
